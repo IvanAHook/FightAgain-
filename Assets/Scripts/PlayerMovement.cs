@@ -29,7 +29,6 @@ public class PlayerMovement : MonoBehaviour {
 
         if (CrossPlatformInputManager.GetAxis("Horizontal") < 0 && facingRight) {
             Flip();
-            //transform.position = new Vector2(transform.position.x - 64f, transform.position.y);
         } else if (CrossPlatformInputManager.GetAxis("Horizontal") > 0 && !facingRight) {
             Flip();
         }
