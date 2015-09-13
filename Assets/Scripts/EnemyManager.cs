@@ -10,6 +10,7 @@ public class EnemyManager : MonoBehaviour {
 
 	List<string> enemyWaves;
     public Enemy[] enemies;
+	public SpawnPoint[] spawnPoints;
 
 	void Start() {
 		enemyWaves = ReadWavesFile( Application.dataPath + "/waves.txt" );
@@ -26,12 +27,30 @@ public class EnemyManager : MonoBehaviour {
 
     void SpawnWave( int waveNo ) {
 		string wave = enemyWaves[ waveNo ];
-		string[] thisWave;
-		for( int i = 0; i < wave.Length; i++ ) {
-			thisWave[i] = wave[i].ToString();
+
+		foreach (SpawnPoint sP in spawnPoints) {
+			sP.resetEnemiesSpawned();
 		}
-		Debug.Log( thisWave );
+
+		//string[] thisWave;
+		for( int i = 0; i < wave.Length; i++ ) {
+			//thisWave[i] = wave[i].ToString();
+		}
+		//Debug.Log( thisWave );
     }
+
+	void SpawnEnemy( int point ) { // Do pooling for this?
+
+		for (int tryPoint = point; tryPoint < spawnPoints.Length; tryPoint++) {
+			if( spawnPoints[ tryPoint ].isFree() ) {
+				//Instantiate( Enemy, spawnPoints[ tryPoint ], Quaternion.identity );
+				spawnPoints[ tryPoint ].increaseEnemiesSpawned( 1 );
+			} else {
+				tryPoint += 1;
+			}
+		}
+
+	}
 
 	List<string> ReadWavesFile( string fileName ) {
 
