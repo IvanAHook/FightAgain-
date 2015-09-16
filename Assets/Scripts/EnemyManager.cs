@@ -9,20 +9,25 @@ public class EnemyManager : MonoBehaviour {
 	//List<Enemy> enemies = new List<Enemy>();
 
 	List<string> enemyWaves;
-    public Enemy[] enemies;
+	List<Enemy> enemies = new List<Enemy>();
 	public SpawnPoint[] spawnPoints;
+
+	public Enemy enemy;
 
 	void Start() {
 		enemyWaves = ReadWavesFile( Application.dataPath + "/waves.txt" );
 		foreach (var item in enemyWaves) {
 			Debug.Log(item);
 		}
+		SpawnWave( 0 );
 	}
     
     void Update () {
-        foreach( var e in enemies ) {
-            e.UppdateAttention();
-        }
+		if( enemies.Count > 0 ) {
+			foreach( var e in enemies ) {
+				e.UppdateAttention();
+			}
+		}
     }
 
     void SpawnWave( int waveNo ) {
@@ -34,22 +39,24 @@ public class EnemyManager : MonoBehaviour {
 
 		//string[] thisWave;
 		for( int i = 0; i < wave.Length; i++ ) {
+			enemies.Add( SpawnEnemy( i ) );
 			//thisWave[i] = wave[i].ToString();
 		}
 		//Debug.Log( thisWave );
     }
 
-	void SpawnEnemy( int point ) { // Do pooling for this?
+	Enemy SpawnEnemy( int point ) { // Do pooling for this
 
 		for (int tryPoint = point; tryPoint < spawnPoints.Length; tryPoint++) {
 			if( spawnPoints[ tryPoint ].isFree() ) {
-				//Instantiate( Enemy, spawnPoints[ tryPoint ], Quaternion.identity );
 				spawnPoints[ tryPoint ].increaseEnemiesSpawned( 1 );
+				return Instantiate( enemy, spawnPoints[ tryPoint ].getPos(), Quaternion.identity ) as Enemy;
 			} else {
 				tryPoint += 1;
 			}
 		}
-
+		Debug.Log( "null enemy fore some reason" );
+		return null;
 	}
 
 	List<string> ReadWavesFile( string fileName ) {
