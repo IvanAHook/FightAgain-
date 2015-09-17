@@ -3,7 +3,7 @@ using System.Collections;
 
 public class Enemy : Unit {
 
-	enum State { Searching, Engaged, Dead };
+	public enum State { Searching, Engaged, Dead };
 	State state;
 
     public Transform target;
@@ -13,7 +13,7 @@ public class Enemy : Unit {
         base.Start();
 	}
 
-	public void UppdateAttention() {
+	public State UppdateAttention() {
 		if (state == State.Searching) {
 			Search();
 		} else if (state == State.Engaged) {
@@ -21,6 +21,7 @@ public class Enemy : Unit {
 		} else if (state == State.Dead) {
 			Die();
 		}
+		return state;
 	}
 
     void Search() {
@@ -42,7 +43,7 @@ public class Enemy : Unit {
             base.direction = new Vector2( direction.x * -1, direction.y * -1 );
         } else if( other.tag == "Player" ) {
             target = other.transform;
-            state = State.Engaged;
+            state = State.Dead;
         }
     }
 

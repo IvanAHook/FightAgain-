@@ -6,27 +6,33 @@ using System.IO;
 
 public class EnemyManager : MonoBehaviour {
 
-	//List<Enemy> enemies = new List<Enemy>();
-
 	List<string> enemyWaves;
+	int wave;
 	List<Enemy> enemies = new List<Enemy>();
 	public SpawnPoint[] spawnPoints;
 
 	public Enemy enemy;
 
-	void Start() {
+	void Awake() {
 		enemyWaves = ReadWavesFile( Application.dataPath + "/waves.txt" );
 		foreach (var item in enemyWaves) {
 			Debug.Log(item);
 		}
-		SpawnWave( 0 );
+		wave = 0;
+		SpawnWave( wave );
 	}
     
     void Update () {
 		if( enemies.Count > 0 ) {
-			foreach( var e in enemies ) {
-				e.UppdateAttention();
+			for( int i = 0; i < enemies.Count; i++ ) {
+				if( enemies[ i ].UppdateAttention() == Enemy.State.Dead ) {
+					Destroy( enemies[ i ].gameObject );
+					Debug.Log(enemies[ i ].UppdateAttention());
+					enemies.RemoveAt( i );
+				}
 			}
+		} else if( wave < enemyWaves.Count - 1 ) {
+			SpawnWave( wave += 1 );
 		}
     }
 
@@ -37,12 +43,12 @@ public class EnemyManager : MonoBehaviour {
 			sP.resetEnemiesSpawned();
 		}
 
-		//string[] thisWave;
 		for( int i = 0; i < wave.Length; i++ ) {
 			enemies.Add( SpawnEnemy( i ) );
-			//thisWave[i] = wave[i].ToString();
 		}
-		//Debug.Log( thisWave );
+		foreach (var item in enemies) {
+			Debug.Log(item.name);
+		}
     }
 
 	Enemy SpawnEnemy( int point ) { // Do pooling for this
