@@ -24,7 +24,15 @@ public class Enemy : Unit {
 	}
 
     void Search() {
-        base.Move();
+
+		//If engaged to player
+		Vector2 myPos = new Vector2(transform.position.x, transform.position.y);
+
+		Vector2 targetDirection = GameManager.instance - myPos;
+
+		transform.Translate(targetDirection.normalized * 1f * Time.deltaTime);
+		
+		base.Move();
     }
 
     void Engage() {
