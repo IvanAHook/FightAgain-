@@ -5,6 +5,7 @@ public class GameManager : MonoBehaviour {
 
 	public static GameManager instance = null;
 
+	Transform playerTransform;
 	int money;
 	
 	void Awake() {
@@ -15,12 +16,16 @@ public class GameManager : MonoBehaviour {
 		DontDestroyOnLoad( gameObject );
 	}
 
+	void Start() {
+		playerTransform = GameObject.FindGameObjectWithTag( "Player" ).transform;
+	}
+
 	void InitGame() {
 
 	}
 
-	void Update() {
-	
+	public Vector2 GetPlayerPosition() {
+		return ( playerTransform != null ) ? new Vector2( playerTransform.position.x, playerTransform.position.y ) : Vector2.zero;
 	}
 
 	bool canAfford( int price ) {
