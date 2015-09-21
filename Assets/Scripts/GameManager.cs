@@ -24,6 +24,10 @@ public class GameManager : MonoBehaviour {
 
 	}
 
+	void Update() {
+		playerTransform = GameObject.FindGameObjectWithTag( "Player" ).transform;
+	}
+
 	public Vector2 GetPlayerPosition() {
 		return ( playerTransform != null ) ? new Vector2( playerTransform.position.x, playerTransform.position.y ) : Vector2.zero;
 	}
