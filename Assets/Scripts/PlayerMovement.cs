@@ -18,7 +18,6 @@ public class PlayerMovement : MonoBehaviour {
         anim = GetComponentInChildren<Animator>();
         rb2D = GetComponent<Rigidbody2D>();
         swordCollider = GetComponent<BoxCollider2D>();
-        
 	}
 	
 
@@ -60,7 +59,7 @@ public class PlayerMovement : MonoBehaviour {
     }
 
     private void OnTriggerEnter2D(Collider2D other) {
-        Debug.Log(other.gameObject.name + " hit");
+        //Debug.Log(other.gameObject.name + " hit");
         explosion.transform.position = other.transform.position;
         explosion.GetComponent<Animator>().SetTrigger("Play");
     }

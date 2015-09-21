@@ -16,7 +16,7 @@ public class EnemyManager : MonoBehaviour {
 	void Awake() {
 		enemyWaves = ReadWavesFile( Application.dataPath + "/waves.txt" );
 		foreach (var item in enemyWaves) {
-			Debug.Log(item);
+			//Debug.Log(item);
 		}
 		wave = 0;
 		SpawnWave( wave );
@@ -25,15 +25,15 @@ public class EnemyManager : MonoBehaviour {
     void Update () {
 		if( enemies.Count > 0 ) {
 			for( int i = 0; i < enemies.Count; i++ ) {
-				if( enemies[ i ].UppdateAttention() == Enemy.State.Dead ) {
+				if( enemies[ i ].UppdateAttention( GameManager.instance.GetPlayerPosition() ) == Enemy.State.Dead ) {
 					Destroy( enemies[ i ].gameObject );
-					Debug.Log(enemies[ i ].UppdateAttention());
 					enemies.RemoveAt( i );
 				}
 			}
 		} else if( wave < enemyWaves.Count - 1 ) {
 			SpawnWave( wave += 1 );
 		}
+		Debug.Log(enemies.Count);
     }
 
     void SpawnWave( int waveNo ) {
@@ -47,7 +47,7 @@ public class EnemyManager : MonoBehaviour {
 			enemies.Add( SpawnEnemy( i ) );
 		}
 		foreach (var item in enemies) {
-			Debug.Log(item.name);
+			//Debug.Log(item.name);
 		}
     }
 

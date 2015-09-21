@@ -13,7 +13,7 @@ public class Enemy : Unit {
         base.Start();
 	}
 
-	public State UppdateAttention() {
+	public State UppdateAttention( Vector2 playerPos ) {
 		if (state == State.Searching) {
 			Search();
 		} else if (state == State.Engaged) {
