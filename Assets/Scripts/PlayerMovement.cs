@@ -33,17 +33,17 @@ public class PlayerMovement : MonoBehaviour {
         }
 
         if (CrossPlatformInputManager.GetAxis("Vertical") != 0 || CrossPlatformInputManager.GetAxis("Horizontal") != 0) {
-            anim.SetFloat("Speed", 1f);
+            anim.SetFloat( "Speed", 1f );
         } else {
-            anim.SetFloat("Speed", 0f);
+            anim.SetFloat( "Speed", 0f );
         }
 
         if (CrossPlatformInputManager.GetButtonDown("Jump")) 
            Attack("Attack");
         if (CrossPlatformInputManager.GetButtonDown("Jump2")) 
             Attack("Attack2");
-        if (Input.GetKeyDown(KeyCode.D))
-            anim.SetTrigger("Die");
+        /*if (Input.GetKeyDown(KeyCode.D))
+            anim.SetTrigger("Die");*/
 	}
 
     void Flip() {

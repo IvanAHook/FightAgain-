@@ -1,12 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class Enemy : Unit {
 
 	public enum State { Targeting, Engaging, Attacking, Death };
 	State state;
 
-    public Transform target;
+    public Transform target = null;
 
 	// Attack stuff.
 	float attackRange = 1f;
@@ -17,64 +18,83 @@ public class Enemy : Unit {
 
 
 	public override void Start() {
-		state = State.Engaging;
+		state = State.Targeting;
         base.Start();
 	}
 
-	public State UppdateAttention( Vector2 playerPos ) {
-		if (state == State.Targeting) {
-			Search(playerPos);
-		} else if (state == State.Engaging) {
-			Engage(playerPos);
-		} else if (state == State.Attacking) {
+	public State UppdateAttention( Transform player, List<Enemy> enemies ) {
+		if ( state == State.Targeting ) {
+			Search( player, enemies );
+		} else if ( state == State.Engaging ) {
+			Engage();
+		} else if ( state == State.Attacking ) {
 			Attack();
-		} else if (state == State.Death) {
+		} else if ( state == State.Death ) {
 			Die();
 		}
 		return state;
 	}
 
-    void Search( Vector2 target ) {
+	void Search( Transform player, List<Enemy> enemies ) {
 
-		
+		if ( this.target == null ) {
+			SelectTarget( player, enemies );
+		}
+
 		base.Move();
     }
 
-    void Engage( Vector2 target ) {
+	void SelectTarget( Transform player, List<Enemy> enemies ) {
+
+		foreach (Enemy e in enemies)
+		{
+			Debug.Log( 1 );
+			if ( e.target == null && e != this )
+			{
+				Debug.Log( 1 );
+				target = e.transform;
+				e.target = transform;
+				state = State.Engaging;
+				return;
+			}
+		}
+
+		target = player;
+		state = State.Engaging;
+	}
+
+    void Engage() {
 
 		//If engaged to player
-
-		
-
-		
 		
 		// Variables
 		Vector2 myPos = new Vector2(transform.position.x, transform.position.y);
+		Vector2 targetPos = new Vector2(target.position.x, target.position.y);
 
-		Vector2 targetDirection = target - myPos;
+		Vector2 targetDirection = targetPos - myPos;
 		float distance = targetDirection.magnitude;
 
 		Vector2 rTarget = Vector2.zero;
 		
 		// Change target vector depending on if the player is to the right of left of me.
-		if (target.x < transform.position.x) {
-			rTarget = target + new Vector2(rAttackRange, 0f);
+		if (target.position.x < transform.position.x) {
+			rTarget = targetPos + new Vector2(rAttackRange, 0f);
 		}
-		else if (target.x > transform.position.x) {
-			rTarget = target - new Vector2(rAttackRange, 0f);
+		else if (target.position.x > transform.position.x) {
+			rTarget = targetPos - new Vector2(rAttackRange, 0f);
 		}
 		
 		Vector2 rTargetDirection = rTarget - myPos;
 		float rDistance = rTargetDirection.magnitude;
 
 
-		if (!isRanged){
+		if (!isRanged)
+		{
 
 			// Melee
 			// Chase target until within range, then attack.
 			if (distance >= attackRange)
 			{
-
 				transform.Translate(targetDirection.normalized * 1f * Time.deltaTime);
 			}
 			else if (state != State.Attacking)
@@ -83,35 +103,24 @@ public class Enemy : Unit {
 			}
 
 		}
-		else {
+		else
+		{
 
 			// Ranged
-			if (Mathf.Abs(target.y - myPos.y) > 0.15f)
+			if (Mathf.Abs(target.position.y - myPos.y) > 0.15f)
 			{
 				
-				
 				transform.Translate(rTargetDirection.normalized * 1f * Time.deltaTime);
-				Debug.Log("moving");
-
+				//Debug.Log("moving");
 
 			}
 			else if (rDistance <= 0.5 && state != State.Attacking)
 			{
 				state = State.Attacking;
-				Debug.Log("attacking");
+				//Debug.Log("attacking");
 			}
-
 		}
 
-
-		
-
-
-		
-
-	
-		
-		
 	//	Vector2 myTarget = target + new Vector2(rAttackRange, 0f);
 	//	Vector2 myTargetDir = myTarget - myPos;
 	//	float myDistance = myTargetDir.magnitude;
@@ -193,7 +202,7 @@ public class Enemy : Unit {
 
 		
 		yield return new WaitForSeconds(1.2f);
-		Debug.Log( "I Attacked!" );
+		//Debug.Log( "I Attacked!" );
 		state = State.Engaging;
 		attacked = false;
 		
