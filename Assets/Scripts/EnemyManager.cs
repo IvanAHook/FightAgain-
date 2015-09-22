@@ -29,7 +29,7 @@ public class EnemyManager : MonoBehaviour {
 		waveTime += Time.deltaTime;
 		if( enemies.Count > 0 ) {
 			for( int i = 0; i < enemies.Count; i++ ) {
-				if( enemies[ i ].UppdateAttention( GameManager.instance.GetPlayerPosition() ) == Enemy.State.Dead ) {
+				if( enemies[ i ].UppdateAttention( GameManager.instance.GetPlayerPosition() ) == Enemy.State.Death ) {
 					Destroy( enemies[ i ].gameObject );
 					enemies.RemoveAt( i );
 				}
