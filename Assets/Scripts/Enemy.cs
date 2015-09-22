@@ -13,6 +13,8 @@ public class Enemy : Unit {
 	float rAttackRange = 3f;
 	bool attacked = false;
 
+	public bool isRanged = true;
+
 
 	public override void Start() {
 		state = State.Engaging;
@@ -42,50 +44,113 @@ public class Enemy : Unit {
 
 		//If engaged to player
 
-		//Chase target until within range
+		
 
 		
 		
-	/*	// Melee enemy test
+		// Variables
 		Vector2 myPos = new Vector2(transform.position.x, transform.position.y);
 
 		Vector2 targetDirection = target - myPos;
 		float distance = targetDirection.magnitude;
 
-		if (distance >= attackRange) {
+		Vector2 rTarget = Vector2.zero;
 		
-			transform.Translate(targetDirection.normalized * 1f * Time.deltaTime);
+		// Change target vector depending on if the player is to the right of left of me.
+		if (target.x < transform.position.x) {
+			rTarget = target + new Vector2(rAttackRange, 0f);
 		}
-		else if (state != State.Attacking) {
-			state = State.Attacking;
-		}*/
+		else if (target.x > transform.position.x) {
+			rTarget = target - new Vector2(rAttackRange, 0f);
+		}
+		
+		Vector2 rTargetDirection = rTarget - myPos;
+		float rDistance = rTargetDirection.magnitude;
 
 
+		if (!isRanged){
+
+			// Melee
+			// Chase target until within range, then attack.
+			if (distance >= attackRange)
+			{
+
+				transform.Translate(targetDirection.normalized * 1f * Time.deltaTime);
+			}
+			else if (state != State.Attacking)
+			{
+				state = State.Attacking;
+			}
+
+		}
+		else {
+
+			// Ranged
+			if (Mathf.Abs(target.y - myPos.y) > 0.15f)
+			{
+				
+				
+				transform.Translate(rTargetDirection.normalized * 1f * Time.deltaTime);
+				Debug.Log("moving");
 
 
-		Vector2 myPos = new Vector2(transform.position.x, transform.position.y);
-		// Ranged enemy test
+			}
+			else if (rDistance <= 0.5 && state != State.Attacking)
+			{
+				state = State.Attacking;
+				Debug.Log("attacking");
+			}
+
+		}
+
+
+		
+
+
+		
+
+	
+		
+		
+	//	Vector2 myTarget = target + new Vector2(rAttackRange, 0f);
+	//	Vector2 myTargetDir = myTarget - myPos;
+	//	float myDistance = myTargetDir.magnitude;
+
+		
+
+
+		/*// Ranged enemy test
 		
 		// Target is to the left of me
-		if (target.x < transform.position.x) {
+		if (target.x < transform.position.x && Mathf.Abs( (target.y - transform.position.y) ) > 0.5f) {
 
-
-
-			Vector2 myTarget = target + new Vector2(rAttackRange, 0f);
-			Vector2 myTargetDir = myTarget - myPos;
 
 			transform.Translate(myTargetDir.normalized * 1f * Time.deltaTime);
+			Debug.Log("yo");
+			
 
 		}
+
+		else if ( myDistance >= rAttackRange ) {
+			Debug.Log("hej");
+		}
+		
+			
 		// Target is to the right of me
-		else if (target.x > transform.position.x) {
+		else if (target.x > transform.position.x && Mathf.Abs( (target.y - transform.position.y) ) > 0.5f) {
 
 
-			Vector2 myTarget = target - new Vector2(rAttackRange, 0f);
-			Vector2 myTargetDir = myTarget - myPos;
+			
 
 			transform.Translate(myTargetDir.normalized * 1f * Time.deltaTime);
+
+			Debug.Log("yoyo");
+
 		}
+		else if ( myDistance >= rAttackRange ) {
+
+			Debug.Log("hej2");
+		}*/
 
 
 
