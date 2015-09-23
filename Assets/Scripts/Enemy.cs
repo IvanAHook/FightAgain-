@@ -31,6 +31,7 @@ public class Enemy : Unit {
 		} else if (state == State.Death) {
 			Die();
 		}
+		base.FlipCheck();
 		return state;
 	}
 
@@ -45,8 +46,6 @@ public class Enemy : Unit {
 		//If engaged to player
 
 		
-
-		
 		
 		// Variables
 		Vector2 myPos = new Vector2(transform.position.x, transform.position.y);
@@ -57,38 +56,27 @@ public class Enemy : Unit {
 		Vector2 rTarget = Vector2.zero;
 		
 		// Change target vector depending on if the player is to the right of left of me.
-		if (target.x < transform.position.x) {
+		// Left of me.
+		if (target.x <= transform.position.x) 
+		{
 			rTarget = target + new Vector2(rAttackRange, 0f);
+			
 		}
-		else if (target.x > transform.position.x) {
+		// Right of me.
+		else if (target.x >= transform.position.x) 
+		{
 			rTarget = target - new Vector2(rAttackRange, 0f);
 		}
 		
 		Vector2 rTargetDirection = rTarget - myPos;
 		float rDistance = rTargetDirection.magnitude;
 
-
-		if (!isRanged){
-
-			// Melee
-			// Chase target until within range, then attack.
-			if (distance >= attackRange)
-			{
-
-				transform.Translate(targetDirection.normalized * 1f * Time.deltaTime);
-			}
-			else if (state != State.Attacking)
-			{
-				state = State.Attacking;
-			}
-
-		}
-		else {
+		if (isRanged) 
+		{
 
 			// Ranged
 			if (Mathf.Abs(target.y - myPos.y) > 0.15f)
 			{
-				
 				
 				transform.Translate(rTargetDirection.normalized * 1f * Time.deltaTime);
 				Debug.Log("moving");
