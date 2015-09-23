@@ -25,24 +25,29 @@ public class EnemyManager : MonoBehaviour {
 		wave = 0;
 	}
     
-    void Update () {
+    void Update() {
 		waveTime += Time.deltaTime;
+
 		if( enemies.Count > 0 ) {
+
 			for( int i = 0; i < enemies.Count; i++ ) {
-				if( enemies[ i ].UppdateAttention( GameManager.instance.GetPlayerPosition() ) == Enemy.State.Death ) {
+				//Debug.Log( enemies[ i ].target.ToString() );
+				if( enemies[ i ].UppdateAttention( GameManager.instance.GetPlayerTransform(), enemies ) == Enemy.State.Death ) {
 					Destroy( enemies[ i ].gameObject );
 					enemies.RemoveAt( i );
 				}
 			}
+
 		} else if( wave < enemyWaves.Count - 1 && spawning == false ) {
 			StartCoroutine( SpawnWave() );
 		}
-		Debug.Log(enemies.Count);
+
+		//Debug.Log(enemies.Count);
     }
 
 	IEnumerator SpawnWave() {
 		waveTime = 0f;
-		spawning = true;
+		spawning = true; //TODO: Temp solution?
 		string wave = enemyWaves[ this.wave += 1 ];
 		
 		foreach (SpawnPoint sP in spawnPoints) {

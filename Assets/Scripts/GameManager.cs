@@ -17,6 +17,7 @@ public class GameManager : MonoBehaviour {
 	}
 
 	void Start() {
+		// Singelton Player instance?
 		playerTransform = GameObject.FindGameObjectWithTag( "Player" ).transform;
 	}
 
@@ -30,6 +31,10 @@ public class GameManager : MonoBehaviour {
 
 	public Vector2 GetPlayerPosition() {
 		return ( playerTransform != null ) ? new Vector2( playerTransform.position.x, playerTransform.position.y ) : Vector2.zero;
+	}
+
+	public Transform GetPlayerTransform() {
+		return playerTransform;
 	}
 
 	bool canAfford( int price ) {
