@@ -1,10 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-using System.Text;
-using System.IO;
 
+[RequireComponent(typeof(FileReaderComponent))]
 public class EnemyManager : MonoBehaviour {
+
+	FileReaderComponent _freader;
 
 	List<string> enemyWaves;
 	int wave;
@@ -18,10 +19,8 @@ public class EnemyManager : MonoBehaviour {
 	public Enemy enemy;
 
 	void Awake() {
-		enemyWaves = ReadWavesFile( Application.dataPath + "/waves.txt" );
-		//foreach (var item in enemyWaves) {
-			//Debug.Log(item);
-		//}
+		_freader = GetComponent<FileReaderComponent>();
+		enemyWaves = _freader.ReadWavesFile( Application.dataPath + "/waves.txt" );
 		wave = 0;
 	}
     
@@ -31,7 +30,6 @@ public class EnemyManager : MonoBehaviour {
 		if( enemies.Count > 0 ) {
 
 			for( int i = 0; i < enemies.Count; i++ ) {
-				//Debug.Log( enemies[ i ].target.ToString() );
 				if( enemies[ i ].UppdateAttention( GameManager.instance.GetPlayerTransform(), enemies ) == Enemy.State.Death ) {
 					Destroy( enemies[ i ].gameObject );
 					enemies.RemoveAt( i );
@@ -42,18 +40,14 @@ public class EnemyManager : MonoBehaviour {
 			StartCoroutine( SpawnWave() );
 		}
 
-		//Debug.Log(enemies.Count);
     }
 
 	IEnumerator SpawnWave() {
 		waveTime = 0f;
 		spawning = true; //TODO: Temp solution?
 		string wave = enemyWaves[ this.wave += 1 ];
-		
-		foreach (SpawnPoint sP in spawnPoints) {
-			sP.resetEnemiesSpawned();
-		}
-		for( int i = 0; i < wave.Length; i++ ) {
+
+		for( int i = 0; i < wave.Length / spawnPoints.Length; i++ ) {
 			yield return new WaitForSeconds( 1f );
 			SpawnEnemy( i );
 		}
@@ -61,36 +55,11 @@ public class EnemyManager : MonoBehaviour {
 	}
 
 	void SpawnEnemy( int point ) { // Do pooling for this
-		for (int tryPoint = point; tryPoint < spawnPoints.Length; tryPoint++) {
-			if( spawnPoints[ tryPoint ].isFree() ) {
-				spawnPoints[ tryPoint ].increaseEnemiesSpawned( 1 );
-				enemies.Add( Instantiate( enemy, spawnPoints[ tryPoint ].getPos(), Quaternion.identity ) as Enemy );
-				return;
-			} else {
-				tryPoint += 1;
-			}
+		for (int i = 0; i < spawnPoints.Length; i++) {
+			spawnPoints[ i ].increaseEnemiesSpawned( 1 );
+			enemies.Add( Instantiate( enemy, spawnPoints[ i ].getPos(), Quaternion.identity ) as Enemy );
 		}
-	}
 
-	List<string> ReadWavesFile( string fileName ) {
-		List<string> fileLines = new List<string>();
-		try {
-			string line;
-			StreamReader reader = new StreamReader( fileName, Encoding.Default );
-			using( reader ) {
-				do {
-					line = reader.ReadLine();
-					if( line != null )
-						fileLines.Add( line );
-				} while ( line != null );
-
-				reader.Close();
-				return fileLines;
-			}
-		} catch( IOException e ) {
-			Debug.Log( "error " + e.Message + " " + e.StackTrace );
-		}
-		return null;
 	}
 
 }

@@ -7,6 +7,8 @@ public class GameManager : MonoBehaviour {
 
 	Transform playerTransform;
 	int money;
+
+	public Transform player;
 	
 	void Awake() {
 		if( instance == null )
@@ -19,6 +21,7 @@ public class GameManager : MonoBehaviour {
 	void Start() {
 		// Singelton Player instance?
 		playerTransform = GameObject.FindGameObjectWithTag( "Player" ).transform;
+		money = 0;
 	}
 
 	void InitGame() {
@@ -26,7 +29,21 @@ public class GameManager : MonoBehaviour {
 	}
 
 	void Update() {
-		playerTransform = GameObject.FindGameObjectWithTag( "Player" ).transform;
+		if( playerTransform ) {
+			playerTransform = GameObject.FindGameObjectWithTag( "Player" ).transform;
+		}
+	}
+
+	void LoadArena() {
+
+	}
+
+	void LoadShop() {
+
+	}
+
+	Transform SpawnPlayer() {
+		return Instantiate( player, Vector3.zero, Quaternion.identity ) as Transform;
 	}
 
 	public Vector2 GetPlayerPosition() {
@@ -37,15 +54,19 @@ public class GameManager : MonoBehaviour {
 		return playerTransform;
 	}
 
-	bool canAfford( int price ) {
+	public int GetMoney() {
+		return money;
+	}
+
+	bool CanAfford( int price ) {
 		return ( money > price ) ? true : false;
 	}
 
-	int increaseMoney( int ammount ) {
+	public int IncreaseMoney( int ammount ) {
 		return money += ammount;
 	}
 
-	int decreaseMoney( int ammount ) {
+	int DecreaseMoney( int ammount ) {
 		return money -= ammount;
 	}
 
