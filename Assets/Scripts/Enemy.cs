@@ -8,17 +8,31 @@ public class Enemy : Unit {
 	State state;
 
     public Transform target = null;
+	public GameObject enemyProjectile;
 
-	// Attack stuff.
-	float attackRange = 1f;
+	float attackRange = 0.5f;
 	float rAttackRange = 3f;
+	float range;
+	bool isRanged = true;
 	bool attacked = false;
 
-	public bool isRanged = true;
-
+	float xVel;
+	float yVel;
 
 	public override void Start() {
 		state = State.Targeting;
+
+		// Temp.
+		if (isRanged)
+		{
+			range = rAttackRange;
+		}
+		else
+		{
+			range = attackRange;
+		}
+
+
         base.Start();
 	}
 
@@ -32,6 +46,12 @@ public class Enemy : Unit {
 		} else if ( state == State.Death ) {
 			Die();
 		}
+		
+		if (xVel != 1 && state != State.Attacking)
+		{
+			base.FlipCheck(xVel);
+		}
+		//base.SpeedCheck(xVel,yVel);
 		return state;
 	}
 
@@ -63,7 +83,8 @@ public class Enemy : Unit {
 		state = State.Engaging;
 	}
 
-    void Engage() {
+    void Engage() 
+	{
 
 		//If engaged to player
 
@@ -76,146 +97,124 @@ public class Enemy : Unit {
 		Vector2 myPos = new Vector2(transform.position.x, transform.position.y);
 		Vector2 targetPos = new Vector2(target.position.x, target.position.y);
 
-		Vector2 targetDirection = targetPos - myPos;
-		float distance = targetDirection.magnitude;
-
-		Vector2 rTarget = Vector2.zero;
+		Vector2 myTarget = Vector2.zero;
 		
 		// Change target vector depending on if the player is to the right of left of me.
-		if (target.position.x < transform.position.x) {
-			rTarget = targetPos + new Vector2(rAttackRange, 0f);
-		}
-		else if (target.position.x > transform.position.x) {
-			rTarget = targetPos - new Vector2(rAttackRange, 0f);
-		}
-		
-		Vector2 rTargetDirection = rTarget - myPos;
-		float rDistance = rTargetDirection.magnitude;
-
-
-		if (!isRanged)
+		// Left
+		if (target.position.x < transform.position.x)
 		{
-
-			// Melee
-			// Chase target until within range, then attack.
-			if (distance >= attackRange)
-			{
-				transform.Translate(targetDirection.normalized * 1f * Time.deltaTime);
-			}
-			else if (state != State.Attacking)
-			{
-				state = State.Attacking;
-			}
-
+			myTarget = targetPos + new Vector2(range, 0f);
 		}
-		else
+		// Right
+		else if (target.position.x > transform.position.x)
 		{
+			myTarget = targetPos - new Vector2(range, 0f);
+		}
 
-			// Ranged
-			if (Mathf.Abs(target.position.y - myPos.y) > 0.15f)
+		// Get target direction.
+		Vector2 targetDirection = myTarget - myPos;
+		float distance = targetDirection.magnitude;
+		Vector2 dir = targetDirection.normalized;
+		xVel = dir.x;
+		yVel = dir.y;
+		
+		
+		// Enemy movement.
+		// If difference in Y is less than var, and distance to target is geater than var, attack.
+		if ( Mathf.Abs( target.position.y - myPos.y ) < 0.15f && distance <= 0.5f && state != State.Attacking )
+		{
+			state = State.Attacking;
+
+			// Set speed for animation. 
+			base.SetSpeed(0);
+
+			//Flip if not facing player.
+			if (target.position.x < transform.position.x && base.facingRight)
 			{
-				
-				transform.Translate(rTargetDirection.normalized * 1f * Time.deltaTime);
-				//Debug.Log("moving");
-
+				base.Flip();
 			}
-			else if (rDistance <= 0.5 && state != State.Attacking)
+			else if (target.position.x > transform.position.x && !base.facingRight)
 			{
-				state = State.Attacking;
-				//Debug.Log("attacking");
+				base.Flip();
 			}
+			//Debug.Log("attacking");
+
 		}
-
-	//	Vector2 myTarget = target + new Vector2(rAttackRange, 0f);
-	//	Vector2 myTargetDir = myTarget - myPos;
-	//	float myDistance = myTargetDir.magnitude;
-
+		// Move
+		else 
+		{
+			transform.Translate(dir * 1f * Time.deltaTime);
+			base.SetSpeed(1);
+			//Debug.Log("moving");
+		}
+	
 		
-
-
-		/*// Ranged enemy test
-		
-		// Target is to the left of me
-		if (target.x < transform.position.x && Mathf.Abs( (target.y - transform.position.y) ) > 0.5f) {
-
-
-			transform.Translate(myTargetDir.normalized * 1f * Time.deltaTime);
-			Debug.Log("yo");
-			
-
-		}
-
-		else if ( myDistance >= rAttackRange ) {
-			Debug.Log("hej");
-		}
-		
-			
-		// Target is to the right of me
-		else if (target.x > transform.position.x && Mathf.Abs( (target.y - transform.position.y) ) > 0.5f) {
-
-
-			
-
-			transform.Translate(myTargetDir.normalized * 1f * Time.deltaTime);
-
-			Debug.Log("yoyo");
-
-		}
-		else if ( myDistance >= rAttackRange ) {
-
-			Debug.Log("hej2");
-		}*/
-
-
-
 		
 	//	if( target != null ) {
     //        base.Move(target);
     //    }
+
+
     }
 
 
-	void Attack() {
-
+	void Attack() 
+	{
 		//Play attack animation
+		base.AttackAnim();
 
-		//Prototype attack loop
-		if (!attacked) {
+		// Prototype recover thing
+		if (!attacked) 
+		{
+			if (isRanged)
+			{
+				GameObject spawnedProjectile = (GameObject)Instantiate(enemyProjectile, transform.position, Quaternion.identity);
+				
+				if (base.facingRight)
+				{
+					spawnedProjectile.gameObject.GetComponent<EnemyProjectile>().MoveRight(true);
+				}
+				else
+				{
+					spawnedProjectile.gameObject.GetComponent<EnemyProjectile>().MoveRight(false);
+				}
+				
+			}
+
 			attacked = true;
-			StartCoroutine("AttackLoop");
+			StartCoroutine("Recover");
 		}
 		
 
 
 	}
 
-    void Die() {
+    void Die() 
+	{
         state = State.Death;
 		GameManager.instance.IncreaseMoney( 10 );
     }
 
-	void OnTriggerEnter2D( Collider2D other ) { // TODO: temp solution with the tag shit
-        if( other.tag == "Wall" ) {
+    void OnTriggerEnter2D( Collider2D other )
+	{
+        if( other.tag == "Wall" ) 
+		{
             base.direction = new Vector2( direction.x * -1, direction.y * -1 );
-        } else if( other.tag == "Damage" && other.transform == target ) {
+        } 
+		else if( other.tag == "Player" )
+		{
             target = other.transform;
             state = State.Death;
-		} else if ( other.tag == "Damage" && other.GetComponentInParent<Transform>().tag == "Player" ) {
-			target = other.transform;
-			state = State.Death;
-		}
+        }
     }
 
 
-	IEnumerator AttackLoop() {
-
-		
+	IEnumerator Recover()
+	{
 		yield return new WaitForSeconds(1.2f);
-		//Debug.Log( "I Attacked!" );
 		state = State.Engaging;
 		attacked = false;
-		
-
 	}
+
 
 }
