@@ -56,7 +56,7 @@ public class EnemyManager : MonoBehaviour {
 
 	void SpawnEnemy( int point ) { // Do pooling for this
 		for (int i = 0; i < spawnPoints.Length; i++) {
-			spawnPoints[ i ].increaseEnemiesSpawned( 1 );
+			//spawnPoints[ i ].increaseEnemiesSpawned( 1 );
 			enemies.Add( Instantiate( enemy, spawnPoints[ i ].getPos(), Quaternion.identity ) as Enemy );
 		}
 

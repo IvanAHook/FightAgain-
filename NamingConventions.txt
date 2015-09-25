@@ -1,0 +1,33 @@
+NamingConventions
+
+FILES
+	Scripts
+		- MyExample.cs
+
+		Components
+			- MyExampleComponent.cs
+
+	Perfabs
+		- MyExamplePrefab.prefab
+
+	Sprites
+		- MyExampleSprite.png
+
+	Textures
+		- MyExampleTex.?	
+
+	Materials
+		- MyExampleMat.?
+
+CODE
+	Functions
+		- MyFunction
+	Variables
+		- publicVar
+		- privateVar
+		- CONSTATNT
+		- _myComponent
+
+		- float = 0f
+
+		- ( stuff[ i ] )	

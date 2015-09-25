@@ -194,13 +194,16 @@ public class Enemy : Unit {
 		GameManager.instance.IncreaseMoney( 10 );
     }
 
-    void OnTriggerEnter2D( Collider2D other ) {
+	void OnTriggerEnter2D( Collider2D other ) { // TODO: temp solution with the tag shit
         if( other.tag == "Wall" ) {
             base.direction = new Vector2( direction.x * -1, direction.y * -1 );
-        } else if( other.tag == "Player" ) {
+        } else if( other.tag == "Damage" && other.transform == target ) {
             target = other.transform;
             state = State.Death;
-        }
+		} else if ( other.tag == "Damage" && other.GetComponentInParent<Transform>().tag == "Player" ) {
+			target = other.transform;
+			state = State.Death;
+		}
     }
 
 
