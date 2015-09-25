@@ -6,18 +6,13 @@ public class PlayerMovement : MonoBehaviour {
 
 	public float Speed;
 
-	//private Rigidbody2D rb2D;
-
 	private Animator anim;
-	//private BoxCollider2D swordCollider;
 	private bool facingRight = true;
 
 	public GameObject explosion;
 
 	void Awake() {
 		anim = GetComponentInChildren<Animator>();
-		//rb2D = GetComponent<Rigidbody2D>();
-		//swordCollider = GetComponent<BoxCollider2D>();
 	}
 	
 
@@ -42,8 +37,6 @@ public class PlayerMovement : MonoBehaviour {
            Attack( "Attack" );
         if (CrossPlatformInputManager.GetButtonDown( "Jump2" )) 
             Attack( "Attack2" );
-        /*if (Input.GetKeyDown(KeyCode.D))
-            anim.SetTrigger("Die");*/
 	}
 
     void Flip() {
@@ -55,21 +48,11 @@ public class PlayerMovement : MonoBehaviour {
 
     void Attack( string attack ) {
         anim.SetTrigger( attack );
-        //yield return new WaitForSeconds(float.Epsilon);
     }
 
     private void OnTriggerEnter2D(Collider2D other) {
-        //Debug.Log(other.gameObject.name + " hit");
         explosion.transform.position = other.transform.position;
         explosion.GetComponent<Animator>().SetTrigger( "Play" );
     }
-
-	public void GotHit(string by)
-	{
-		if (by == "EnemyProjectile")
-		{
-			Debug.Log("OUCH!");
-		}
-	}
 
 }

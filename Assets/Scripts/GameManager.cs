@@ -29,7 +29,7 @@ public class GameManager : MonoBehaviour {
 	}
 
 	void Update() {
-		if( playerTransform ) {
+		if( playerTransform && playerTransform.gameObject.activeSelf ) {
 			playerTransform = GameObject.FindGameObjectWithTag( "Player" ).transform;
 		}
 	}

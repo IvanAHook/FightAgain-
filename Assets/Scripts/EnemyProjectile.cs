@@ -2,9 +2,13 @@
 using System.Collections;
 
 public class EnemyProjectile : MonoBehaviour {
-
-	bool sentMessage = false;
+	
 	bool moveRight = true;
+	int damage;
+
+	void Awake() {
+		damage = 10;
+	}
 
 	void Update () 
 	{
@@ -34,13 +38,10 @@ public class EnemyProjectile : MonoBehaviour {
 
 	void OnTriggerEnter2D (Collider2D other)
 	{
-		if ( other.gameObject.tag == "Player" && !sentMessage )
+		if ( other.gameObject.tag == "Player" )
 		{
-			sentMessage = true;
-			string hitBy = "EnemyProjectile";
-			other.gameObject.SendMessage( "GotHit" , (string)hitBy , SendMessageOptions.DontRequireReceiver );
+			other.gameObject.SendMessage( "TakeDamage" , damage , SendMessageOptions.DontRequireReceiver );
 			Destroy(gameObject);
-
 		}
 	}
 }

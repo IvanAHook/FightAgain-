@@ -15,6 +15,8 @@ public class Enemy : Unit {
 	float range;
 	bool isRanged = true;
 	bool attacked = false;
+	float attackTime;
+	float attackCooldown = 1.2f;
 
 	float xVel;
 	float yVel;
@@ -51,6 +53,7 @@ public class Enemy : Unit {
 		{
 			base.FlipCheck(xVel);
 		}
+		attackTime += Time.deltaTime;
 		//base.SpeedCheck(xVel,yVel);
 		return state;
 	}
@@ -160,12 +163,10 @@ public class Enemy : Unit {
 
 	void Attack() 
 	{
-		//Play attack animation
-		base.AttackAnim();
-
 		// Prototype recover thing
-		if (!attacked) 
+		if ( attackTime > attackCooldown ) 
 		{
+			base.AttackAnim();
 			if (isRanged)
 			{
 				GameObject spawnedProjectile = (GameObject)Instantiate(enemyProjectile, transform.position, Quaternion.identity);
@@ -180,12 +181,8 @@ public class Enemy : Unit {
 				}
 				
 			}
-
-			attacked = true;
-			StartCoroutine("Recover");
+			attackTime = 0;
 		}
-		
-
 
 	}
 
@@ -197,17 +194,13 @@ public class Enemy : Unit {
 
     void OnTriggerEnter2D( Collider2D other )
 	{
-        if( other.tag == "Wall" ) 
+		if( other.tag == "Arrebarre" && other.GetComponentInParent<Animator>().tag == "Player" )
 		{
-            base.direction = new Vector2( direction.x * -1, direction.y * -1 );
-        } 
-		else if( other.tag == "Player" )
-		{
+			Debug.Log( "puzzzzzzzz" );
             target = other.transform;
             state = State.Death;
         }
     }
-
 
 	IEnumerator Recover()
 	{
