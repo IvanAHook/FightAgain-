@@ -183,6 +183,7 @@ public class Enemy : Unit {
 			}
 			attackTime = 0;
 		}
+		state = State.Engaging;
 
 	}
 
@@ -201,13 +202,5 @@ public class Enemy : Unit {
             state = State.Death;
         }
     }
-
-	IEnumerator Recover()
-	{
-		yield return new WaitForSeconds(1.2f);
-		state = State.Engaging;
-		attacked = false;
-	}
-
 
 }
