@@ -87,6 +87,11 @@ public class Enemy : Unit {
 	{
 
 		//If engaged to player
+
+		if( target == null ) { // Dont continue if target is missing
+			state = State.Targeting;
+			return;
+		}
 		
 		// Variables
 		Vector2 myPos = new Vector2(transform.position.x, transform.position.y);
@@ -187,6 +192,7 @@ public class Enemy : Unit {
     void Die() 
 	{
         state = State.Death;
+		GameManager.instance.IncreaseMoney( 10 );
     }
 
     void OnTriggerEnter2D( Collider2D other )
