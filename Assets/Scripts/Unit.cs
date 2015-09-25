@@ -8,19 +8,49 @@ public class Unit : MonoBehaviour {
     public float speed;
     public Vector2 direction;
 
+	bool facingRight;
+
     public List<Enemy> engagedWithEnemies;
 
-    public virtual void Start() {
+    public virtual void Start() 
+	{
 
     }
 
-    public virtual void Move() {
+    public virtual void Move() 
+	{
+
     }
 
-    public virtual void Move(Vector2 targetDirection) {
+    public virtual void Move(Vector2 targetDirection) 
+	{
+
     }
 
-    public int GetNumberEngagedWith() {
+	public void FlipCheck()
+	{
+		Rigidbody rb = gameObject.GetComponent<Rigidbody>();
+		
+		if (rb.velocity.x > 0 && !facingRight)
+		{
+			Flip();
+		}
+		else if (rb.velocity.x < 0 && facingRight)
+		{
+			Flip();
+		}
+	}
+
+	public void Flip()
+	{
+		facingRight = !facingRight;
+		Vector3 scale = transform.localScale;
+		scale.x *= -1;
+		transform.localScale = scale;
+	}
+
+    public int GetNumberEngagedWith() 
+	{
         return engagedWithEnemies.Count;
     }
 
