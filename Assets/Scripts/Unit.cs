@@ -4,17 +4,20 @@ using System.Collections.Generic;
 
 public class Unit : MonoBehaviour {
 
-    public int health = 100;
+	private Animator animator;
+	
+	public int health = 100;
     public float speed;
     public Vector2 direction;
 
-	bool facingRight;
+	public bool facingRight;
 
     public List<Enemy> engagedWithEnemies;
 
     public virtual void Start() 
 	{
-
+		animator = GetComponentInChildren<Animator>();
+		facingRight = true;
     }
 
     public virtual void Move() 
@@ -27,26 +30,61 @@ public class Unit : MonoBehaviour {
 
     }
 
-	public void FlipCheck()
+	public void FlipCheck(float vel)
 	{
-		Rigidbody rb = gameObject.GetComponent<Rigidbody>();
-		
-		if (rb.velocity.x > 0 && !facingRight)
+		//Debug.Log(vel);
+
+		// If moving left
+		if (vel < 0 && facingRight)
 		{
 			Flip();
 		}
-		else if (rb.velocity.x < 0 && facingRight)
+		// if moving right
+		else if (vel > 0 && !facingRight)
 		{
 			Flip();
 		}
+
 	}
 
 	public void Flip()
 	{
+		//Debug.Log("Flip!");
 		facingRight = !facingRight;
 		Vector3 scale = transform.localScale;
 		scale.x *= -1;
 		transform.localScale = scale;
+	}
+
+	// Not working right now. Using SetSpeed() instead.
+	public void SpeedCheck (float xVel, float yVel)
+	{
+		if (xVel > 0f || yVel > 0f)
+		{
+			animator.SetFloat("Speed", 1f);
+		}
+		else
+		{
+			animator.SetFloat("Speed", 0f);
+		}
+	}
+
+
+	public void SetSpeed(int spd)
+	{
+		if (spd == 1)
+		{
+			animator.SetFloat("Speed", 1f);
+		}
+		else if (spd == 0)
+		{
+			animator.SetFloat("Speed", 0f);
+		}
+	}
+
+	public void AttackAnim()
+	{
+		animator.SetTrigger("Attack");
 	}
 
     public int GetNumberEngagedWith() 

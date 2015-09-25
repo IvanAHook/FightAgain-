@@ -64,4 +64,12 @@ public class PlayerMovement : MonoBehaviour {
         explosion.GetComponent<Animator>().SetTrigger("Play");
     }
 
+	public void GotHit(string by)
+	{
+		if (by == "EnemyProjectile")
+		{
+			Debug.Log("OUCH!");
+		}
+	}
+
 }
