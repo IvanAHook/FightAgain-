@@ -55,4 +55,9 @@ public class PauseMenu : MonoBehaviour {
 	{
 		Debug.Log("Mute/Unmute");
 	}
+
+	public void OptionsPress ()
+	{
+		Debug.Log("Go to options");
+	}
 }
