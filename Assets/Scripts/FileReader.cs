@@ -1,10 +1,9 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using System.IO;
 
-public class FileReaderComponent : MonoBehaviour {
+public class FileReader {
 
 	public List<string> ReadWavesFile( string fileName ) {
 		List<string> fileLines = new List<string>();
@@ -22,7 +21,7 @@ public class FileReaderComponent : MonoBehaviour {
 				return fileLines;
 			}
 		} catch( IOException e ) {
-			Debug.Log( "error " + e.Message + " " + e.StackTrace );
+			// print to somewhere
 		}
 		return null;
 	}

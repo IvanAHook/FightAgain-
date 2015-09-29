@@ -94,10 +94,8 @@ public class Enemy : Unit {
 
 		foreach (Enemy e in enemies)
 		{
-			Debug.Log( 1 );
 			if ( e.target == null && e != this )
 			{
-				Debug.Log( 1 );
 				target = e.transform;
 				e.target = transform;
 				state = State.Engaging;

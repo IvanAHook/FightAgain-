@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class EquipmentComponent : MonoBehaviour {
+public class EquipmentComponent : MonoBehaviour { // Does not need monobehavior
 
 	enum Type { Weapon, Armor, Helmet, Boots };
 	Type type;

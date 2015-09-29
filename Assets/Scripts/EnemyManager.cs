@@ -2,10 +2,9 @@
 using System.Collections;
 using System.Collections.Generic;
 
-[RequireComponent(typeof(FileReaderComponent))]
 public class EnemyManager : MonoBehaviour {
 
-	FileReaderComponent _freader;
+	FileReader _fReader;
 
 	List<string> enemyWaves;
 	int wave;
@@ -20,8 +19,8 @@ public class EnemyManager : MonoBehaviour {
 
 	void Awake() 
 	{
-		_freader = GetComponent<FileReaderComponent>();
-		enemyWaves = _freader.ReadWavesFile( Application.dataPath + "/waves.txt" );
+		_fReader = new FileReader();
+		enemyWaves = _fReader.ReadWavesFile( Application.dataPath + "/waves.txt" );
 		wave = 0;
 	}
     
@@ -31,7 +30,6 @@ public class EnemyManager : MonoBehaviour {
 
 		if( enemies.Count > 0 ) 
 		{
-
 			for( int i = 0; i < enemies.Count; i++ ) 
 			{
 				if( enemies[ i ].UppdateAttention( GameManager.instance.GetPlayerTransform(), enemies ) == Enemy.State.Death )
@@ -57,7 +55,7 @@ public class EnemyManager : MonoBehaviour {
 
 		for( int i = 0; i < wave.Length / spawnPoints.Length; i++ ) 
 		{
-			yield return new WaitForSeconds( 1f );
+			yield return new WaitForSeconds( 1f ); // This breaks on level load for some reason
 			SpawnEnemy( i );
 		}
 		spawning = false;
@@ -67,7 +65,6 @@ public class EnemyManager : MonoBehaviour {
 	{ // Do pooling for this
 		for (int i = 0; i < spawnPoints.Length; i++) 
 			enemies.Add( Instantiate( enemy, spawnPoints[ i ].getPos(), Quaternion.identity ) as Enemy );
-
 	}
 
 }

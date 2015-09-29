@@ -4,12 +4,12 @@ using UnityStandardAssets.CrossPlatformInput;
 
 public class PlayerMovement : MonoBehaviour {
 
-	float speed;
-
 	private Animator anim;
 	private bool facingRight = true;
 
 	public GameObject explosion;
+
+	float speed;
 
 	void Awake() 
 	{
@@ -20,7 +20,6 @@ public class PlayerMovement : MonoBehaviour {
 
 	void Update() 
 	{
-
 		transform.Translate( Vector3.up * CrossPlatformInputManager.GetAxis( "Vertical" ) * speed * Time.deltaTime );
 		transform.Translate( Vector3.right * CrossPlatformInputManager.GetAxis( "Horizontal" ) * speed * Time.deltaTime );
 
@@ -60,8 +59,15 @@ public class PlayerMovement : MonoBehaviour {
 
     private void OnTriggerEnter2D(Collider2D other) 
 	{
-        explosion.transform.position = other.transform.position;
-        explosion.GetComponent<Animator>().SetTrigger( "Play" );
+		if( other.tag == "Enemy" )
+		{
+			explosion.transform.position = other.transform.position;
+			explosion.GetComponent<Animator>().SetTrigger( "Play" );
+		}
+		else if ( other.tag == "Item" ) //Or pickup? where to put this logic?
+		{
+
+		}
     }
 
 }

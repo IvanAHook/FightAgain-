@@ -43,6 +43,7 @@ public class PauseMenu : MonoBehaviour {
 
 	public void ExitPress ()
 	{
+		Time.timeScale = 1;
 		Application.LoadLevel("MainMenu");
 	}
 
