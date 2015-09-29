@@ -11,46 +11,49 @@ public class PlayerMovement : MonoBehaviour {
 
 	public GameObject explosion;
 
-	void Awake() {
+	void Awake() 
+	{
 		anim = GetComponentInChildren<Animator>();
 	}
 	
 
-	void Update() {
+	void Update() 
+	{
 
 		transform.Translate( Vector3.up * CrossPlatformInputManager.GetAxis( "Vertical" ) * Speed * Time.deltaTime );
 		transform.Translate( Vector3.right * CrossPlatformInputManager.GetAxis( "Horizontal" ) * Speed * Time.deltaTime );
 
-		if( CrossPlatformInputManager.GetAxis( "Horizontal" ) < 0 && facingRight ) {
+		if( CrossPlatformInputManager.GetAxis( "Horizontal" ) < 0 && facingRight ) 
 			Flip();
-		} else if( CrossPlatformInputManager.GetAxis( "Horizontal" ) > 0 && !facingRight ) {
+		else if( CrossPlatformInputManager.GetAxis( "Horizontal" ) > 0 && !facingRight ) 
 			Flip();
-		}
 
-		if( CrossPlatformInputManager.GetAxis( "Vertical" ) != 0 || CrossPlatformInputManager.GetAxis( "Horizontal" ) != 0 ) {
+		if( CrossPlatformInputManager.GetAxis( "Vertical" ) != 0 || CrossPlatformInputManager.GetAxis( "Horizontal" ) != 0 ) 
 			anim.SetFloat( "Speed", 1f );
-        } else {
+		else 
             anim.SetFloat( "Speed", 0f );
-        }
 
-        if (CrossPlatformInputManager.GetButtonDown( "Jump" )) 
+        if( CrossPlatformInputManager.GetButtonDown( "Jump" ) ) 
            Attack( "Attack" );
-        if (CrossPlatformInputManager.GetButtonDown( "Jump2" )) 
+        if( CrossPlatformInputManager.GetButtonDown( "Jump2" ) ) 
             Attack( "Attack2" );
 	}
 
-    void Flip() {
+    void Flip() 
+	{
         facingRight = !facingRight;
         Vector3 scale = transform.localScale;
         scale.x *= -1;
         transform.localScale = scale;
     }
 
-    void Attack( string attack ) {
+    void Attack( string attack ) 
+	{
         anim.SetTrigger( attack );
     }
 
-    private void OnTriggerEnter2D(Collider2D other) {
+    private void OnTriggerEnter2D(Collider2D other) 
+	{
         explosion.transform.position = other.transform.position;
         explosion.GetComponent<Animator>().SetTrigger( "Play" );
     }

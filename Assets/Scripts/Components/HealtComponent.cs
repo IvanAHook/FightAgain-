@@ -5,14 +5,20 @@ public class HealtComponent : MonoBehaviour {
 
 	public int health;
 
-	void Awake() {
+	void Awake() 
+	{
 	}
 
 	public void TakeDamage( int damage )
 	{
 		health -= damage;
-		if ( health <= 0 ) {
+		if ( health <= 0 )
 			gameObject.SetActive( false );
-		}
 	}
+
+	public int GetHealth() 
+	{
+		return health;
+	}
+
 }

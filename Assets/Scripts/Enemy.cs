@@ -2,10 +2,14 @@
 using System.Collections;
 using System.Collections.Generic;
 
+[RequireComponent(typeof(HealtComponent))]
 public class Enemy : Unit {
 
 	public enum State { Targeting, Engaging, Attacking, Death };
 	State state;
+
+	// Required componente
+	HealtComponent _healthcomponent;
 
     public Transform target = null;
 	public GameObject enemyProjectile;
@@ -21,53 +25,59 @@ public class Enemy : Unit {
 	float xVel;
 	float yVel;
 
-	public override void Start() {
+	void Awake() 
+	{
+		_healthcomponent = GetComponent<HealtComponent>();
+	}
+
+	public override void Start() 
+	{
 		state = State.Targeting;
 
 		// Temp.
 		if (isRanged)
-		{
 			range = rAttackRange;
-		}
 		else
-		{
 			range = attackRange;
-		}
 
 
         base.Start();
 	}
 
-	public State UppdateAttention( Transform player, List<Enemy> enemies ) {
-		if ( state == State.Targeting ) {
-			Search( player, enemies );
-		} else if ( state == State.Engaging ) {
-			Engage();
-		} else if ( state == State.Attacking ) {
-			Attack();
-		} else if ( state == State.Death ) {
-			Die();
-		}
-		
-		if (xVel != 1 && state != State.Attacking)
+	public State UppdateAttention( Transform player, List<Enemy> enemies ) 
+	{
+		if ( _healthcomponent.GetHealth() <= 0 ) // Dont continue if dead
 		{
-			base.FlipCheck(xVel);
+			state = State.Death;
+			return state;
 		}
+
+		if ( state == State.Targeting ) 
+			Search( player, enemies );
+		else if ( state == State.Engaging ) 
+			Engage();
+		else if ( state == State.Attacking ) 
+			Attack();
+		else if ( state == State.Death ) 
+			Die();
+
+		if (xVel != 1 && state != State.Attacking) 
+			base.FlipCheck(xVel);
+
 		attackTime += Time.deltaTime;
-		//base.SpeedCheck(xVel,yVel);
 		return state;
 	}
 
-	void Search( Transform player, List<Enemy> enemies ) {
-
-		if ( this.target == null ) {
+	void Search( Transform player, List<Enemy> enemies ) 
+	{
+		if ( this.target == null ) 
 			SelectTarget( player, enemies );
-		}
 
 		base.Move();
     }
 
-	void SelectTarget( Transform player, List<Enemy> enemies ) {
+	void SelectTarget( Transform player, List<Enemy> enemies ) 
+	{
 
 		foreach (Enemy e in enemies)
 		{
@@ -91,7 +101,8 @@ public class Enemy : Unit {
 
 		//If engaged to player
 
-		if( target == null ) { // Dont continue if target is missing
+		if( target == null ) // Dont continue if target is missing
+		{
 			state = State.Targeting;
 			return;
 		}
@@ -105,14 +116,10 @@ public class Enemy : Unit {
 		// Change target vector depending on if the player is to the right of left of me.
 		// Left
 		if (target.position.x < transform.position.x)
-		{
 			myTarget = targetPos + new Vector2(range, 0f);
-		}
 		// Right
 		else if (target.position.x > transform.position.x)
-		{
 			myTarget = targetPos - new Vector2(range, 0f);
-		}
 
 		// Get target direction.
 		Vector2 targetDirection = myTarget - myPos;
@@ -120,7 +127,6 @@ public class Enemy : Unit {
 		Vector2 dir = targetDirection.normalized;
 		xVel = dir.x;
 		yVel = dir.y;
-		
 		
 		// Enemy movement.
 		// If difference in Y is less than var, and distance to target is geater than var, attack.
@@ -133,33 +139,18 @@ public class Enemy : Unit {
 
 			//Flip if not facing player.
 			if (target.position.x < transform.position.x && base.facingRight)
-			{
 				base.Flip();
-			}
 			else if (target.position.x > transform.position.x && !base.facingRight)
-			{
 				base.Flip();
-			}
-			//Debug.Log("attacking");
-
+		
 		}
-		// Move
-		else 
+		else // Move
 		{
 			transform.Translate(dir * 1f * Time.deltaTime);
 			base.SetSpeed(1);
-			//Debug.Log("moving");
 		}
-	
-		
-		
-	//	if( target != null ) {
-    //        base.Move(target);
-    //    }
-
 
     }
-
 
 	void Attack() 
 	{
@@ -172,13 +163,9 @@ public class Enemy : Unit {
 				GameObject spawnedProjectile = (GameObject)Instantiate(enemyProjectile, transform.position, Quaternion.identity);
 				
 				if (base.facingRight)
-				{
 					spawnedProjectile.gameObject.GetComponent<EnemyProjectile>().MoveRight(true);
-				}
 				else
-				{
 					spawnedProjectile.gameObject.GetComponent<EnemyProjectile>().MoveRight(false);
-				}
 				
 			}
 			attackTime = 0;
@@ -197,7 +184,6 @@ public class Enemy : Unit {
 	{
 		if( other.tag == "Arrebarre" && other.GetComponentInParent<Animator>().tag == "Player" )
 		{
-			Debug.Log( "puzzzzzzzz" );
             target = other.transform;
             state = State.Death;
         }
