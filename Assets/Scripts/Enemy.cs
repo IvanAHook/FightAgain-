@@ -44,6 +44,19 @@ public class Enemy : Unit {
         base.Start();
 	}
 
+	void Update() // Only for Colins feel test
+	{
+		if ( GameObject.Find( "EnemyManager" ) == null )
+		{
+			if ( Vector3.Normalize( GameObject.Find( "Player" ).transform.position
+			          - transform.position ).x < 0 && facingRight )
+				Flip();
+			else if ( Vector3.Normalize( GameObject.Find( "Player" ).transform.position
+			                            - transform.position ).x >= 0 && !facingRight )
+				Flip();
+		}
+	}
+
 	public State UppdateAttention( Transform player, List<Enemy> enemies ) 
 	{
 		if ( _healthcomponent.GetHealth() <= 0 ) // Dont continue if dead

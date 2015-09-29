@@ -4,7 +4,7 @@ using UnityStandardAssets.CrossPlatformInput;
 
 public class PlayerMovement : MonoBehaviour {
 
-	public float Speed;
+	float speed;
 
 	private Animator anim;
 	private bool facingRight = true;
@@ -14,14 +14,15 @@ public class PlayerMovement : MonoBehaviour {
 	void Awake() 
 	{
 		anim = GetComponentInChildren<Animator>();
+		speed = 2;
 	}
 	
 
 	void Update() 
 	{
 
-		transform.Translate( Vector3.up * CrossPlatformInputManager.GetAxis( "Vertical" ) * Speed * Time.deltaTime );
-		transform.Translate( Vector3.right * CrossPlatformInputManager.GetAxis( "Horizontal" ) * Speed * Time.deltaTime );
+		transform.Translate( Vector3.up * CrossPlatformInputManager.GetAxis( "Vertical" ) * speed * Time.deltaTime );
+		transform.Translate( Vector3.right * CrossPlatformInputManager.GetAxis( "Horizontal" ) * speed * Time.deltaTime );
 
 		if( CrossPlatformInputManager.GetAxis( "Horizontal" ) < 0 && facingRight ) 
 			Flip();
@@ -51,6 +52,11 @@ public class PlayerMovement : MonoBehaviour {
 	{
         anim.SetTrigger( attack );
     }
+
+	public void ChangeSpeed( int speed )
+	{
+		this.speed = speed;
+	}
 
     private void OnTriggerEnter2D(Collider2D other) 
 	{
