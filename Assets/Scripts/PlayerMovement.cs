@@ -20,8 +20,15 @@ public class PlayerMovement : MonoBehaviour {
 
 	void Update() 
 	{
-		transform.Translate( Vector3.up * CrossPlatformInputManager.GetAxis( "Vertical" ) * speed * Time.deltaTime );
-		transform.Translate( Vector3.right * CrossPlatformInputManager.GetAxis( "Horizontal" ) * speed * Time.deltaTime );
+		Vector3 move = new Vector3( CrossPlatformInputManager.GetAxis( "Horizontal" ),
+		                           CrossPlatformInputManager.GetAxis( "Vertical" ), 0 );
+
+		transform.position = new Vector3( Mathf.Clamp( transform.position.x + move.x * speed * Time.deltaTime, -8f, 8f ),
+		                                 Mathf.Clamp( transform.position.y + move.y * speed * Time.deltaTime, -4f, 4f ),
+		                                 0f );
+
+		//transform.Translate( Vector3.up * CrossPlatformInputManager.GetAxis( "Vertical" ) * speed * Time.deltaTime );
+		//transform.Translate( Vector3.right * CrossPlatformInputManager.GetAxis( "Horizontal" ) * speed * Time.deltaTime );
 
 		if( CrossPlatformInputManager.GetAxis( "Horizontal" ) < 0 && facingRight ) 
 			Flip();
