@@ -38,6 +38,7 @@ public class EnemyManager : MonoBehaviour {
 			{
 				if( enemies[ i ].UppdateAttention( GameManager.instance.GetPlayerTransform(), enemies ) == Enemy.State.Death )
 				{
+					enemies[ i ].StopAllCoroutines();
 					Destroy( enemies[ i ].gameObject );
 					enemies.RemoveAt( i );
 				}
