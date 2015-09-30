@@ -25,9 +25,6 @@ public class PlayerMovement : MonoBehaviour {
 		                                 Mathf.Clamp( transform.position.y + move.y * speed * Time.deltaTime, -4f, 4f ),
 		                                 0f );
 
-		//transform.Translate( Vector3.up * CrossPlatformInputManager.GetAxis( "Vertical" ) * speed * Time.deltaTime );
-		//transform.Translate( Vector3.right * CrossPlatformInputManager.GetAxis( "Horizontal" ) * speed * Time.deltaTime );
-
 		if( CrossPlatformInputManager.GetAxis( "Horizontal" ) < 0 && facingRight ) 
 			Flip();
 		else if( CrossPlatformInputManager.GetAxis( "Horizontal" ) > 0 && !facingRight ) 
@@ -64,7 +61,7 @@ public class PlayerMovement : MonoBehaviour {
 
     private void OnTriggerEnter2D(Collider2D other) 
 	{
-		if ( other.tag == "Item" ) //Or pickup? where to put this logic?
+		if ( other.tag == "Weapon" )
 		{
 
 		}

@@ -8,13 +8,21 @@ public class EquipmentComponent : MonoBehaviour { // Does not need monobehavior
 	// Ability ability
 
 	Weapon weapon;
+	//Helmet helmet;
+	//Armor armor;
+	//Boots boots;
+
+	Weapon EquipWeapon( string weapon ) // struct? array? of weapons
+	{
+
+	}
 
 	public string GetWeaponName()
 	{
 		return ( weapon != null ) ? weapon.name : "None";
 	}
 
-	private void OnTriggerEnter2D(Collider2D other) 
+	private void OnTriggerEnter2D( Collider2D other ) 
 	{
 		if( other.tag == "Weapon" )
 		{

@@ -71,7 +71,7 @@ public class Enemy : Unit {
 		}
 	}
 
-	public State UppdateAttention( Transform player, List<Enemy> enemies ) 
+	public State UppdateAttention( Transform player, List<Enemy> enemies )
 	{
 		if ( _healthcomponent.GetHealth() <= 0 ) // Dont continue if dead
 		{
