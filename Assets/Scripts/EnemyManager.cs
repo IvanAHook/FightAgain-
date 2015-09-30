@@ -17,11 +17,15 @@ public class EnemyManager : MonoBehaviour {
 
 	public Enemy enemy;
 
+	public bool spawnOne;
+
 	void Awake() 
 	{
 		_fReader = new FileReader();
 		enemyWaves = _fReader.ReadWavesFile( Application.dataPath + "/waves.txt" );
 		wave = 0;
+		if ( spawnOne )
+			SpawnEnemy( 1 );
 	}
     
     void Update() 
@@ -40,7 +44,7 @@ public class EnemyManager : MonoBehaviour {
 			}
 
 		} 
-		else if( wave < enemyWaves.Count - 1 && spawning == false ) 
+		else if( wave < enemyWaves.Count  && spawning == false && !spawnOne ) 
 		{
 			StartCoroutine( SpawnWave() );
 		}
@@ -56,15 +60,15 @@ public class EnemyManager : MonoBehaviour {
 		for( int i = 0; i < wave.Length / spawnPoints.Length; i++ ) 
 		{
 			yield return new WaitForSeconds( 1f ); // This breaks on level load for some reason
-			SpawnEnemy( i );
+			for (int j = 0; j < spawnPoints.Length; j++) 
+				enemies.Add( SpawnEnemy( i ) );
 		}
 		spawning = false;
 	}
 
-	void SpawnEnemy( int point ) 
+	Enemy SpawnEnemy( int point ) 
 	{ // Do pooling for this
-		for (int i = 0; i < spawnPoints.Length; i++) 
-			enemies.Add( Instantiate( enemy, spawnPoints[ i ].getPos(), Quaternion.identity ) as Enemy );
+		return Instantiate( enemy, spawnPoints[ point ].getPos(), Quaternion.identity ) as Enemy;
 	}
 
 }
