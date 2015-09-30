@@ -8,9 +8,11 @@ public class UI : MonoBehaviour {
 
 	void Start () {
 		money = GetComponent<Text>();
+
 	}
 
 	void Update () {
-		money.text = GameManager.instance.GetMoney().ToString() + "$";
+		money.text = GameManager.instance.GetMoney().ToString() + "$ "
+			+ GameManager.instance.GetPlayerTransform().GetComponent<EquipmentComponent>().GetWeaponName();
 	}
 }

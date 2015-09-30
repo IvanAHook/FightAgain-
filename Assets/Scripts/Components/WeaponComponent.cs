@@ -7,10 +7,11 @@ public class WeaponComponent : MonoBehaviour {
 
 	void Awake() 
 	{
+		// get damage from weapon in equipment component
 		damage = 10;
 	}
 
-	void OnTriggerEnter2D( Collider2D other ) 
+	void OnTriggerEnter2D( Collider2D other )
 	{
 		Debug.Log(other.tag);
 		other.gameObject.SendMessage( "TakeDamage", damage, SendMessageOptions.DontRequireReceiver );

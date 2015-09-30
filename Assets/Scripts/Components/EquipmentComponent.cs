@@ -3,24 +3,24 @@ using System.Collections;
 
 public class EquipmentComponent : MonoBehaviour { // Does not need monobehavior
 
-	enum Type { Weapon, Armor, Helmet, Boots };
-	Type type;
-
-	int damage;
-	int armor;
-	int speed;
+	// enum Type { Weapon, Armor, Helmet, Boots }; // this should be in equipment data class
+	
 	// Ability ability
 
-	public int GetDamage() {
-		return damage;
+	Weapon weapon;
+
+	public string GetWeaponName()
+	{
+		return ( weapon != null ) ? weapon.name : "None";
 	}
 
-	public int GetArmor() {
-		return armor;
+	private void OnTriggerEnter2D(Collider2D other) 
+	{
+		if( other.tag == "Weapon" )
+		{
+			weapon = new Weapon( other.name );
+			Destroy( other.gameObject );
+		}
 	}
-
-	public int GetSpeed() {
-		return speed;
-	}
-
+	
 }
