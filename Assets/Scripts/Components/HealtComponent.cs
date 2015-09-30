@@ -13,7 +13,7 @@ public class HealtComponent : MonoBehaviour {
 	{
 		health -= damage;
 		if ( health <= 0 )
-			gameObject.SetActive( false );
+			gameObject.SetActiveRecursively( false );
 	}
 
 	public int GetHealth() 
