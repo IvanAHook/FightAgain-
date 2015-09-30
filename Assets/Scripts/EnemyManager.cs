@@ -61,7 +61,7 @@ public class EnemyManager : MonoBehaviour {
 		{
 			yield return new WaitForSeconds( 1f ); // This breaks on level load for some reason
 			for (int j = 0; j < spawnPoints.Length; j++) 
-				enemies.Add( SpawnEnemy( i ) );
+				enemies.Add( SpawnEnemy( j ) );
 		}
 		spawning = false;
 	}

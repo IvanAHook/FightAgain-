@@ -7,6 +7,7 @@ public class WeaponComponent : MonoBehaviour {
 
 	void Awake() 
 	{
+		// get damage from weapon in equipment component
 		damage = 10;
 	}
 
