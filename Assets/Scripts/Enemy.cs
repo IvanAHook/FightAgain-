@@ -17,10 +17,11 @@ public class Enemy : Unit {
 	float attackRange = 0.5f;
 	float rAttackRange = 3f;
 	float range;
-	bool isRanged = false;
-	bool attacked = false;
+	bool isRanged;
 	float attackTime;
 	float attackCooldown = 1.2f;
+
+	bool attacked = false;
 
 	float xVel;
 	float yVel;
@@ -40,7 +41,7 @@ public class Enemy : Unit {
 		int meleeOrRanged = Random.Range(0, 2);
 		
 		if (meleeOrRanged == 0)
-			isRanged = false;
+			isRanged = true;
 		else
 			isRanged = true;
 
@@ -179,23 +180,47 @@ public class Enemy : Unit {
 
 	void Attack() 
 	{
-		
-		
-		// Ranged Attack
+
+		if (!attacked)
+		{
+			attacked = true;
+			StartCoroutine("RangedAttack");
+		}
+			
+
+		/*// Ranged Attack
 		if (isRanged && attackTime > attackCooldown)
 		{
-			GameObject spawnedProjectile = (GameObject)Instantiate(enemyProjectile, transform.position, Quaternion.identity);
+			// Wait for Lock On to end
+			if (lockOnTime > lockOnCooldown)
+			{
+				// Shoot
+				base.AttackAnim();
+				GameObject spawnedProjectile = (GameObject)Instantiate(enemyProjectile, transform.position, Quaternion.identity);
+				if (base.facingRight)
+					spawnedProjectile.gameObject.GetComponent<EnemyProjectile>().MoveRight(true);
+				else
+					spawnedProjectile.gameObject.GetComponent<EnemyProjectile>().MoveRight(false);
 
-			if (base.facingRight)
-				spawnedProjectile.gameObject.GetComponent<EnemyProjectile>().MoveRight(true);
-			else
-				spawnedProjectile.gameObject.GetComponent<EnemyProjectile>().MoveRight(false);		
+				// Wait for Recover to end
+				if (recoverTime > recoverTimeCooldown)
+				{
+					attackTime = 0f;
+					state = State.Engaging;
+				}
+
+			}
 		}
+		else if (attackTime > attackCooldown)
+		{
+			base.AttackAnim();
+			attackTime = 0;
+			state = State.Engaging;
+		}
+			*/
 
-		 // Melee attack only needs these things
-		base.AttackAnim();
-		attackTime = 0;
-		state = State.Engaging;
+		
+		
 		
 	
 		
@@ -222,19 +247,32 @@ public class Enemy : Unit {
 
 	}
 
+	IEnumerator RangedAttack()
+	{
+		// Wait while Locking On
+		yield return new WaitForSeconds(0.8f);
+
+		// Shoot
+		base.AttackAnim();
+		GameObject spawnedProjectile = (GameObject)Instantiate(enemyProjectile, transform.position, Quaternion.identity);
+		if (base.facingRight)
+			spawnedProjectile.gameObject.GetComponent<EnemyProjectile>().MoveRight(true);
+		else
+			spawnedProjectile.gameObject.GetComponent<EnemyProjectile>().MoveRight(false);
+
+		// Recover
+		yield return new WaitForSeconds(0.5f);
+		attackTime = 0f;
+		state = State.Engaging;
+		attacked = false;
+	}
+
     void Die() 
 	{
         state = State.Death;
 		GameManager.instance.IncreaseMoney( 10 );
     }
+	
 
-    void OnTriggerEnter2D( Collider2D other )
-	{
-		if( other.tag == "Arrebarre" && other.GetComponentInParent<Animator>().tag == "Player" )
-		{
-            target = other.transform;
-            state = State.Death;
-        }
-    }
 
 }
