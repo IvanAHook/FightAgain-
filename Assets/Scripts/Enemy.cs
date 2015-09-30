@@ -17,7 +17,7 @@ public class Enemy : Unit {
 	float attackRange = 0.5f;
 	float rAttackRange = 3f;
 	float range;
-	bool isRanged = true;
+	bool isRanged = false;
 	bool attacked = false;
 	float attackTime;
 	float attackCooldown = 1.2f;
@@ -34,12 +34,19 @@ public class Enemy : Unit {
 	{
 		state = State.Targeting;
 
-		// Temp.
+		// Temporary
+		// Make enemy melee or ranged at random
+		int meleeOrRanged = Random.Range(0, 2);
+		
+		if (meleeOrRanged == 0)
+			isRanged = false;
+		else
+			isRanged = true;
+
 		if (isRanged)
 			range = rAttackRange;
 		else
 			range = attackRange;
-
 
         base.Start();
 	}

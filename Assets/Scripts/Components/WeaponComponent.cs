@@ -12,7 +12,7 @@ public class WeaponComponent : MonoBehaviour {
 
 	void OnTriggerEnter2D( Collider2D other ) 
 	{
-		Debug.Log(other.tag);
+		//Debug.Log(other.tag);
 		other.gameObject.SendMessage( "TakeDamage", damage, SendMessageOptions.DontRequireReceiver );
 	}
 
