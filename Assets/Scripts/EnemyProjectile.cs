@@ -5,6 +5,7 @@ public class EnemyProjectile : MonoBehaviour {
 	
 	bool moveRight = true;
 	int damage;
+	float lifeTime;
 
 	void Awake() 
 	{
@@ -13,6 +14,11 @@ public class EnemyProjectile : MonoBehaviour {
 
 	void Update () 
 	{
+
+		lifeTime += Time.deltaTime;
+		if (lifeTime > 10f)
+			Destroy(gameObject);
+
 		if (moveRight)
 			transform.position += transform.right * 3f * Time.deltaTime;
 		else

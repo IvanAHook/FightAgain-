@@ -24,6 +24,7 @@ public class Enemy : Unit {
 
 	float xVel;
 	float yVel;
+	Vector2 randomVector;
 
 	void Awake() 
 	{
@@ -43,10 +44,15 @@ public class Enemy : Unit {
 		else
 			isRanged = true;
 
+		// Change range depening on if enemy is ranged or not.
 		if (isRanged)
 			range = rAttackRange;
 		else
 			range = attackRange;
+
+		// Make a random vector.
+		randomVector =  new Vector2( Random.Range(-0.35f, 0.35f), Random.Range(-0.1f, 0.1f ) );
+		Debug.Log(randomVector);
 
         base.Start();
 	}
@@ -118,7 +124,6 @@ public class Enemy : Unit {
 	{
 
 		//If engaged to player
-
 		if( target == null ) // Dont continue if target is missing
 		{
 			state = State.Targeting;
@@ -139,6 +144,9 @@ public class Enemy : Unit {
 		else if (target.position.x > transform.position.x)
 			myTarget = targetPos - new Vector2(range, 0f);
 
+		// Add a bit of randomness to the target.
+		myTarget += randomVector;
+
 		// Get target direction.
 		Vector2 targetDirection = myTarget - myPos;
 		float distance = targetDirection.magnitude;
@@ -147,8 +155,8 @@ public class Enemy : Unit {
 		yVel = dir.y;
 		
 		// Enemy movement.
-		// If difference in Y is less than var, and distance to target is geater than var, attack.
-		if ( Mathf.Abs( target.position.y - myPos.y ) < 0.15f && distance <= 0.5f && state != State.Attacking )
+		// If difference in Y is less than var and distance to target is geater than var, ATTACK.
+		if ( Mathf.Abs( target.position.y - myPos.y ) < 0.2f && distance <= 0.5f && state != State.Attacking )
 		{
 			state = State.Attacking;
 
@@ -160,7 +168,6 @@ public class Enemy : Unit {
 				base.Flip();
 			else if (target.position.x > transform.position.x && !base.facingRight)
 				base.Flip();
-		
 		}
 		else // Move
 		{
@@ -172,6 +179,27 @@ public class Enemy : Unit {
 
 	void Attack() 
 	{
+		
+		
+		// Ranged Attack
+		if (isRanged && attackTime > attackCooldown)
+		{
+			GameObject spawnedProjectile = (GameObject)Instantiate(enemyProjectile, transform.position, Quaternion.identity);
+
+			if (base.facingRight)
+				spawnedProjectile.gameObject.GetComponent<EnemyProjectile>().MoveRight(true);
+			else
+				spawnedProjectile.gameObject.GetComponent<EnemyProjectile>().MoveRight(false);		
+		}
+
+		 // Melee attack only needs these things
+		base.AttackAnim();
+		attackTime = 0;
+		state = State.Engaging;
+		
+	
+		
+		/*
 		// Prototype recover thing
 		if ( attackTime > attackCooldown ) 
 		{
@@ -188,7 +216,9 @@ public class Enemy : Unit {
 			}
 			attackTime = 0;
 		}
-		state = State.Engaging;
+		state = State.Engaging; */
+
+
 
 	}
 

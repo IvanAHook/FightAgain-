@@ -7,8 +7,6 @@ public class PlayerMovement : MonoBehaviour {
 	private Animator anim;
 	private bool facingRight = true;
 
-	public GameObject explosion;
-
 	float speed;
 
 	void Awake() 
@@ -66,12 +64,7 @@ public class PlayerMovement : MonoBehaviour {
 
     private void OnTriggerEnter2D(Collider2D other) 
 	{
-		if( other.tag == "Enemy" )
-		{
-			explosion.transform.position = other.transform.position;
-			explosion.GetComponent<Animator>().SetTrigger( "Play" );
-		}
-		else if ( other.tag == "Item" ) //Or pickup? where to put this logic?
+		if ( other.tag == "Item" ) //Or pickup? where to put this logic?
 		{
 
 		}
