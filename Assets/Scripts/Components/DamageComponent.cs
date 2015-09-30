@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class WeaponComponent : MonoBehaviour {
+public class DamageComponent : MonoBehaviour {
 
 	int damage;
 
@@ -9,6 +9,11 @@ public class WeaponComponent : MonoBehaviour {
 	{
 		// get damage from weapon in equipment component
 		damage = 10;
+	}
+
+	void GetWeaponDamage()
+	{
+		damage = GetComponentInParent<EquipmentComponent>().GetWeaponDamage();
 	}
 
 	void OnTriggerEnter2D( Collider2D other )

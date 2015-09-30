@@ -14,7 +14,12 @@ public class EquipmentComponent : MonoBehaviour { // Does not need monobehavior
 
 	Weapon EquipWeapon( string weapon ) // struct? array? of weapons
 	{
+		return null;
+	}
 
+	public int GetWeaponDamage()
+	{
+		return weapon.damage;
 	}
 
 	public string GetWeaponName()
