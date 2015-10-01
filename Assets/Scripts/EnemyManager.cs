@@ -35,7 +35,7 @@ public class EnemyManager : MonoBehaviour {
 		//enemyWaves = _fReader.ReadWavesFile( "waves" );
 		wave = 0;
 		if ( spawnOne )
-			SpawnEnemy( 1 );
+			enemies.Add(SpawnEnemy(1));
 	}
     
     void Update() 

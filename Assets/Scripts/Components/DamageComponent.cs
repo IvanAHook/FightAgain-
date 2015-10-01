@@ -9,7 +9,10 @@ public class DamageComponent : MonoBehaviour {
 
 	int GetWeaponDamage()
 	{
-		return GetComponentInParent<EquipmentComponent>().GetWeaponDamage();
+		if (gameObject.tag == "Player")
+			return GetComponentInParent<EquipmentComponent>().GetWeaponDamage();
+		else
+			return 10;
 	}
 
 	void OnTriggerEnter2D( Collider2D other )

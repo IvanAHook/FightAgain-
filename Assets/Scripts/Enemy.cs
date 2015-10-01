@@ -14,13 +14,11 @@ public class Enemy : Unit {
     public Transform target = null;
 	public GameObject enemyProjectile;
 
-	float attackRange = 0.5f;
-	float rAttackRange = 3f;
+	float attackRange = 0.8f;
+	float rAttackRange = 4f;
 	float range;
 	bool isRanged;
-	float attackTime;
-	float attackCooldown = 1.2f;
-
+	
 	bool attacked = false;
 
 	float xVel;
@@ -41,7 +39,7 @@ public class Enemy : Unit {
 		int meleeOrRanged = Random.Range(0, 2);
 		
 		if (meleeOrRanged == 0)
-			isRanged = true;
+			isRanged = false;
 		else
 			isRanged = true;
 
@@ -53,7 +51,6 @@ public class Enemy : Unit {
 
 		// Make a random vector.
 		randomVector =  new Vector2( Random.Range(-0.35f, 0.35f), Random.Range(-0.1f, 0.1f ) );
-		Debug.Log(randomVector);
 
         base.Start();
 	}
@@ -91,7 +88,6 @@ public class Enemy : Unit {
 		if (xVel != 1 && state != State.Attacking) 
 			base.FlipCheck(xVel);
 
-		attackTime += Time.deltaTime;
 		return state;
 	}
 
@@ -134,16 +130,15 @@ public class Enemy : Unit {
 		// Variables
 		Vector2 myPos = new Vector2(transform.position.x, transform.position.y);
 		Vector2 targetPos = new Vector2(target.position.x, target.position.y);
-
 		Vector2 myTarget = Vector2.zero;
 		
 		// Change target vector depending on if the player is to the right of left of me.
 		// Left
 		if (target.position.x < transform.position.x)
-			myTarget = targetPos + new Vector2(range, 0f);
+			myTarget = targetPos + new Vector2(range - 0.15f, 0f);
 		// Right
 		else if (target.position.x > transform.position.x)
-			myTarget = targetPos - new Vector2(range, 0f);
+			myTarget = targetPos - new Vector2(range - 0.15f, 0f);
 
 		// Add a bit of randomness to the target.
 		myTarget += randomVector;
@@ -156,8 +151,8 @@ public class Enemy : Unit {
 		yVel = dir.y;
 		
 		// Enemy movement.
-		// If difference in Y is less than var and distance to target is geater than var, ATTACK.
-		if ( Mathf.Abs( target.position.y - myPos.y ) < 0.2f && distance <= 0.5f && state != State.Attacking )
+		// If close enough, Attack
+		if (distance < 0.2f && state != State.Attacking)
 		{
 			state = State.Attacking;
 
@@ -181,68 +176,16 @@ public class Enemy : Unit {
 	void Attack() 
 	{
 
-		if (!attacked)
+		if (!attacked && isRanged)
 		{
 			attacked = true;
 			StartCoroutine("RangedAttack");
 		}
-			
-
-		/*// Ranged Attack
-		if (isRanged && attackTime > attackCooldown)
+		else if (!attacked)
 		{
-			// Wait for Lock On to end
-			if (lockOnTime > lockOnCooldown)
-			{
-				// Shoot
-				base.AttackAnim();
-				GameObject spawnedProjectile = (GameObject)Instantiate(enemyProjectile, transform.position, Quaternion.identity);
-				if (base.facingRight)
-					spawnedProjectile.gameObject.GetComponent<EnemyProjectile>().MoveRight(true);
-				else
-					spawnedProjectile.gameObject.GetComponent<EnemyProjectile>().MoveRight(false);
-
-				// Wait for Recover to end
-				if (recoverTime > recoverTimeCooldown)
-				{
-					attackTime = 0f;
-					state = State.Engaging;
-				}
-
-			}
+			attacked = true;
+			StartCoroutine("MeleeAttack");
 		}
-		else if (attackTime > attackCooldown)
-		{
-			base.AttackAnim();
-			attackTime = 0;
-			state = State.Engaging;
-		}
-			*/
-
-		
-		
-		
-	
-		
-		/*
-		// Prototype recover thing
-		if ( attackTime > attackCooldown ) 
-		{
-			base.AttackAnim();
-			if (isRanged)
-			{
-				GameObject spawnedProjectile = (GameObject)Instantiate(enemyProjectile, transform.position, Quaternion.identity);
-				
-				if (base.facingRight)
-					spawnedProjectile.gameObject.GetComponent<EnemyProjectile>().MoveRight(true);
-				else
-					spawnedProjectile.gameObject.GetComponent<EnemyProjectile>().MoveRight(false);
-				
-			}
-			attackTime = 0;
-		}
-		state = State.Engaging; */
-
 
 
 	}
@@ -265,6 +208,15 @@ public class Enemy : Unit {
 		attackTime = 0f;
 		state = State.Engaging;
 		attacked = false;
+	}
+
+	IEnumerator MeleeAttack()
+	{
+		base.AttackAnim(); // Attack
+		
+		yield return new WaitForSeconds(1f); // Recover
+		attacked = false;
+		state = State.Engaging;
 	}
 
     void Die() 

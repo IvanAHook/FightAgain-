@@ -25,6 +25,13 @@ public class HealtComponent : MonoBehaviour {
 		timer += Time.deltaTime;
 		if (timer > 0.5f)
 			mySprite.color = defaultColor;
+
+		//For testing
+		if (gameObject.tag == "Player" && Input.GetKeyDown(KeyCode.O))
+		{
+			health = 50000;
+		}
+
 	}
 
 	public void TakeDamage( int damage )
