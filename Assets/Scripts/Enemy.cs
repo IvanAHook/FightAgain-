@@ -205,7 +205,6 @@ public class Enemy : Unit {
 
 		// Recover
 		yield return new WaitForSeconds(0.5f);
-		attackTime = 0f;
 		state = State.Engaging;
 		attacked = false;
 	}
