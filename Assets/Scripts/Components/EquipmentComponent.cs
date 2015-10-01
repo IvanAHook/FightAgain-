@@ -7,14 +7,23 @@ public class EquipmentComponent : MonoBehaviour { // Does not need monobehavior
 	
 	// Ability ability
 
-	Weapon weapon;
+	WeaponData weapon;
 	//Helmet helmet;
 	//Armor armor;
 	//Boots boots;
 
-	Weapon EquipWeapon( string weapon ) // struct? array? of weapons
+	void Start()
 	{
-		return null;
+		if( weapon.damage == 0 ) // get weapon equiped before game here
+		{
+			weapon.name = "Fist";
+			weapon.damage = 2;
+			weapon.attackSpeed = 10;
+		}
+	}
+
+	void EquipWeapon( string weapon ) // struct? array? of weapons
+	{
 	}
 
 	public int GetWeaponDamage()
@@ -24,14 +33,15 @@ public class EquipmentComponent : MonoBehaviour { // Does not need monobehavior
 
 	public string GetWeaponName()
 	{
-		return ( weapon != null ) ? weapon.name : "None";
+		//weapon.name = "Fist";
+		return weapon.name;
 	}
 
 	private void OnTriggerEnter2D( Collider2D other ) 
 	{
 		if( other.tag == "Weapon" )
 		{
-			weapon = new Weapon( other.name );
+			weapon = other.GetComponent<WeaponComponent>().weaponData;
 			Destroy( other.gameObject );
 		}
 	}

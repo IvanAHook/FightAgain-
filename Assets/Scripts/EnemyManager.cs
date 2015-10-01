@@ -22,7 +22,7 @@ public class EnemyManager : MonoBehaviour {
 	void Awake() 
 	{
 		_fReader = new FileReader();
-		enemyWaves = _fReader.ReadWavesFile( Application.dataPath + "/waves.txt" );
+		enemyWaves = _fReader.ReadWavesFile( Application.dataPath + "/Resources/waves.txt" );
 		wave = 0;
 		if ( spawnOne )
 			SpawnEnemy( 1 );

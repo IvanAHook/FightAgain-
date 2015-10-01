@@ -3,17 +3,13 @@ using System.Collections;
 
 public class DamageComponent : MonoBehaviour {
 
-	int damage;
-
-	void Awake() 
+	void Start() 
 	{
-		// get damage from weapon in equipment component
-		damage = 10;
 	}
 
-	void GetWeaponDamage()
+	int GetWeaponDamage()
 	{
-		damage = GetComponentInParent<EquipmentComponent>().GetWeaponDamage();
+		return GetComponentInParent<EquipmentComponent>().GetWeaponDamage();
 	}
 
 	void OnTriggerEnter2D( Collider2D other )
@@ -26,18 +22,18 @@ public class DamageComponent : MonoBehaviour {
 		if (gameObject.GetComponentInParent<Enemy>() != null && other.gameObject.tag == "Enemy"
 			&& gameObject.GetComponentInParent<Enemy>().target != other.gameObject.GetComponentInParent<Enemy>().target)
 		{
-			other.gameObject.SendMessage("TakeDamage", damage, SendMessageOptions.DontRequireReceiver);
+			other.gameObject.SendMessage("TakeDamage", GetWeaponDamage(), SendMessageOptions.DontRequireReceiver);
 		}
 		// If we are the player, send message
 		else if (gameObject.GetComponentInParent<Enemy>() == null)
 		{
 			//Debug.Log(other.tag);
-			other.gameObject.SendMessage("TakeDamage", damage, SendMessageOptions.DontRequireReceiver);
+			other.gameObject.SendMessage("TakeDamage", GetWeaponDamage(), SendMessageOptions.DontRequireReceiver);
 		}
 		// If we are an enemy and we hit the player, send message
 		else if ( gameObject.GetComponentInParent<Enemy>() != null && other.tag == "Player" )
 		{
-			other.gameObject.SendMessage("TakeDamage", damage, SendMessageOptions.DontRequireReceiver);
+			other.gameObject.SendMessage("TakeDamage", GetWeaponDamage(), SendMessageOptions.DontRequireReceiver);
 		}
 
 		
