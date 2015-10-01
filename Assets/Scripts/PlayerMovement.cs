@@ -3,30 +3,26 @@ using System.Collections;
 using UnityStandardAssets.CrossPlatformInput;
 
 [RequireComponent(typeof(EquipmentComponent))]
+[RequireComponent(typeof(MovementComponent))]
 public class PlayerMovement : MonoBehaviour {
 
 	private Animator anim;
 	private bool facingRight = true;
 
 	EquipmentComponent _equipment;
-
-	float speed;
+	MovementComponent _movement;
 
 	void Awake() 
 	{
 		_equipment = GetComponent<EquipmentComponent>();
+		_movement = GetComponent<MovementComponent>();
 		anim = GetComponentInChildren<Animator>();
-		speed = 2;
 	}
 
 	void Update() 
 	{
-		Vector3 move = new Vector3( CrossPlatformInputManager.GetAxis( "Horizontal" ),
-		                           CrossPlatformInputManager.GetAxis( "Vertical" ), 0 );
-
-		transform.position = new Vector3( Mathf.Clamp( transform.position.x + move.x * speed * Time.deltaTime, -8f, 8f ),
-		                                 Mathf.Clamp( transform.position.y + move.y * speed * Time.deltaTime, -4f, 4f ),
-		                                 0f );
+		_movement.Move( CrossPlatformInputManager.GetAxis( "Horizontal" ),
+		               CrossPlatformInputManager.GetAxis( "Vertical" ) );
 
 		if( CrossPlatformInputManager.GetAxis( "Horizontal" ) < 0 && facingRight ) 
 			Flip();
@@ -74,11 +70,6 @@ public class PlayerMovement : MonoBehaviour {
 	{
         anim.SetTrigger( attack );
     }
-
-	public void ChangeSpeed( int speed )
-	{
-		this.speed = speed;
-	}
 
     private void OnTriggerEnter2D(Collider2D other) 
 	{

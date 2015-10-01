@@ -8,7 +8,7 @@ public class ColinFeelUI : MonoBehaviour {
 	{
 		int number;
 		if ( int.TryParse( speed.text, out number ) )
-			GameObject.Find( "Player" ).GetComponent<PlayerMovement>().ChangeSpeed( number );
+			GameObject.Find( "Player" ).GetComponent<MovementComponent>().ChangeSpeed( number );
 	}
 
 }
