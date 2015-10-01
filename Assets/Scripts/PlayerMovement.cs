@@ -2,19 +2,22 @@
 using System.Collections;
 using UnityStandardAssets.CrossPlatformInput;
 
+[RequireComponent(typeof(EquipmentComponent))]
 public class PlayerMovement : MonoBehaviour {
 
 	private Animator anim;
 	private bool facingRight = true;
 
+	EquipmentComponent _equipment;
+
 	float speed;
 
 	void Awake() 
 	{
+		_equipment = GetComponent<EquipmentComponent>();
 		anim = GetComponentInChildren<Animator>();
 		speed = 2;
 	}
-	
 
 	void Update() 
 	{
@@ -35,10 +38,16 @@ public class PlayerMovement : MonoBehaviour {
 		else 
             anim.SetFloat( "Speed", 0f );
 
-        if( CrossPlatformInputManager.GetButtonDown( "Jump" ) ) 
-           Attack( "Attack" );
+        if( CrossPlatformInputManager.GetButtonDown( "Jump" ) )
+			Attack( "Attack" );
         if( CrossPlatformInputManager.GetButtonDown( "Jump2" ) ) 
-            Attack( "Attack2" );
+			ThrowWeapon();
+	}
+
+	void ThrowWeapon()
+	{
+
+		//Instantiate
 	}
 
     void Flip() 

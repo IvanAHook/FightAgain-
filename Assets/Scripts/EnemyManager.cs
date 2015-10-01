@@ -21,8 +21,18 @@ public class EnemyManager : MonoBehaviour {
 
 	void Awake() 
 	{
-		_fReader = new FileReader();
-		enemyWaves = _fReader.ReadWavesFile( Application.dataPath + "/Resources/waves.txt" );
+		TextAsset wavesFile = Resources.Load( "waves" ) as TextAsset;
+		List<string> fileLines = new List<string>();
+		string [] linesFromFile = wavesFile.text.Split( "\n"[0] );
+		
+		foreach ( string line in linesFromFile ) {
+			if( line != null )
+				fileLines.Add( line );
+		}
+		enemyWaves = fileLines;
+
+		//_fReader = new FileReader();
+		//enemyWaves = _fReader.ReadWavesFile( "waves" );
 		wave = 0;
 		if ( spawnOne )
 			SpawnEnemy( 1 );

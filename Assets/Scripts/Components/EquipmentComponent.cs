@@ -22,6 +22,13 @@ public class EquipmentComponent : MonoBehaviour { // Does not need monobehavior
 		}
 	}
 
+	public void DropWeapon()
+	{
+		weapon.name = "Fist";
+		weapon.damage = 2;
+		weapon.attackSpeed = 10;
+	}
+
 	void EquipWeapon( string weapon ) // struct? array? of weapons
 	{
 	}
