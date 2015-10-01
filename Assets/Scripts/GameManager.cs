@@ -5,10 +5,13 @@ public class GameManager : MonoBehaviour {
 
 	public static GameManager instance = null;
 
+	bool playerDied = false;
+
 	Transform playerTransform;
 	int money;
 
 	public Transform player;
+	public GameObject menu;
 	
 	void Awake() {
 		if( instance == null )
@@ -20,7 +23,9 @@ public class GameManager : MonoBehaviour {
 
 	void Start() {
 		// Singelton Player instance?
+		Debug.Log("Start");
 		playerTransform = GameObject.FindGameObjectWithTag( "Player" ).transform;
+		Debug.Log( "Player transform is " + playerTransform );
 		money = 0;
 	}
 
@@ -31,6 +36,13 @@ public class GameManager : MonoBehaviour {
 	void Update() {
 		if( playerTransform && playerTransform.gameObject.activeSelf ) {
 			playerTransform = GameObject.FindGameObjectWithTag( "Player" ).transform;
+		}
+
+		if (playerDied) {
+			playerDied = false;
+			menu.GetComponent<Menu>().DeathScreen();
+
+
 		}
 	}
 
@@ -68,6 +80,11 @@ public class GameManager : MonoBehaviour {
 
 	int DecreaseMoney( int ammount ) {
 		return money -= ammount;
+	}
+
+	public void PlayerDied()
+	{
+		playerDied = true;
 	}
 
 }
