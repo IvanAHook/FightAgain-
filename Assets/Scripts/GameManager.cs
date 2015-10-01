@@ -22,10 +22,7 @@ public class GameManager : MonoBehaviour {
 	}
 
 	void Start() {
-		// Singelton Player instance?
-		Debug.Log("Start");
-		playerTransform = GameObject.FindGameObjectWithTag( "Player" ).transform;
-		Debug.Log( "Player transform is " + playerTransform );
+		
 		money = 0;
 	}
 
@@ -41,9 +38,14 @@ public class GameManager : MonoBehaviour {
 		if (playerDied) {
 			playerDied = false;
 			menu.GetComponent<Menu>().DeathScreen();
-
-
 		}
+
+		// Singelton Player instance?
+		if(playerTransform == null)
+		{
+			playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
+		}
+		
 	}
 
 	void LoadArena() {
