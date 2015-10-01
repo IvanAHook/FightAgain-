@@ -6,7 +6,6 @@ public class PauseMenu : MonoBehaviour {
 
 	public Canvas pauseMenuCanvas;
 
-
 	bool paused = false;
 
 
