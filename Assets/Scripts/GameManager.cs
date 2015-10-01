@@ -9,7 +9,7 @@ public class GameManager : MonoBehaviour {
 
 	Transform playerTransform;
 	int money;
-
+	
 	public Transform player;
 	public GameObject menu;
 	
