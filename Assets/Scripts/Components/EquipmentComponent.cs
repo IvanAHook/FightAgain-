@@ -7,14 +7,16 @@ public class EquipmentComponent : MonoBehaviour { // Does not need monobehavior
 	
 	// Ability ability
 
-	WeaponData weapon;
+	public WeaponData weapon;
 	//Helmet helmet;
 	//Armor armor;
 	//Boots boots;
 
+	public GameObject weaponPrefab;
+	
 	void Start()
 	{
-		if( weapon.damage == 0 ) // get weapon equiped before game here
+		if( weaponPrefab == null ) // get weapon equiped before game here
 		{
 			weapon.name = "Fist";
 			weapon.damage = 2;
@@ -24,9 +26,13 @@ public class EquipmentComponent : MonoBehaviour { // Does not need monobehavior
 
 	public void DropWeapon()
 	{
-		weapon.name = "Fist";
-		weapon.damage = 2;
-		weapon.attackSpeed = 10;
+		if( weaponPrefab != null )
+		{
+			weapon.name = "Fist";
+			weapon.damage = 2;
+			weapon.attackSpeed = 10;
+			weaponPrefab = null;
+		}
 	}
 
 	void EquipWeapon( string weapon ) // struct? array? of weapons
@@ -40,16 +46,16 @@ public class EquipmentComponent : MonoBehaviour { // Does not need monobehavior
 
 	public string GetWeaponName()
 	{
-		//weapon.name = "Fist";
 		return weapon.name;
 	}
 
 	private void OnTriggerEnter2D( Collider2D other ) 
 	{
-		if( other.tag == "Weapon" )
+		if( other.tag == "Weapon" && weaponPrefab == null )
 		{
+			weaponPrefab = other.gameObject as GameObject;
 			weapon = other.GetComponent<WeaponComponent>().weaponData;
-			Destroy( other.gameObject );
+			other.gameObject.SetActive( false );
 		}
 	}
 	

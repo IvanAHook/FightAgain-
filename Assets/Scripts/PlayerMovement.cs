@@ -46,8 +46,20 @@ public class PlayerMovement : MonoBehaviour {
 
 	void ThrowWeapon()
 	{
+		if( _equipment.weaponPrefab != null )
+		{
+			GameObject thrownWeapon = Instantiate( _equipment.weaponPrefab,
+			                                      transform.TransformPoint( ((facingRight)? Vector3.right: Vector3.right*-1) * 1.5f ),
+			                                      Quaternion.identity ) as GameObject;
+			thrownWeapon.SetActive( true );
 
-		//Instantiate
+			if (facingRight)
+				thrownWeapon.gameObject.GetComponent<WeaponComponent>().MoveRight(true);
+			else
+				thrownWeapon.gameObject.GetComponent<WeaponComponent>().MoveRight(false);
+			thrownWeapon.GetComponent<WeaponComponent>().thrown = true;
+			_equipment.DropWeapon();
+		}
 	}
 
     void Flip() 
