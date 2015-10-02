@@ -14,8 +14,9 @@ public class Enemy : Unit {
     public Transform target = null;
 	public GameObject enemyProjectile;
 
-	float attackRange = 0.8f;
-	float rAttackRange = 4f;
+	float attackRange = 1.2f;
+	float rAttackRange = 5f;
+	float moveSpeed = 3f;
 	float range;
 	bool isRanged;
 	
@@ -152,7 +153,7 @@ public class Enemy : Unit {
 		
 		// Enemy movement.
 		// If close enough, Attack
-		if (distance < 0.2f && state != State.Attacking)
+		if (distance < 0.3f && state != State.Attacking && !attacked)
 		{
 			state = State.Attacking;
 
@@ -165,9 +166,9 @@ public class Enemy : Unit {
 			else if (target.position.x > transform.position.x && !base.facingRight)
 				base.Flip();
 		}
-		else // Move
+		else if (distance > 0.3f) // Move if not too close
 		{
-			transform.Translate(dir * 3f * Time.deltaTime);
+			transform.Translate(dir * moveSpeed * Time.deltaTime);
 			base.SetSpeed(1);
 		}
 
@@ -193,7 +194,7 @@ public class Enemy : Unit {
 	IEnumerator RangedAttack()
 	{
 		// Wait while Locking On
-		yield return new WaitForSeconds(0.8f);
+		yield return new WaitForSeconds(0.2f);
 
 		// Shoot
 		base.AttackAnim();
@@ -212,10 +213,13 @@ public class Enemy : Unit {
 	IEnumerator MeleeAttack()
 	{
 		base.AttackAnim(); // Attack
+
+		yield return new WaitForSeconds(0.5f);
+		state = State.Engaging;
 		
 		yield return new WaitForSeconds(1f); // Recover
 		attacked = false;
-		state = State.Engaging;
+		
 	}
 
     void Die() 
