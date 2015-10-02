@@ -1,0 +1,154 @@
+fileFormatVersion: 2
+guid: 6204f163673c485469891ad644129d5d
+timeCreated: 1443774883
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: Character_attack_0
+    21300002: Character_attack_1
+    21300004: Character_attack_2
+    21300006: Character_attack_3
+    21300008: Character_attack_4
+    21300010: Character_attack_5
+    21300012: Character_attack_6
+    21300014: Character_attack_7
+    21300016: Character_attack_8
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: .25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  cubemapConvolution: 0
+  cubemapConvolutionSteps: 8
+  cubemapConvolutionExponent: 1.5
+  seamlessCubemap: 0
+  textureFormat: 4
+  maxTextureSize: 1024
+  textureSettings:
+    filterMode: 0
+    aniso: 16
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  rGBM: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: .5, y: .5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 50
+  alphaIsTransparency: 1
+  textureType: 5
+  buildTargetSettings: []
+  spriteSheet:
+    sprites:
+    - name: Character_attack_0
+      rect:
+        serializedVersion: 2
+        x: 3
+        y: 15
+        width: 42
+        height: 37
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Character_attack_1
+      rect:
+        serializedVersion: 2
+        x: 66
+        y: 15
+        width: 43
+        height: 37
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Character_attack_2
+      rect:
+        serializedVersion: 2
+        x: 130
+        y: 15
+        width: 43
+        height: 37
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Character_attack_3
+      rect:
+        serializedVersion: 2
+        x: 210
+        y: 11
+        width: 43
+        height: 41
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Character_attack_4
+      rect:
+        serializedVersion: 2
+        x: 276
+        y: 9
+        width: 41
+        height: 42
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Character_attack_5
+      rect:
+        serializedVersion: 2
+        x: 340
+        y: 9
+        width: 41
+        height: 40
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Character_attack_6
+      rect:
+        serializedVersion: 2
+        x: 404
+        y: 9
+        width: 29
+        height: 40
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Character_attack_7
+      rect:
+        serializedVersion: 2
+        x: 468
+        y: 10
+        width: 29
+        height: 39
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Character_attack_8
+      rect:
+        serializedVersion: 2
+        x: 527
+        y: 13
+        width: 32
+        height: 39
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

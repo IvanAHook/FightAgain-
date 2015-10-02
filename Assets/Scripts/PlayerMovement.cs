@@ -37,7 +37,7 @@ public class PlayerMovement : MonoBehaviour {
         if( CrossPlatformInputManager.GetButtonDown( "Jump" ) )
 			Attack( "Attack" );
         if( CrossPlatformInputManager.GetButtonDown( "Jump2" ) ) 
-			ThrowWeapon();
+			Attack( "Attack2" );
 	}
 
 	void ThrowWeapon()
