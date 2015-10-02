@@ -1,0 +1,187 @@
+fileFormatVersion: 2
+guid: 1a9563d6af637cc47b26c4007089eb2c
+timeCreated: 1443774874
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: Character_throw_0
+    21300002: Character_throw_1
+    21300004: Character_throw_2
+    21300006: Character_throw_3
+    21300008: Character_throw_4
+    21300010: Character_throw_5
+    21300012: Character_throw_6
+    21300014: Character_throw_7
+    21300016: Character_throw_8
+    21300018: Character_throw_9
+    21300020: Character_throw_10
+    21300022: Character_throw_11
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: .25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  cubemapConvolution: 0
+  cubemapConvolutionSteps: 8
+  cubemapConvolutionExponent: 1.5
+  seamlessCubemap: 0
+  textureFormat: 4
+  maxTextureSize: 2048
+  textureSettings:
+    filterMode: 0
+    aniso: 16
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  rGBM: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: .5, y: .5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 50
+  alphaIsTransparency: 1
+  textureType: 5
+  buildTargetSettings: []
+  spriteSheet:
+    sprites:
+    - name: Character_throw_0
+      rect:
+        serializedVersion: 2
+        x: 10
+        y: 9
+        width: 37
+        height: 36
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Character_throw_1
+      rect:
+        serializedVersion: 2
+        x: 72
+        y: 9
+        width: 43
+        height: 36
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Character_throw_2
+      rect:
+        serializedVersion: 2
+        x: 143
+        y: 8
+        width: 40
+        height: 37
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Character_throw_3
+      rect:
+        serializedVersion: 2
+        x: 207
+        y: 9
+        width: 44
+        height: 36
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Character_throw_4
+      rect:
+        serializedVersion: 2
+        x: 276
+        y: 9
+        width: 43
+        height: 36
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Character_throw_5
+      rect:
+        serializedVersion: 2
+        x: 347
+        y: 8
+        width: 40
+        height: 37
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Character_throw_6
+      rect:
+        serializedVersion: 2
+        x: 411
+        y: 9
+        width: 44
+        height: 36
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Character_throw_7
+      rect:
+        serializedVersion: 2
+        x: 498
+        y: 9
+        width: 28
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Character_throw_8
+      rect:
+        serializedVersion: 2
+        x: 566
+        y: 9
+        width: 29
+        height: 33
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Character_throw_9
+      rect:
+        serializedVersion: 2
+        x: 634
+        y: 9
+        width: 29
+        height: 34
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Character_throw_10
+      rect:
+        serializedVersion: 2
+        x: 702
+        y: 9
+        width: 29
+        height: 34
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Character_throw_11
+      rect:
+        serializedVersion: 2
+        x: 765
+        y: 7
+        width: 32
+        height: 39
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
