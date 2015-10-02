@@ -167,7 +167,7 @@ public class Enemy : Unit {
 		}
 		else // Move
 		{
-			transform.Translate(dir * 1f * Time.deltaTime);
+			transform.Translate(dir * 3f * Time.deltaTime);
 			base.SetSpeed(1);
 		}
 
