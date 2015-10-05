@@ -12,32 +12,63 @@ public class PlayerMovement : MonoBehaviour {
 	EquipmentComponent _equipment;
 	MovementComponent _movement;
 
+	SkeletonAnimation skelAnim;
+	bool isIdle;
+
 	void Awake() 
 	{
 		_equipment = GetComponent<EquipmentComponent>();
 		_movement = GetComponent<MovementComponent>();
 		anim = GetComponentInChildren<Animator>();
+
+		skelAnim = GetComponent<SkeletonAnimation>();
+
 	}
 
 	void Update() 
 	{
-		_movement.Move( CrossPlatformInputManager.GetAxis( "Horizontal" ),
-		               CrossPlatformInputManager.GetAxis( "Vertical" ) );
+		if (CrossPlatformInputManager.GetAxis("Vertical") != 0 || CrossPlatformInputManager.GetAxis("Horizontal") != 0)
+		{
+			UpdateInput();
+		}
+		else if (!isIdle)
+		{
+			isIdle = true;
+			skelAnim.state.SetAnimation(0, "Idle", true);
+			Debug.Log("Idle");
+		}
+			
 
-		if( CrossPlatformInputManager.GetAxis( "Horizontal" ) < 0 && facingRight ) 
-			Flip();
-		else if( CrossPlatformInputManager.GetAxis( "Horizontal" ) > 0 && !facingRight ) 
-			Flip();
-
-		if( CrossPlatformInputManager.GetAxis( "Vertical" ) != 0 || CrossPlatformInputManager.GetAxis( "Horizontal" ) != 0 ) 
+		// Old prototype animations.
+		/*if( CrossPlatformInputManager.GetAxis( "Vertical" ) != 0 || CrossPlatformInputManager.GetAxis( "Horizontal" ) != 0 ) 
 			anim.SetFloat( "Speed", 1f );
 		else 
-            anim.SetFloat( "Speed", 0f );
+            anim.SetFloat( "Speed", 0f );*/
+
 
         if( CrossPlatformInputManager.GetButtonDown( "Jump" ) )
 			Attack( "Attack" );
         if( CrossPlatformInputManager.GetButtonDown( "Jump2" ) ) 
 			Attack( "Attack2" );
+	}
+
+	void UpdateInput ()
+	{
+		_movement.Move(CrossPlatformInputManager.GetAxis("Horizontal"),
+					   CrossPlatformInputManager.GetAxis("Vertical"));
+
+		if (CrossPlatformInputManager.GetAxis("Horizontal") < 0 && facingRight)
+			Flip();
+		else if (CrossPlatformInputManager.GetAxis("Horizontal") > 0 && !facingRight)
+			Flip();
+
+		if (isIdle)
+		{
+			isIdle = false;
+			skelAnim.state.SetAnimation(0, "Run", true);
+			Debug.Log("Run");
+		}
+	
 	}
 
 	void ThrowWeapon()

@@ -14,16 +14,18 @@ public class HealtComponent : MonoBehaviour {
 
 	void Awake() 
 	{
-		mySprite = GetComponent<SpriteRenderer>();
-		defaultColor = mySprite.color;
-		if (mySprite == null)
-			Debug.LogError("Unable to find Sprite component");
+		if ( GetComponent<SpriteRenderer>() != null )
+		{
+			mySprite = GetComponent<SpriteRenderer>();
+			defaultColor = mySprite.color;
+		}
+		
 	}
 
 	void Update() // for test only plz
 	{
 		timer += Time.deltaTime;
-		if (timer > 0.5f)
+		if (timer > 0.5f && mySprite != null)
 			mySprite.color = defaultColor;
 
 		//For testing
@@ -46,10 +48,12 @@ public class HealtComponent : MonoBehaviour {
 				gameManager.PlayerDied();
 			}
 		}
-			
 
-		mySprite.color = Color.blue;
 		timer = 0f;
+		if (mySprite != null)
+			mySprite.color = Color.blue;
+		
+		
 		
 	}
 
