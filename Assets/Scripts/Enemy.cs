@@ -3,13 +3,15 @@ using System.Collections;
 using System.Collections.Generic;
 
 [RequireComponent(typeof(HealtComponent))]
+[RequireComponent(typeof(MovementComponent))]
 public class Enemy : Unit {
 
 	public enum State { Targeting, Engaging, Attacking, Death };
-	State state;
+	public State state;
 
 	// Required componente
 	HealtComponent _healthcomponent;
+	MovementComponent _movement;
 
     public Transform target = null;
 	public GameObject enemyProjectile;
@@ -29,6 +31,7 @@ public class Enemy : Unit {
 	void Awake() 
 	{
 		_healthcomponent = GetComponent<HealtComponent>();
+		_movement = GetComponent<MovementComponent>();
 	}
 
 	public override void Start() 
@@ -92,6 +95,10 @@ public class Enemy : Unit {
 		return state;
 	}
 
+	public State GetState() {
+		return state;
+	}
+
 	void Search( Transform player, List<Enemy> enemies ) 
 	{
 		if ( this.target == null ) 
@@ -109,6 +116,7 @@ public class Enemy : Unit {
 			{
 				target = e.transform;
 				e.target = transform;
+				e.state = State.Engaging;
 				state = State.Engaging;
 				return;
 			}
@@ -168,7 +176,8 @@ public class Enemy : Unit {
 		}
 		else if (distance > 0.3f) // Move if not too close
 		{
-			transform.Translate(dir * moveSpeed * Time.deltaTime);
+			//transform.Translate(dir * moveSpeed * Time.deltaTime);
+			_movement.Move( dir.x, dir.y );
 			base.SetSpeed(1);
 		}
 

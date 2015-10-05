@@ -14,7 +14,7 @@ public class WeaponComponent : MonoBehaviour {
 		damage = weaponData.damage;
 	}
 
-	void Update () 
+	void Update() 
 	{
 		if( thrown )
 		{
@@ -25,7 +25,7 @@ public class WeaponComponent : MonoBehaviour {
 		}
 	}
 	
-	public void MoveRight (bool right)
+	public void MoveRight(bool right)
 	{
 		if (right)
 			moveRight = true;

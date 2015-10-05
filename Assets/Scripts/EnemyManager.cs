@@ -64,17 +64,20 @@ public class EnemyManager : MonoBehaviour {
 
 	IEnumerator SpawnWave() 
 	{
-		waveTime = 0f;
-		spawning = true; //TODO: Temp solution?
-		string wave = enemyWaves[ this.wave += 1 ];
+		if( this.wave < enemyWaves.Count -1 ) {
+			waveTime = 0f;
+			spawning = true; //TODO: Temp solution?
 
-		for( int i = 0; i < wave.Length / spawnPoints.Length; i++ ) 
-		{
-			yield return new WaitForSeconds( 1f ); // This breaks on level load for some reason
-			for (int j = 0; j < spawnPoints.Length; j++) 
-				enemies.Add( SpawnEnemy( j ) );
+			string wave = enemyWaves[ this.wave += 1 ];
+
+			for( int i = 0; i < wave.Length / spawnPoints.Length; i++ ) 
+			{
+				yield return new WaitForSeconds( 1f ); // This breaks on level load for some reason
+				for (int j = 0; j < spawnPoints.Length; j++) 
+					enemies.Add( SpawnEnemy( j ) );
+			}
+			spawning = false;
 		}
-		spawning = false;
 	}
 
 	Enemy SpawnEnemy( int point ) 
