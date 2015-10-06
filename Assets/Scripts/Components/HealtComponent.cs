@@ -9,24 +9,19 @@ public class HealtComponent : MonoBehaviour {
 	Color defaultColor;
 	float timer;
 
-	//Game manager for death stuff
-	public GameManager gameManager;
-
 	void Awake() 
 	{
-		if ( GetComponent<SpriteRenderer>() != null )
-		{
-			mySprite = GetComponent<SpriteRenderer>();
-			defaultColor = mySprite.color;
-		}
-		
+		//mySprite = GetComponent<SpriteRenderer>();
+		//defaultColor = mySprite.color;
+		//if (mySprite == null)
+			//Debug.LogError("Unable to find Sprite component");
 	}
 
 	void Update() // for test only plz
 	{
 		timer += Time.deltaTime;
-		if (timer > 0.5f && mySprite != null)
-			mySprite.color = defaultColor;
+		if (timer > 0.5f)
+			//mySprite.color = defaultColor;
 
 		//For testing
 		if (gameObject.tag == "Player" && Input.GetKeyDown(KeyCode.O))
@@ -45,16 +40,24 @@ public class HealtComponent : MonoBehaviour {
 
 			if (gameObject.tag == "Player")
 			{
-				gameManager.PlayerDied();
+				GameManager.instance.PlayerDied();
 			}
 		}
-
+		//mySprite.color = Color.blue;
 		timer = 0f;
-		if (mySprite != null)
-			mySprite.color = Color.blue;
-		
-		
-		
+	}
+
+	public void TakeDamageFromPlayer( int damage )
+	{
+		health -= damage;
+		if ( health <= 0 )
+		{
+			GameManager.instance.IncreaseMoney( 10 ); // store value in enemy
+
+			gameObject.SetActive(false);
+		}
+		//mySprite.color = Color.blue;
+		timer = 0f;
 	}
 
 	public int GetHealth() 
