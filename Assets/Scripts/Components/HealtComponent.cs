@@ -11,17 +11,17 @@ public class HealtComponent : MonoBehaviour {
 
 	void Awake() 
 	{
-		mySprite = GetComponent<SpriteRenderer>();
-		defaultColor = mySprite.color;
-		if (mySprite == null)
-			Debug.LogError("Unable to find Sprite component");
+		//mySprite = GetComponent<SpriteRenderer>();
+		//defaultColor = mySprite.color;
+		//if (mySprite == null)
+			//Debug.LogError("Unable to find Sprite component");
 	}
 
 	void Update() // for test only plz
 	{
 		timer += Time.deltaTime;
 		if (timer > 0.5f)
-			mySprite.color = defaultColor;
+			//mySprite.color = defaultColor;
 
 		//For testing
 		if (gameObject.tag == "Player" && Input.GetKeyDown(KeyCode.O))
@@ -43,7 +43,7 @@ public class HealtComponent : MonoBehaviour {
 				GameManager.instance.PlayerDied();
 			}
 		}
-		mySprite.color = Color.blue;
+		//mySprite.color = Color.blue;
 		timer = 0f;
 	}
 
@@ -56,7 +56,7 @@ public class HealtComponent : MonoBehaviour {
 
 			gameObject.SetActive(false);
 		}
-		mySprite.color = Color.blue;
+		//mySprite.color = Color.blue;
 		timer = 0f;
 	}
 

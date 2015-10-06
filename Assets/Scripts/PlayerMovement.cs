@@ -4,6 +4,7 @@ using UnityStandardAssets.CrossPlatformInput;
 
 [RequireComponent(typeof(EquipmentComponent))]
 [RequireComponent(typeof(MovementComponent))]
+[RequireComponent(typeof(SkeletonAnimation))]
 public class PlayerMovement : MonoBehaviour {
 
 	private Animator anim;
@@ -11,22 +12,30 @@ public class PlayerMovement : MonoBehaviour {
 
 	EquipmentComponent _equipment;
 	MovementComponent _movement;
+	SkeletonAnimation _skelAnim;
 
-	SkeletonAnimation skelAnim;
 	bool isIdle;
+
+	[SpineAnimation( "Idle" )]
+	public string idleAnimation;
+
+	[SpineAnimation]
+	public string moveAnimation;
+
+	[SpineAnimation]
+	public string attackAnimation;
 
 	void Awake() 
 	{
 		_equipment = GetComponent<EquipmentComponent>();
 		_movement = GetComponent<MovementComponent>();
-		anim = GetComponentInChildren<Animator>();
-
-		skelAnim = GetComponent<SkeletonAnimation>();
+		_skelAnim = GetComponent<SkeletonAnimation>();
 
 	}
 
 	void Update() 
 	{
+		// wtf?
 		if (CrossPlatformInputManager.GetAxis("Vertical") != 0 || CrossPlatformInputManager.GetAxis("Horizontal") != 0)
 		{
 			UpdateInput();
@@ -34,7 +43,8 @@ public class PlayerMovement : MonoBehaviour {
 		else if (!isIdle)
 		{
 			isIdle = true;
-			skelAnim.state.SetAnimation(0, "Idle", true);
+			_skelAnim.AnimationName = idleAnimation;
+			//_skelAnim.state.SetAnimation(0, "Idle", true);
 			Debug.Log("Idle");
 		}
 			
@@ -47,9 +57,10 @@ public class PlayerMovement : MonoBehaviour {
 
 
         if( CrossPlatformInputManager.GetButtonDown( "Jump" ) )
-			Attack( "Attack" );
-        if( CrossPlatformInputManager.GetButtonDown( "Jump2" ) ) 
-			Attack( "Attack2" );
+			_skelAnim.AnimationName = attackAnimation;
+        if( CrossPlatformInputManager.GetButtonDown( "Jump2" ) )
+			_skelAnim.AnimationName = attackAnimation;
+
 	}
 
 	void UpdateInput ()
@@ -57,15 +68,18 @@ public class PlayerMovement : MonoBehaviour {
 		_movement.Move(CrossPlatformInputManager.GetAxis("Horizontal"),
 					   CrossPlatformInputManager.GetAxis("Vertical"));
 
-		if (CrossPlatformInputManager.GetAxis("Horizontal") < 0 && facingRight)
+		if( CrossPlatformInputManager.GetAxis( "Horizontal" ) < 0 && facingRight )
+			// _skelAnim.skeleton.FlipX = true;
 			Flip();
 		else if (CrossPlatformInputManager.GetAxis("Horizontal") > 0 && !facingRight)
+			// _skelAnim.skeleton.FlipX = false;
 			Flip();
 
 		if (isIdle)
 		{
 			isIdle = false;
-			skelAnim.state.SetAnimation(0, "Run", true);
+			_skelAnim.AnimationName = moveAnimation;
+			// _skelAnim.state.SetAnimation(0, "Run", true);
 			Debug.Log("Run");
 		}
 	
@@ -99,7 +113,6 @@ public class PlayerMovement : MonoBehaviour {
 
     void Attack( string attack ) 
 	{
-        anim.SetTrigger( attack );
     }
 
     private void OnTriggerEnter2D(Collider2D other) 
