@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityStandardAssets.CrossPlatformInput;
+using CnControls;
 
 [RequireComponent(typeof(EquipmentComponent))]
 [RequireComponent(typeof(MovementComponent))]
@@ -27,7 +28,8 @@ public class PlayerMovement : MonoBehaviour {
 
 	void Update() 
 	{
-		if (CrossPlatformInputManager.GetAxis("Vertical") != 0 || CrossPlatformInputManager.GetAxis("Horizontal") != 0)
+		//CrossPlatformInputManager.GetAxis("Vertical") != 0 || CrossPlatformInputManager.GetAxis("Horizontal") != 0
+		if ( CnInputManager.GetAxis( "Vertical" ) != 0 || CnInputManager.GetAxis( "Horizontal" ) != 0 )
 		{
 			UpdateInput();
 		}
@@ -35,7 +37,6 @@ public class PlayerMovement : MonoBehaviour {
 		{
 			isIdle = true;
 			skelAnim.state.SetAnimation(0, "Idle", true);
-			Debug.Log("Idle");
 		}
 			
 
@@ -54,19 +55,18 @@ public class PlayerMovement : MonoBehaviour {
 
 	void UpdateInput ()
 	{
-		_movement.Move(CrossPlatformInputManager.GetAxis("Horizontal"),
-					   CrossPlatformInputManager.GetAxis("Vertical"));
+		_movement.Move(CnInputManager.GetAxis( "Horizontal" ),
+					   CnInputManager.GetAxis( "Vertical") );
 
-		if (CrossPlatformInputManager.GetAxis("Horizontal") < 0 && facingRight)
+		if (CnInputManager.GetAxis("Horizontal") < 0 && facingRight)
 			Flip();
-		else if (CrossPlatformInputManager.GetAxis("Horizontal") > 0 && !facingRight)
+		else if (CnInputManager.GetAxis( "Horizontal") > 0 && !facingRight)
 			Flip();
 
 		if (isIdle)
 		{
 			isIdle = false;
 			skelAnim.state.SetAnimation(0, "Run", true);
-			Debug.Log("Run");
 		}
 	
 	}

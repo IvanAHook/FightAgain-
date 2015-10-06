@@ -26,9 +26,14 @@ public class Enemy : Unit {
 	float yVel;
 	Vector2 randomVector;
 
+	//Skeleton Animation
+	SkeletonAnimation skelAnim;
+
 	void Awake() 
 	{
 		_healthcomponent = GetComponent<HealtComponent>();
+		
+		skelAnim = GetComponent<SkeletonAnimation>();
 	}
 
 	public override void Start() 
@@ -157,8 +162,9 @@ public class Enemy : Unit {
 		{
 			state = State.Attacking;
 
-			// Set speed for animation. 
-			base.SetSpeed(0);
+			// Set speed for animation. NOT NEEDED WITH SPINE
+			//base.SetSpeed(0);
+			skelAnim.state.SetAnimation(0, "Idle", true); // Spine thing
 
 			//Flip if not facing player.
 			if (target.position.x < transform.position.x && base.facingRight)
@@ -169,7 +175,8 @@ public class Enemy : Unit {
 		else if (distance > 0.3f) // Move if not too close
 		{
 			transform.Translate(dir * moveSpeed * Time.deltaTime);
-			base.SetSpeed(1);
+			//base.SetSpeed(1); // NOT NEEDED WITH SPINE
+			skelAnim.state.SetAnimation(0, "Run", true); // Spine thing
 		}
 
     }
@@ -197,7 +204,7 @@ public class Enemy : Unit {
 		yield return new WaitForSeconds(0.2f);
 
 		// Shoot
-		base.AttackAnim();
+		//base.AttackAnim(); // not needed with spine
 		GameObject spawnedProjectile = (GameObject)Instantiate(enemyProjectile, transform.position, Quaternion.identity);
 		if (base.facingRight)
 			spawnedProjectile.gameObject.GetComponent<EnemyProjectile>().MoveRight(true);
@@ -212,7 +219,7 @@ public class Enemy : Unit {
 
 	IEnumerator MeleeAttack()
 	{
-		base.AttackAnim(); // Attack
+		//base.AttackAnim(); // not needed with spine
 
 		yield return new WaitForSeconds(0.5f);
 		state = State.Engaging;
