@@ -57,7 +57,8 @@ public class PlayerMovement : MonoBehaviour {
 
 
         if( CrossPlatformInputManager.GetButtonDown( "Jump" ) )
-			_skelAnim.AnimationName = attackAnimation;
+			_skelAnim.state.SetAnimation(0, attackAnimation, false);
+			//_skelAnim.AnimationName = attackAnimation;
         if( CrossPlatformInputManager.GetButtonDown( "Jump2" ) )
 			_skelAnim.AnimationName = attackAnimation;
 

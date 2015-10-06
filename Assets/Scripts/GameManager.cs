@@ -5,6 +5,8 @@ public class GameManager : MonoBehaviour {
 
 	public static GameManager instance = null;
 
+	public GameObject playerPrefab;
+
 	bool playerDied = false;
 
 	Transform playerTransform;
@@ -12,8 +14,14 @@ public class GameManager : MonoBehaviour {
 	
 	public Transform player;
 	public GameObject menu;
+
+	public WeaponData weapon;
+	public EquipmentData head;
+	public EquipmentData body;
+	public EquipmentData feet;
 	
-	void Awake() {
+	void Awake()
+	{
 		if( instance == null )
 			instance = this;
 		else if( instance != this )
@@ -21,16 +29,21 @@ public class GameManager : MonoBehaviour {
 		DontDestroyOnLoad( gameObject );
 	}
 
-	void Start() {
+	void Start()
+	{
 		
 		money = 0;
-	}
-
-	void InitGame() {
+		SpawnPlayer();
 
 	}
 
-	void Update() {
+	void InitGame()
+	{
+
+	}
+
+	void Update()
+	{
 		if( playerTransform && playerTransform.gameObject.activeSelf ) {
 			playerTransform = GameObject.FindGameObjectWithTag( "Player" ).transform;
 		}
@@ -48,39 +61,51 @@ public class GameManager : MonoBehaviour {
 		
 	}
 
-	void LoadArena() {
+	void LoadArena()
+	{
+		// load level
+		// spawn player
+	}
+
+	void LoadShop()
+	{
 
 	}
 
-	void LoadShop() {
-
+	Transform SpawnPlayer()
+	{
+		player = Instantiate( playerPrefab, Vector3.zero, Quaternion.identity ) as Transform;
+		player.GetComponent<EquipmentComponent>().Equip( weapon, head, body, feet );
+		return player;
 	}
 
-	Transform SpawnPlayer() {
-		return Instantiate( player, Vector3.zero, Quaternion.identity ) as Transform;
-	}
-
-	public Vector2 GetPlayerPosition() {
+	public Vector2 GetPlayerPosition()
+	{
 		return ( playerTransform != null ) ? new Vector2( playerTransform.position.x, playerTransform.position.y ) : Vector2.zero;
 	}
 
-	public Transform GetPlayerTransform() {
+	public Transform GetPlayerTransform()
+	{
 		return playerTransform;
 	}
 
-	public int GetMoney() {
+	public int GetMoney()
+	{
 		return money;
 	}
 
-	bool CanAfford( int price ) {
+	bool CanAfford( int price )
+	{
 		return ( money > price ) ? true : false;
 	}
 
-	public int IncreaseMoney( int ammount ) {
+	public int IncreaseMoney( int ammount )
+	{
 		return money += ammount;
 	}
 
-	int DecreaseMoney( int ammount ) {
+	int DecreaseMoney( int ammount )
+	{
 		return money -= ammount;
 	}
 
