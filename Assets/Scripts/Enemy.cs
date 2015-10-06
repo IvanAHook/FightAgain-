@@ -165,8 +165,8 @@ public class Enemy : Unit {
 		{
 			state = State.Attacking;
 
-			// Set speed for animation. 
-			base.SetSpeed(0);
+			// Set speed for animation. Not needed for spine
+			// base.SetSpeed(0);
 
 			//Flip if not facing player.
 			if (target.position.x < transform.position.x && base.facingRight)
@@ -178,7 +178,7 @@ public class Enemy : Unit {
 		{
 			//transform.Translate(dir * moveSpeed * Time.deltaTime);
 			_movement.Move( dir.x, dir.y );
-			base.SetSpeed(1);
+			//base.SetSpeed(1); // not needed for spine
 		}
 
     }
@@ -206,7 +206,7 @@ public class Enemy : Unit {
 		yield return new WaitForSeconds(0.2f);
 
 		// Shoot
-		base.AttackAnim();
+		//base.AttackAnim(); // not needed with spine
 		GameObject spawnedProjectile = (GameObject)Instantiate(enemyProjectile, transform.position, Quaternion.identity);
 		if (base.facingRight)
 			spawnedProjectile.gameObject.GetComponent<EnemyProjectile>().MoveRight(true);
@@ -221,7 +221,7 @@ public class Enemy : Unit {
 
 	IEnumerator MeleeAttack()
 	{
-		base.AttackAnim(); // Attack
+		//base.AttackAnim(); // not needed with spine
 
 		yield return new WaitForSeconds(0.5f);
 		state = State.Engaging;
