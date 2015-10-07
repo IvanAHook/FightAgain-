@@ -19,6 +19,7 @@ public class GameManager : MonoBehaviour {
 	public EquipmentData head;
 	public EquipmentData body;
 	public EquipmentData feet;
+	EquipmentList equipmentList;
 	
 	void Awake()
 	{
@@ -31,9 +32,9 @@ public class GameManager : MonoBehaviour {
 
 	void Start()
 	{
-		
+		equipmentList = new EquipmentList();
 		money = 0;
-		SpawnPlayer();
+		//SpawnPlayer();
 
 	}
 

@@ -9,11 +9,11 @@ public struct EquipmentData {
 	public int speed;
 	// sprite reference?
 
-	public EquipmentData( Type type, string name, int damage, int attackSpeed )
+	public EquipmentData( Type type, string name, int armor, int speed )
 	{
 		this.type = type;
 		this.name = name;
-		this.armor = damage;
-		this.speed = attackSpeed;
+		this.armor = armor;
+		this.speed = speed;
 	}
 }

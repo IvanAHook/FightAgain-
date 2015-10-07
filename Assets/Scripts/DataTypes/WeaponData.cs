@@ -1,14 +1,17 @@
 ﻿[System.Serializable]
 public struct WeaponData {
+
+	public enum Type { Melee, Ranged };
+
+	public Type type;
 	public string name;
 	public int damage;
-	public int attackSpeed;
 	// sprite reference?
 
-	public WeaponData( string name, int damage, int attackSpeed )
+	public WeaponData( Type type, string name, int damage )
 	{
+		this.type = type;
 		this.name = name;
 		this.damage = damage;
-		this.attackSpeed = attackSpeed;
 	}
 }

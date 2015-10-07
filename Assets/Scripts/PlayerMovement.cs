@@ -45,7 +45,7 @@ public class PlayerMovement : MonoBehaviour {
 			isIdle = true;
 			_skelAnim.AnimationName = idleAnimation;
 			//_skelAnim.state.SetAnimation(0, "Idle", true);
-			Debug.Log("Idle");
+			//Debug.Log("Idle");
 		}
 			
 

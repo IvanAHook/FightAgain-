@@ -18,9 +18,9 @@ public class EquipmentComponent : MonoBehaviour { // Does not need monobehavior
 	{
 		if( weaponPrefab == null ) // get weapon equiped before game here
 		{
+			weapon.type = WeaponData.Type.Melee;
 			weapon.name = "Fist";
 			weapon.damage = 2;
-			weapon.attackSpeed = 10;
 		}
 	}
 
@@ -29,9 +29,9 @@ public class EquipmentComponent : MonoBehaviour { // Does not need monobehavior
 		if( weaponPrefab != null )
 		{
 			// make fist default
+			weapon.type = WeaponData.Type.Melee;
 			weapon.name = "Fist";
 			weapon.damage = 2;
-			weapon.attackSpeed = 10;
 			weaponPrefab = null;
 		}
 	}
