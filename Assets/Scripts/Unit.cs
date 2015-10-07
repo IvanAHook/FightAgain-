@@ -70,7 +70,7 @@ public class Unit : MonoBehaviour {
 	}
 
 
-	public void SetSpeed(int spd)
+	public void SetSpeed(int spd) // not really needed.
 	{
 		if (spd == 1)
 		{
@@ -82,7 +82,7 @@ public class Unit : MonoBehaviour {
 		}
 	}
 
-	public void AttackAnim()
+	public void AttackAnim() // not really needed.
 	{
 		animator.SetTrigger("Attack");
 	}

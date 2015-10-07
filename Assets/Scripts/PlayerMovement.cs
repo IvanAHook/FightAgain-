@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityStandardAssets.CrossPlatformInput;
+using CnControls;
 
 [RequireComponent(typeof(EquipmentComponent))]
 [RequireComponent(typeof(MovementComponent))]
@@ -35,17 +36,15 @@ public class PlayerMovement : MonoBehaviour {
 
 	void Update() 
 	{
-		// wtf?
-		if (CrossPlatformInputManager.GetAxis("Vertical") != 0 || CrossPlatformInputManager.GetAxis("Horizontal") != 0)
+
+		if (CnInputManager.GetAxis("Vertical") != 0 || CnInputManager.GetAxis("Horizontal") != 0)
 		{
 			UpdateInput();
 		}
 		else if (!isIdle)
 		{
 			isIdle = true;
-			_skelAnim.AnimationName = idleAnimation;
-			//_skelAnim.state.SetAnimation(0, "Idle", true);
-			//Debug.Log("Idle");
+			_skelAnim.state.SetAnimation(0, idleAnimation, true);
 		}
 			
 
@@ -57,8 +56,7 @@ public class PlayerMovement : MonoBehaviour {
 
 
         if( CrossPlatformInputManager.GetButtonDown( "Jump" ) )
-			_skelAnim.state.SetAnimation(0, attackAnimation, false);
-			//_skelAnim.AnimationName = attackAnimation;
+			_skelAnim.AnimationName = attackAnimation;
         if( CrossPlatformInputManager.GetButtonDown( "Jump2" ) )
 			_skelAnim.AnimationName = attackAnimation;
 
@@ -66,22 +64,20 @@ public class PlayerMovement : MonoBehaviour {
 
 	void UpdateInput ()
 	{
-		_movement.Move(CrossPlatformInputManager.GetAxis("Horizontal"),
-					   CrossPlatformInputManager.GetAxis("Vertical"));
+		_movement.Move(CnInputManager.GetAxis("Horizontal"),
+					   CnInputManager.GetAxis("Vertical"));
 
-		if( CrossPlatformInputManager.GetAxis( "Horizontal" ) < 0 && facingRight )
+		if (CnInputManager.GetAxis("Horizontal") < 0 && facingRight)
 			// _skelAnim.skeleton.FlipX = true;
 			Flip();
-		else if (CrossPlatformInputManager.GetAxis("Horizontal") > 0 && !facingRight)
+		else if (CnInputManager.GetAxis("Horizontal") > 0 && !facingRight)
 			// _skelAnim.skeleton.FlipX = false;
 			Flip();
 
 		if (isIdle)
 		{
 			isIdle = false;
-			_skelAnim.AnimationName = moveAnimation;
-			// _skelAnim.state.SetAnimation(0, "Run", true);
-			Debug.Log("Run");
+			_skelAnim.state.SetAnimation(0,  moveAnimation, true);
 		}
 	
 	}

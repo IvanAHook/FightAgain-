@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System.Collections;
 using UnityEngine.EventSystems;
 
 namespace CnControls
@@ -25,7 +26,7 @@ namespace CnControls
             // Straightforward things happening here
 
             PointerEventDataCache = new PointerEventData(FindObjectOfType<EventSystem>());
-            UiRootCamera = GetComponentInParent<Canvas>().worldCamera;
+			UiRootCamera = GetComponentInParent<Canvas>().worldCamera;
         }
     }
 }
