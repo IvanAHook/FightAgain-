@@ -13,18 +13,16 @@ public class PlayerMovement : MonoBehaviour {
 
 	EquipmentComponent _equipment;
 	MovementComponent _movement;
+	
+	// ANIMATIONZ
 	SkeletonAnimation _skelAnim;
-
-	bool isIdle;
-
 	[SpineAnimation( "Idle" )]
 	public string idleAnimation;
-
 	[SpineAnimation]
 	public string moveAnimation;
-
 	[SpineAnimation]
 	public string attackAnimation;
+	bool isIdle;
 
 	void Awake() 
 	{

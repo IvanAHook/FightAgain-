@@ -34,12 +34,13 @@ public class EnemyProjectile : MonoBehaviour {
 	}
 
 
-	void OnTriggerEnter2D (Collider2D other)
+	// prolly don't need this since we have damage component
+	/*void OnTriggerEnter2D (Collider2D other)
 	{
 		if ( other.gameObject.tag == "Player" )
 		{
 			other.gameObject.SendMessage( "TakeDamage" , damage , SendMessageOptions.DontRequireReceiver );
 			Destroy(gameObject);
 		}
-	}
+	}*/
 }
