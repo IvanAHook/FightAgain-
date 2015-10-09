@@ -27,7 +27,7 @@ public class EquipmentList {
 
 	void InsertEquipment( EquipmentData.Type type, string typeString, JSONNode jsonNode ) // parse weapons and equipment from JSON file
 	{
-		Debug.Log( "Equipment list parsing..." + typeString );
+		//Debug.Log( "Equipment list parsing..." + typeString );
 		
 		for( int i = 0; i < jsonNode["equipment"]["head"].Count; i++ ) // add helmets
 		{
@@ -39,7 +39,7 @@ public class EquipmentList {
 
 	void InsertWeapons( WeaponData.Type type, string typeString, JSONNode jsonNode )
 	{
-		Debug.Log( "Weapons list parsing..." + typeString );
+		//Debug.Log( "Weapons list parsing..." + typeString );
 		
 		for( int i = 0; i < jsonNode["weapons"]["melee"].Count; i++ ) // add melee weapons
 		{

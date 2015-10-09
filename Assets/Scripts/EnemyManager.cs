@@ -21,6 +21,15 @@ public class EnemyManager : MonoBehaviour {
 
 	void Awake() 
 	{
+		List<int> tempRange = new List<int>();
+		tempRange.Add( 1 );
+		tempRange.Add( 2 );
+		tempRange.Add( 3 );
+		List<int> tempWave = GenerateWave( 10, tempRange );
+		foreach( int i in tempWave ) {
+			//Debug.Log( i );
+		}
+
 		TextAsset wavesFile = Resources.Load( "waves" ) as TextAsset;
 		List<string> fileLines = new List<string>();
 		string [] linesFromFile = wavesFile.text.Split( "\n"[0] );
@@ -61,6 +70,31 @@ public class EnemyManager : MonoBehaviour {
 		}
 
     }
+
+	List<int> GenerateWave( int resource, List<int> range )
+	{
+		List<int> wave = new List<int>();
+
+		do {
+			int e = Random.Range( 1, range.Count );
+			if( range[ e ] > resource )
+			{
+				//Debug.Log( "loool " + range[ e ] + " ... " + resource );
+				wave.Add( resource );
+				resource = 0;
+				break;
+			}
+			wave.Add( range[ e ] );
+			resource -= range[ e ];
+			//Debug.Log( range[ e ] + " ... " + resource );
+		} while( resource > 0 );
+
+		Debug.Log( "wave count= " + wave.Count );
+		for (int i = 0; i < wave.Count; i++) {
+			Debug.Log( wave[ i ] );
+		}
+		return wave;
+	}
 
 	IEnumerator SpawnWave() 
 	{

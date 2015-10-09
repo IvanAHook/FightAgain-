@@ -1,6 +1,8 @@
 ﻿[System.Serializable]
 public struct WeaponData {
 
+	enum Upgrades { ball, boot, dick }
+
 	public enum Type { Melee, Ranged };
 
 	public Type type;
