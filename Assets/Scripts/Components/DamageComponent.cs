@@ -3,6 +3,8 @@ using System.Collections;
 
 public class DamageComponent : MonoBehaviour {
 
+	Transform myOwner;
+
 	void Start() 
 	{
 	}
@@ -17,13 +19,14 @@ public class DamageComponent : MonoBehaviour {
 
 	void OnTriggerEnter2D( Collider2D other )
 	{
-		//Debug.Log("collided with " + other.tag);
+		Debug.Log("collided with " + other.tag);
 
 		// If I'm an enemy and I hit another enemy.
 		// And we don't have the same target.
 		// Send message.
+		if (other.transform == myOwner) return;
 		if ( gameObject.GetComponentInParent<Enemy>() != null && other.gameObject.tag == "Enemy"
-			&& gameObject.GetComponentInParent<Enemy>().target != other.gameObject.GetComponentInParent<Enemy>().target )
+			&& gameObject.GetComponentInParent<Enemy>().target != other.gameObject.GetComponentInParent<Enemy>().target)
 		{
 			other.gameObject.SendMessage( "TakeDamage", GetWeaponDamage(), SendMessageOptions.DontRequireReceiver );
 		}
@@ -38,8 +41,11 @@ public class DamageComponent : MonoBehaviour {
 		{
 			other.gameObject.SendMessage( "TakeDamage", GetWeaponDamage(), SendMessageOptions.DontRequireReceiver );
 		}
+	}
 
-		
+	public void Owner(Transform owner)
+	{
+		myOwner = owner;
 	}
 
 }

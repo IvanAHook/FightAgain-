@@ -9,7 +9,7 @@ public class Enemy : Unit {
 	public enum State { Targeting, Engaging, Attacking, Death };
 	public State state;
 
-	// Required componente
+	// Required componentent
 	HealtComponent _healthcomponent;
 	MovementComponent _movement;
 
@@ -28,10 +28,22 @@ public class Enemy : Unit {
 	float yVel;
 	Vector2 randomVector;
 
+
+	// ANIMATIONZ
+	SkeletonAnimation _skelAnim;
+	[SpineAnimation("Idle")]
+	public string idleAnimation;
+	[SpineAnimation]
+	public string moveAnimation;
+	[SpineAnimation]
+	public string attackAnimation;
+	bool isIdle;
+
 	void Awake() 
 	{
 		_healthcomponent = GetComponent<HealtComponent>();
 		_movement = GetComponent<MovementComponent>();
+		_skelAnim = GetComponent<SkeletonAnimation>();
 	}
 
 	public override void Start() 
@@ -43,7 +55,7 @@ public class Enemy : Unit {
 		int meleeOrRanged = Random.Range(0, 2);
 		
 		if (meleeOrRanged == 0)
-			isRanged = false;
+			isRanged = true;
 		else
 			isRanged = true;
 
@@ -167,6 +179,12 @@ public class Enemy : Unit {
 
 			// Set speed for animation. Not needed for spine
 			// base.SetSpeed(0);
+			if (!isIdle)
+			{
+				isIdle = true;
+				_skelAnim.state.SetAnimation(0, idleAnimation, true);
+			}
+			
 
 			//Flip if not facing player.
 			if (target.position.x < transform.position.x && base.facingRight)
@@ -179,6 +197,13 @@ public class Enemy : Unit {
 			//transform.Translate(dir * moveSpeed * Time.deltaTime);
 			_movement.Move( dir.x, dir.y );
 			//base.SetSpeed(1); // not needed for spine
+
+			if (isIdle)
+			{
+				isIdle = false;
+				_skelAnim.state.SetAnimation(0, moveAnimation, true);
+			}
+			
 		}
 
     }
@@ -207,11 +232,19 @@ public class Enemy : Unit {
 
 		// Shoot
 		//base.AttackAnim(); // not needed with spine
-		GameObject spawnedProjectile = (GameObject)Instantiate(enemyProjectile, transform.position, Quaternion.identity);
+		Vector2 pos = new Vector3( transform.position.x, transform.position.y + 0.5f, 0f);
+		GameObject spawnedProjectile = (GameObject)Instantiate(enemyProjectile, pos, Quaternion.identity);
 		if (base.facingRight)
+		{
 			spawnedProjectile.gameObject.GetComponent<EnemyProjectile>().MoveRight(true);
+			spawnedProjectile.gameObject.GetComponent<DamageComponent>().Owner(gameObject.transform);
+		}	
 		else
+		{
 			spawnedProjectile.gameObject.GetComponent<EnemyProjectile>().MoveRight(false);
+			spawnedProjectile.gameObject.GetComponent<DamageComponent>().Owner(gameObject.transform);
+		}
+			
 
 		// Recover
 		yield return new WaitForSeconds(0.5f);
