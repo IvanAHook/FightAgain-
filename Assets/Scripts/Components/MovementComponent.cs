@@ -11,6 +11,9 @@ public class MovementComponent : MonoBehaviour {
 		                                 Mathf.Clamp( transform.position.y + vertical * speed * Time.deltaTime, -4f, 4f ),
 		                                 0f );
 
+
+		//Physics2D.OverlapCircleAll(
+
 		//Vector3.Normalize(movement);
 		transform.position = movement;
 	}
