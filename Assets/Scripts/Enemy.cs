@@ -122,7 +122,7 @@ public class Enemy : Unit {
 	void SelectTarget( Transform player, List<Enemy> enemies ) 
 	{
 
-		/*foreach (Enemy e in enemies)
+		foreach (Enemy e in enemies)
 		{
 			if ( e.target == null && e != this )
 			{
@@ -132,7 +132,7 @@ public class Enemy : Unit {
 				state = State.Engaging;
 				return;
 			}
-		}*/
+		}
 
 		target = player;
 		state = State.Engaging;
