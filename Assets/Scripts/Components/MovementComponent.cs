@@ -3,7 +3,7 @@ using System.Collections;
 
 public class MovementComponent : MonoBehaviour {
 
-	float speed = 4f;
+	public float speed = 4f;
 
 	public void Move( float horizontal, float vertical ) {
 		

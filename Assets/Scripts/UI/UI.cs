@@ -13,11 +13,11 @@ public class UI : MonoBehaviour {
 
 	void Update () {
 
-		if (GameManager.instance.GetPlayerTransform() != null)
+		/* if (GameManager.instance.GetPlayerTransform() != null)
 		{
 			money.text = GameManager.instance.GetMoney().ToString() + "$ "
 			+ GameManager.instance.GetPlayerTransform().GetComponent<EquipmentComponent>().GetWeaponName();
-		}
+		}*/
 		
 	}
 }

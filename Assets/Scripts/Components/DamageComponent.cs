@@ -5,10 +5,6 @@ public class DamageComponent : MonoBehaviour {
 
 	Transform myOwner;
 
-	void Start() 
-	{
-	}
-
 	int GetWeaponDamage()
 	{
 		if ( gameObject.tag == "Player" )
@@ -19,27 +15,35 @@ public class DamageComponent : MonoBehaviour {
 
 	void OnTriggerEnter2D( Collider2D other )
 	{
-		Debug.Log("collided with " + other.tag);
+		Debug.Log(gameObject.tag + " collided with " + other.tag);
 
-		// If I'm an enemy and I hit another enemy.
-		// And we don't have the same target.
-		// Send message.
+	
 		if (other.transform == myOwner) return;
+
+		// If I'm an enemy and I hit another enemy and we don't have the same target.
 		if ( gameObject.GetComponentInParent<Enemy>() != null && other.gameObject.tag == "Enemy"
 			&& gameObject.GetComponentInParent<Enemy>().target != other.gameObject.GetComponentInParent<Enemy>().target)
 		{
 			other.gameObject.SendMessage( "TakeDamage", GetWeaponDamage(), SendMessageOptions.DontRequireReceiver );
+			//Debug.Log("111");
 		}
 		// If we are the player, send message
-		else if (gameObject.GetComponentInParent<Enemy>() == null)
+		else if (GetComponent<PlayerMovement>() != null || GetComponentInParent<PlayerMovement>() != null )
 		{
-			//Debug.Log(other.tag);
 			other.gameObject.SendMessage( "TakeDamageFromPlayer", GetWeaponDamage(), SendMessageOptions.DontRequireReceiver );
+			//Debug.Log("222");
 		}
 		// If we are an enemy and we hit the player, send message
 		else if ( gameObject.GetComponentInParent<Enemy>() != null && other.tag == "Player" )
 		{
-			other.gameObject.SendMessage( "TakeDamage", GetWeaponDamage(), SendMessageOptions.DontRequireReceiver );
+			other.gameObject.GetComponentInParent<HealtComponent>().SendMessage( "TakeDamage", GetWeaponDamage(), SendMessageOptions.DontRequireReceiver );
+			//Debug.Log("333");
+		}
+		// If we are an enemy projectile and we hit the player, send message.
+		else if (gameObject.tag == "EnemyProjectile" && ( other.tag == "Player" || other.tag == "Enemy" ) )
+		{
+			other.gameObject.GetComponentInParent<HealtComponent>().SendMessage( "TakeDamage", GetWeaponDamage(), SendMessageOptions.DontRequireReceiver );
+			//Debug.Log("444");
 		}
 	}
 

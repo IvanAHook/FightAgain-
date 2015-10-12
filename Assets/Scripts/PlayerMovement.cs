@@ -53,10 +53,10 @@ public class PlayerMovement : MonoBehaviour {
             anim.SetFloat( "Speed", 0f );*/
 
 
-        if( CrossPlatformInputManager.GetButtonDown( "Jump" ) )
-			_skelAnim.AnimationName = attackAnimation;
+        if( CrossPlatformInputManager.GetButtonDown( "Jump" ) || Input.GetKeyDown(KeyCode.U) )
+			_skelAnim.state.SetAnimation( 0, attackAnimation, false );
         if( CrossPlatformInputManager.GetButtonDown( "Jump2" ) )
-			_skelAnim.AnimationName = attackAnimation;
+			_skelAnim.state.SetAnimation(0, attackAnimation, false );
 
 	}
 
