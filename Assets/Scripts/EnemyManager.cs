@@ -10,7 +10,7 @@ public class EnemyManager : MonoBehaviour {
 	List<int> tempRange;
 	int wave;
 	bool spawning;
-	List<Enemy> enemies = new List<Enemy>();
+	public List<Enemy> enemies = new List<Enemy>();
 	public SpawnPoint[] spawnPoints;
 
 	float waveTime;
@@ -64,10 +64,10 @@ public class EnemyManager : MonoBehaviour {
 		} 
 		else if(/* wave < enemyWaves.Count  && */spawning == false && !spawnOne ) 
 		{
-			Debug.Log(1);
+			Debug.Log( "Deeeek" );
 			List<int> tempList = GenerateWave( (wave+1)*8, tempRange );
 			for ( int i = 0; i < tempList.Count; i++ ) {
-				Debug.Log( tempList[ i ] );
+				//Debug.Log( "tempList[" + i + "]: " + tempList[ i ] );
 			}
 			StartCoroutine( SpawnWave( tempList ) );
 		}
@@ -76,28 +76,29 @@ public class EnemyManager : MonoBehaviour {
 
 	List<int> GenerateWave( int resource, List<int> range )
 	{
-		Debug.Log(2);
-		Debug.Log( resource + " " + range[0] + " " + range[1] );
 		List<int> waveList = new List<int>();
 
 		do {
-			int e = Random.Range( 1, range.Count );
+			int e = Random.Range( 0, range.Count );
 			if( range[ e ] > resource )
 			{
 				//Debug.Log( "loool " + range[ e ] + " ... " + resource );
 				waveList.Add( resource );
+				//Debug.Log( "... " + resource );
 				resource = 0;
 				break;
 			}
 			waveList.Add( range[ e ] );
+			//Debug.Log( "... " + range[ e ] );
 			resource -= range[ e ];
 			//Debug.Log( range[ e ] + " ... " + resource );
 		} while( resource > 0 );
 
 		//Debug.Log( "wave count= " + waveList.Count );
 		for ( int i = 0; i < waveList.Count; i++ ) {
-			//Debug.Log( waveList[ i ] );
+			Debug.Log( "waveList value: " + waveList[ i ] );
 		}
+		Debug.Log( "enemies in wave: " + waveList.Count );
 		return waveList;
 	}
 
@@ -106,16 +107,20 @@ public class EnemyManager : MonoBehaviour {
 		//if( this.wave < enemyWaves.Count -1 ) {
 			waveTime = 0f;
 			spawning = true; //TODO: Temp solution?
+			int spawned = 0;
 		//Debug.Log(3);
 			//string wave = enemyWaves[ this.wave += 1 ];
 
-			for( int i = 0; i < waveList.Count / spawnPoints.Length; i++ ) 
+			for( int i = 0; i < waveList.Count /* spawnPoints.Length*/; i++ ) 
 			{
 				yield return new WaitForSeconds( 1f ); // This breaks on level load for some reason
-				for ( int j = 0; j < spawnPoints.Length; j++ ) 
-					enemies.Add( SpawnEnemy( j ) );
+				for( int j = 0; j < spawnPoints.Length; j++ )
+					if( waveList.Count > spawned )
+					{
+						enemies.Add( SpawnEnemy( j ) );
+						spawned += 1;
+					}
 			}
-			Debug.Log(3);
 			spawning = false;
 		//}
 	}

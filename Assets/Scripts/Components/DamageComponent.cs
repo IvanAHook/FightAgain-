@@ -19,7 +19,6 @@ public class DamageComponent : MonoBehaviour {
 
 	void OnTriggerEnter2D( Collider2D other )
 	{
-		Debug.Log("collided with " + other.tag);
 
 		// If I'm an enemy and I hit another enemy.
 		// And we don't have the same target.

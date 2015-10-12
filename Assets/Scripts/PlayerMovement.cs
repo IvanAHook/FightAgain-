@@ -57,6 +57,12 @@ public class PlayerMovement : MonoBehaviour {
 			_skelAnim.AnimationName = attackAnimation;
         //if( CrossPlatformInputManager.GetButtonDown( "Jump2" ) )
 		//	_skelAnim.AnimationName = attackAnimation;
+		if( Input.GetKey(KeyCode.D) )
+		{
+			foreach (var item in GameObject.Find( "EnemyManager" ).GetComponent<EnemyManager>().enemies) {
+				item.gameObject.SendMessage( "TakeDamage", 1000, SendMessageOptions.DontRequireReceiver );
+			}
+		}
 
 	}
 
