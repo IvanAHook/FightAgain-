@@ -22,6 +22,11 @@ public class ShopMenu : MonoBehaviour {
 		Application.LoadLevel("FirstTest"); //Remember to change the string here later.
 	}
 
+	public void BackButtonPress ()
+	{
+		Application.LoadLevel("MainMenu");
+	}
+	
 	//Items Inventory Navigation Buttons Functionality
 
 	public void WeaponsPress ()
