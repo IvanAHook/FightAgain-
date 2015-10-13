@@ -4,7 +4,13 @@ using System.Collections;
 public class ShopMenu : MonoBehaviour {
 
 	public GameObject PopUpMoneyMenu; 
+	public GameObject WeaponsItems;
+	public GameObject ArmorItems;
+	public GameObject HelmetsItems;
+	public GameObject BootsItems;
+	
 	private bool isShowing; 
+
 
 	public void BuyPress ()
 	{
