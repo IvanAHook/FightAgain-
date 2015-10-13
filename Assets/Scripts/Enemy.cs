@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-[RequireComponent(typeof(HealtComponent))]
+[RequireComponent(typeof(HealthComponent))]
 [RequireComponent(typeof(MovementComponent))]
 public class Enemy : Unit {
 
@@ -10,7 +10,7 @@ public class Enemy : Unit {
 	public State state;
 
 	// Required componentent
-	HealtComponent _healthcomponent;
+	HealthComponent _healthcomponent;
 	MovementComponent _movement;
 
     public Transform target = null;
@@ -41,7 +41,7 @@ public class Enemy : Unit {
 
 	void Awake() 
 	{
-		_healthcomponent = GetComponent<HealtComponent>();
+		_healthcomponent = GetComponent<HealthComponent>();
 		_movement = GetComponent<MovementComponent>();
 		_skelAnim = GetComponent<SkeletonAnimation>();
 	}

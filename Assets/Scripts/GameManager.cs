@@ -20,6 +20,8 @@ public class GameManager : MonoBehaviour {
 	public EquipmentData body;
 	public EquipmentData feet;
 	EquipmentList equipmentList;
+
+	public bool collisionHandling;
 	
 	void Awake()
 	{
