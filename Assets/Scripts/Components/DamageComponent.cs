@@ -15,7 +15,7 @@ public class DamageComponent : MonoBehaviour {
 
 	void OnTriggerEnter2D( Collider2D other )
 	{
-		Debug.Log(gameObject.tag + " collided with " + other.tag);
+		//Debug.Log(gameObject.tag + " collided with " + other.tag);
 
 	
 		if (other.transform == myOwner) return;

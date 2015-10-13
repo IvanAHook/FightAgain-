@@ -493,9 +493,21 @@ public class SkeletonRenderer : MonoBehaviour {
 				mesh.SetTriangles(submeshes.Items[i].triangles, i);
 		}
 
-		Vector3 meshBoundsExtents = meshBoundsMax - meshBoundsMin;
+		/*Vector3 meshBoundsExtents = meshBoundsMax - meshBoundsMin;
 		Vector3 meshBoundsCenter = meshBoundsMin + meshBoundsExtents * 0.5f;
-		mesh.bounds = new Bounds(meshBoundsCenter, meshBoundsExtents);
+		mesh.bounds = new Bounds(meshBoundsCenter, meshBoundsExtents);*/
+
+		// MANUAL MESH BOUNDS CALCULATION
+		if (vertexIndex > 0)
+		{
+			Vector3 meshBoundsExtents = meshBoundsMax - meshBoundsMin;
+			Vector3 meshBoundsCenter = meshBoundsMin + meshBoundsExtents * 0.5f;
+			mesh.bounds = new Bounds(meshBoundsCenter, meshBoundsExtents);
+		}
+		else
+		{
+			mesh.bounds = new Bounds(Vector3.zero, Vector3.zero);
+		}
 
 		if (newTriangles && calculateNormals) {
 			Vector3[] normals = new Vector3[vertexCount];

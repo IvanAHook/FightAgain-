@@ -1,0 +1,272 @@
+
+Bum.png
+size: 256,128
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+BDSM/bumparts_chest_BDSM
+  rotate: false
+  xy: 48, 86
+  size: 40, 40
+  orig: 40, 40
+  offset: 0, 0
+  index: -1
+BDSM/bumparts_head_BDSM
+  rotate: false
+  xy: 2, 8
+  size: 36, 32
+  orig: 36, 32
+  offset: 0, 0
+  index: -1
+BDSM/bumparts_hip_BDSM
+  rotate: true
+  xy: 40, 2
+  size: 38, 10
+  orig: 38, 10
+  offset: 0, 0
+  index: -1
+BDSM/bumparts_leftHand_BDSM
+  rotate: false
+  xy: 62, 34
+  size: 12, 8
+  orig: 12, 8
+  offset: 0, 0
+  index: -1
+BDSM/bumparts_rightHand_BDSM
+  rotate: false
+  xy: 62, 34
+  size: 12, 8
+  orig: 12, 8
+  offset: 0, 0
+  index: -1
+BDSM/bumparts_leftLeg_BDSM
+  rotate: false
+  xy: 140, 51
+  size: 8, 19
+  orig: 8, 19
+  offset: 0, 0
+  index: -1
+BDSM/bumparts_leftLowerArm_BDSM
+  rotate: true
+  xy: 236, 120
+  size: 6, 18
+  orig: 6, 18
+  offset: 0, 0
+  index: -1
+BDSM/bumparts_rightLowerArm_BDSM
+  rotate: true
+  xy: 236, 120
+  size: 6, 18
+  orig: 6, 18
+  offset: 0, 0
+  index: -1
+BDSM/bumparts_leftShoe_BDSM
+  rotate: true
+  xy: 198, 79
+  size: 16, 8
+  orig: 16, 8
+  offset: 0, 0
+  index: -1
+BDSM/bumparts_rightShoe_BDSM
+  rotate: true
+  xy: 198, 79
+  size: 16, 8
+  orig: 16, 8
+  offset: 0, 0
+  index: -1
+BDSM/bumparts_leftUpperArm_BDSM
+  rotate: false
+  xy: 222, 110
+  size: 12, 16
+  orig: 12, 16
+  offset: 0, 0
+  index: -1
+BDSM/bumparts_mouth_closed_BDSM
+  rotate: true
+  xy: 128, 72
+  size: 34, 20
+  orig: 34, 20
+  offset: 0, 0
+  index: -1
+BDSM/bumparts_mouth_open_BDSM
+  rotate: false
+  xy: 90, 48
+  size: 34, 24
+  orig: 34, 24
+  offset: 0, 0
+  index: -1
+BDSM/bumparts_rightLeg_BDSM
+  rotate: false
+  xy: 198, 97
+  size: 10, 19
+  orig: 10, 19
+  offset: 0, 0
+  index: -1
+BDSM/bumparts_rightUpperArm_BDSM
+  rotate: false
+  xy: 126, 54
+  size: 12, 16
+  orig: 12, 16
+  offset: 0, 0
+  index: -1
+baseball bat
+  rotate: false
+  xy: 150, 118
+  size: 58, 8
+  orig: 58, 8
+  offset: 0, 0
+  index: -1
+bumReference
+  rotate: false
+  xy: 2, 42
+  size: 44, 84
+  orig: 44, 84
+  offset: 0, 0
+  index: -1
+bumparts_chest
+  rotate: false
+  xy: 48, 44
+  size: 40, 40
+  orig: 40, 40
+  offset: 0, 0
+  index: -1
+bumparts_eyebrows_01
+  rotate: false
+  xy: 90, 44
+  size: 18, 2
+  orig: 18, 2
+  offset: 0, 0
+  index: -1
+bumparts_eyebrows_02
+  rotate: false
+  xy: 90, 44
+  size: 18, 2
+  orig: 18, 2
+  offset: 0, 0
+  index: -1
+bumparts_eyebrows_03
+  rotate: false
+  xy: 2, 2
+  size: 18, 4
+  orig: 18, 4
+  offset: 0, 0
+  index: -1
+bumparts_eyebrows_04
+  rotate: false
+  xy: 22, 2
+  size: 14, 4
+  orig: 14, 4
+  offset: 0, 0
+  index: -1
+bumparts_eyebrows_05
+  rotate: false
+  xy: 236, 112
+  size: 18, 6
+  orig: 18, 6
+  offset: 0, 0
+  index: -1
+bumparts_head
+  rotate: false
+  xy: 90, 74
+  size: 36, 32
+  orig: 36, 32
+  offset: 0, 0
+  index: -1
+bumparts_hip
+  rotate: true
+  xy: 186, 78
+  size: 38, 10
+  orig: 38, 10
+  offset: 0, 0
+  index: -1
+bumparts_leftHand
+  rotate: false
+  xy: 62, 24
+  size: 12, 8
+  orig: 12, 8
+  offset: 0, 0
+  index: -1
+bumparts_rightHand
+  rotate: false
+  xy: 62, 24
+  size: 12, 8
+  orig: 12, 8
+  offset: 0, 0
+  index: -1
+bumparts_leftLeg
+  rotate: false
+  xy: 52, 23
+  size: 8, 19
+  orig: 8, 19
+  offset: 0, 0
+  index: -1
+bumparts_leftLowerArm
+  rotate: true
+  xy: 236, 104
+  size: 6, 18
+  orig: 6, 18
+  offset: 0, 0
+  index: -1
+bumparts_rightLowerArm
+  rotate: true
+  xy: 236, 104
+  size: 6, 18
+  orig: 6, 18
+  offset: 0, 0
+  index: -1
+bumparts_leftShoe
+  rotate: true
+  xy: 52, 5
+  size: 16, 8
+  orig: 16, 8
+  offset: 0, 0
+  index: -1
+bumparts_rightShoe
+  rotate: true
+  xy: 52, 5
+  size: 16, 8
+  orig: 16, 8
+  offset: 0, 0
+  index: -1
+bumparts_leftUpperArm
+  rotate: false
+  xy: 150, 52
+  size: 12, 16
+  orig: 12, 16
+  offset: 0, 0
+  index: -1
+bumparts_mouth_closed
+  rotate: false
+  xy: 150, 70
+  size: 34, 20
+  orig: 34, 20
+  offset: 0, 0
+  index: -1
+bumparts_mouth_open
+  rotate: false
+  xy: 150, 92
+  size: 34, 24
+  orig: 34, 24
+  offset: 0, 0
+  index: -1
+bumparts_rightLeg
+  rotate: false
+  xy: 210, 107
+  size: 10, 19
+  orig: 10, 19
+  offset: 0, 0
+  index: -1
+bumparts_rightUpperArm
+  rotate: false
+  xy: 164, 52
+  size: 12, 16
+  orig: 12, 16
+  offset: 0, 0
+  index: -1
+spiked mace
+  rotate: false
+  xy: 90, 108
+  size: 58, 18
+  orig: 58, 18
+  offset: 0, 0
+  index: -1

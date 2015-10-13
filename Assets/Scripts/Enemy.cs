@@ -31,7 +31,7 @@ public class Enemy : Unit {
 
 	// ANIMATIONZ
 	SkeletonAnimation _skelAnim;
-	[SpineAnimation("Idle")]
+	[SpineAnimation]
 	public string idleAnimation;
 	[SpineAnimation]
 	public string moveAnimation;
@@ -232,6 +232,8 @@ public class Enemy : Unit {
 
 		// Shoot
 		//base.AttackAnim(); // not needed with spine
+		_skelAnim.state.SetAnimation( 0, attackAnimation, false );
+
 		Vector2 pos = new Vector3( transform.position.x, transform.position.y + 0.5f, 0f);
 		GameObject spawnedProjectile = (GameObject)Instantiate(enemyProjectile, pos, Quaternion.identity);
 		if (base.facingRight)
@@ -255,6 +257,7 @@ public class Enemy : Unit {
 	IEnumerator MeleeAttack()
 	{
 		//base.AttackAnim(); // not needed with spine
+		_skelAnim.state.SetAnimation(0, attackAnimation, false);
 
 		yield return new WaitForSeconds(0.5f);
 		state = State.Engaging;
