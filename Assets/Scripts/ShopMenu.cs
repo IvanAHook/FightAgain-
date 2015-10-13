@@ -9,7 +9,8 @@ public class ShopMenu : MonoBehaviour {
 	public GameObject ArmorItems;
 	public GameObject HelmetsItems;
 	public GameObject BootsItems;
-	
+
+
 
 	public void BuyPress ()
 	{
@@ -20,6 +21,8 @@ public class ShopMenu : MonoBehaviour {
 	{
 		Application.LoadLevel("FirstTest"); //Remember to change the string here later.
 	}
+
+	//Items Inventory Navigation Buttons Functionality
 
 	public void WeaponsPress ()
 	{
@@ -59,7 +62,7 @@ public class ShopMenu : MonoBehaviour {
 
 	public void PlusIconPress ()
 	{
-		PopUpMoneyMenu.SetActive (true); 
+		PopUpMoneyMenu.SetActive (true);
 	}
 
 	public void ClosePopUpPress ()
@@ -80,6 +83,12 @@ public class ShopMenu : MonoBehaviour {
 	public void BigMoneyPress ()
 	{
 		Debug.Log ("pressedBigMoney");
+	}
+
+	public void MoveInHierarchy(GameObject myObject, int delta) 
+	{
+		int index = myObject.transform.GetSiblingIndex();
+		myObject.transform.SetSiblingIndex (index + delta);
 	}
 }
 
