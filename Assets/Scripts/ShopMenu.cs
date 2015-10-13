@@ -4,13 +4,12 @@ using System.Collections;
 public class ShopMenu : MonoBehaviour {
 
 	public GameObject PopUpMoneyMenu; 
+
 	public GameObject WeaponsItems;
 	public GameObject ArmorItems;
 	public GameObject HelmetsItems;
 	public GameObject BootsItems;
 	
-	private bool isShowing; 
-
 
 	public void BuyPress ()
 	{
@@ -22,41 +21,50 @@ public class ShopMenu : MonoBehaviour {
 		Application.LoadLevel("FirstTest"); //Remember to change the string here later.
 	}
 
-	public void PlusIconPress ()
-	{
-		Debug.Log ("pressedPlusIcon");
-		isShowing = !isShowing;
-		PopUpMoneyMenu.SetActive (isShowing = true); 
-
-	}
-
 	public void WeaponsPress ()
 	{
-		Debug.Log ("pressedWeapons");
+		WeaponsItems.SetActive (true);
+		ArmorItems.SetActive (false); 
+		HelmetsItems.SetActive (false);
+		BootsItems.SetActive (false);
 	}
 
 	public void ArmorPress ()
 	{
-		Debug.Log ("pressedArmor");
+		WeaponsItems.SetActive (false);
+		ArmorItems.SetActive (true); 
+		HelmetsItems.SetActive (false);
+		BootsItems.SetActive (false);
 	}
 
 	public void HelmetsPress ()
 	{
-		Debug.Log ("pressedHelmets");
+		WeaponsItems.SetActive (false);
+		ArmorItems.SetActive (false); 
+		HelmetsItems.SetActive (true);
+		BootsItems.SetActive (false);
+
 	}
 
 	public void BootsPress ()
 	{
-		Debug.Log ("pressedBoots");
+		WeaponsItems.SetActive (false);
+		ArmorItems.SetActive (false); 
+		HelmetsItems.SetActive (false);
+		BootsItems.SetActive (true);
+
+	}
+
+	//Purchase Money Pop Up Menu Functionality
+
+	public void PlusIconPress ()
+	{
+		PopUpMoneyMenu.SetActive (true); 
 	}
 
 	public void ClosePopUpPress ()
 	{
-		Debug.Log ("pressedCloseIcon");
-		isShowing = !isShowing;
-		PopUpMoneyMenu.SetActive (isShowing = false); 
-		 
-
+		PopUpMoneyMenu.SetActive (false); 
 	}
 
 	public void SmallMoneyPress ()
