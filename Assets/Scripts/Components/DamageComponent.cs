@@ -42,7 +42,14 @@ public class DamageComponent : MonoBehaviour {
 		// If we are an enemy projectile and we hit the player, send message.
 		else if (gameObject.tag == "EnemyProjectile" && ( other.tag == "Player" || other.tag == "Enemy" ) )
 		{
-			other.gameObject.GetComponentInParent<HealthComponent>().SendMessage( "TakeDamage", GetWeaponDamage(), SendMessageOptions.DontRequireReceiver );
+			if ( other.gameObject.GetComponentInParent<HealthComponent>() != null )
+			{
+				other.gameObject.GetComponentInParent<HealthComponent>().SendMessage("TakeDamage", GetWeaponDamage(), SendMessageOptions.DontRequireReceiver);
+			}
+			else if ( other.gameObject.GetComponent<HealthComponent>() != null )
+			{
+				other.gameObject.GetComponent<HealthComponent>().SendMessage("TakeDamage", GetWeaponDamage(), SendMessageOptions.DontRequireReceiver);
+			}
 			//Debug.Log("444");
 		}
 	}
