@@ -3,6 +3,8 @@ using System.Collections;
 
 public class ShopMenu : MonoBehaviour {
 
+	public GameObject PopUpMoneyMenu; 
+	private bool isShowing; 
 
 	public void BuyPress ()
 	{
@@ -17,6 +19,9 @@ public class ShopMenu : MonoBehaviour {
 	public void PlusIconPress ()
 	{
 		Debug.Log ("pressedPlusIcon");
+		isShowing = !isShowing;
+		PopUpMoneyMenu.SetActive (isShowing); 
+
 	}
 
 	public void WeaponsPress ()
