@@ -15,7 +15,7 @@ public class DamageComponent : MonoBehaviour {
 
 	void OnTriggerEnter2D( Collider2D other )
 	{
-		//Debug.Log(gameObject.tag + " collided with " + other.tag);
+		Debug.Log(gameObject.tag + " collided with " + other.tag);
 
 	
 		if (other.transform == myOwner) return;
@@ -24,33 +24,36 @@ public class DamageComponent : MonoBehaviour {
 		if ( gameObject.GetComponentInParent<Enemy>() != null && other.gameObject.tag == "Enemy"
 			&& gameObject.GetComponentInParent<Enemy>().target != other.gameObject.GetComponentInParent<Enemy>().target)
 		{
-			other.gameObject.SendMessage( "TakeDamage", GetWeaponDamage(), SendMessageOptions.DontRequireReceiver );
-			//Debug.Log("111");
+			Debug.Log("111");
+			SendDamage(other.gameObject.GetComponentInParent<HealthComponent>());
 		}
 		// If we are the player, send message
 		else if (GetComponent<PlayerMovement>() != null || GetComponentInParent<PlayerMovement>() != null )
 		{
-			other.gameObject.SendMessage( "TakeDamageFromPlayer", GetWeaponDamage(), SendMessageOptions.DontRequireReceiver );
-			//Debug.Log("222");
+			Debug.Log("222");
+			other.gameObject.SendMessage( "TakeDamageFromPlayer", GetWeaponDamage(), SendMessageOptions.DontRequireReceiver ); //what is this?
 		}
 		// If we are an enemy and we hit the player, send message
 		else if ( gameObject.GetComponentInParent<Enemy>() != null && other.tag == "Player" )
 		{
-			other.gameObject.GetComponentInParent<HealthComponent>().SendMessage( "TakeDamage", GetWeaponDamage(), SendMessageOptions.DontRequireReceiver );
-			//Debug.Log("333");
+			Debug.Log("333");
+			SendDamage( other.gameObject.GetComponentInParent<HealthComponent>() );
 		}
-		// If we are an enemy projectile and we hit the player, send message.
+		// If we are an enemy projectile and we hit the player or another enemy, send message.
 		else if (gameObject.tag == "EnemyProjectile" && ( other.tag == "Player" || other.tag == "Enemy" ) )
 		{
-			if ( other.gameObject.GetComponentInParent<HealthComponent>() != null )
-			{
-				other.gameObject.GetComponentInParent<HealthComponent>().SendMessage("TakeDamage", GetWeaponDamage(), SendMessageOptions.DontRequireReceiver);
-			}
-			else if ( other.gameObject.GetComponent<HealthComponent>() != null )
-			{
-				other.gameObject.GetComponent<HealthComponent>().SendMessage("TakeDamage", GetWeaponDamage(), SendMessageOptions.DontRequireReceiver);
-			}
-			//Debug.Log("444");
+			Debug.Log("444");
+			SendDamage( other.gameObject.GetComponentInParent<HealthComponent>() );
+		}
+	}
+
+	void SendDamage(HealthComponent healtComp)
+	{
+		healtComp.SendMessage("TakeDamage", GetWeaponDamage(), SendMessageOptions.DontRequireReceiver);
+
+		if (gameObject.tag == "EnemyProjectile")
+		{
+			Destroy(gameObject);
 		}
 	}
 

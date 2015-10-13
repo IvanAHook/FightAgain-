@@ -239,12 +239,12 @@ public class Enemy : Unit {
 		if (base.facingRight)
 		{
 			spawnedProjectile.gameObject.GetComponent<EnemyProjectile>().MoveRight(true);
-			spawnedProjectile.gameObject.GetComponent<DamageComponent>().Owner(gameObject.transform);
+			spawnedProjectile.gameObject.GetComponent<DamageComponent>().Owner(gameObject.GetComponentInChildren<Collider2D>().gameObject.transform);
 		}	
 		else
 		{
 			spawnedProjectile.gameObject.GetComponent<EnemyProjectile>().MoveRight(false);
-			spawnedProjectile.gameObject.GetComponent<DamageComponent>().Owner(gameObject.transform);
+			spawnedProjectile.gameObject.GetComponent<DamageComponent>().Owner(gameObject.GetComponentInChildren<Collider2D>().gameObject.transform);
 		}
 			
 

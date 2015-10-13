@@ -14,7 +14,6 @@ public class EnemyProjectile : MonoBehaviour {
 
 	void Update () 
 	{
-
 		lifeTime += Time.deltaTime;
 		if (lifeTime > 10f)
 			Destroy(gameObject);
