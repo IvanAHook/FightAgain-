@@ -20,7 +20,7 @@ public class ShopMenu : MonoBehaviour {
 	{
 		Debug.Log ("pressedPlusIcon");
 		isShowing = !isShowing;
-		PopUpMoneyMenu.SetActive (isShowing); 
+		PopUpMoneyMenu.SetActive (isShowing = true); 
 
 	}
 
@@ -43,5 +43,30 @@ public class ShopMenu : MonoBehaviour {
 	{
 		Debug.Log ("pressedBoots");
 	}
+
+	public void ClosePopUpPress ()
+	{
+		Debug.Log ("pressedCloseIcon");
+		isShowing = !isShowing;
+		PopUpMoneyMenu.SetActive (isShowing = false); 
+		 
+
+	}
+
+	public void SmallMoneyPress ()
+	{
+		Debug.Log ("pressedSmallMoney");
+	}
+
+	public void MediumMoneyPress ()
+	{
+		Debug.Log ("pressedMediumMoney");
+	}
+
+	public void BigMoneyPress ()
+	{
+		Debug.Log ("pressedBigMoney");
+	}
 }
+
 
