@@ -64,7 +64,6 @@ public class EnemyManager : MonoBehaviour {
 		} 
 		else if(/* wave < enemyWaves.Count  && */spawning == false && !spawnOne ) 
 		{
-			Debug.Log( "Deeeek" );
 			List<int> tempList = GenerateWave( (wave+1)*8, tempRange );
 			for ( int i = 0; i < tempList.Count; i++ ) {
 				//Debug.Log( "tempList[" + i + "]: " + tempList[ i ] );
@@ -96,9 +95,9 @@ public class EnemyManager : MonoBehaviour {
 
 		//Debug.Log( "wave count= " + waveList.Count );
 		for ( int i = 0; i < waveList.Count; i++ ) {
-			Debug.Log( "waveList value: " + waveList[ i ] );
+			//Debug.Log( "waveList value: " + waveList[ i ] );
 		}
-		Debug.Log( "enemies in wave: " + waveList.Count );
+		//Debug.Log( "enemies in wave: " + waveList.Count );
 		return waveList;
 	}
 
