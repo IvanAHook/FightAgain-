@@ -12,7 +12,7 @@ public class MovementComponent : MonoBehaviour {
 		public Vector2 tangentialTranslation;
 	}
 
-	float speed = 4f;
+	public float speed = 3.8f;
 	float RADIUS;
 	float DIAMETER_SQR;
 
@@ -49,10 +49,10 @@ public class MovementComponent : MonoBehaviour {
 			this.speed = speed;
 	}
 
-	void OnDrawGizmos() {
+	/*void OnDrawGizmos() {
 		Gizmos.color = Color.yellow;
 		Gizmos.DrawSphere( transform.position, RADIUS );
-	}
+	}*/
 
 	Vector2 ConstrainTranslation( Transform t, Vector2 wantedTranslation )
 	{
