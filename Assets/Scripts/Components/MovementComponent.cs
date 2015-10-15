@@ -49,11 +49,6 @@ public class MovementComponent : MonoBehaviour {
 			this.speed = speed;
 	}
 
-	void OnDrawGizmos() {
-		Gizmos.color = Color.yellow;
-		Gizmos.DrawSphere( transform.position, RADIUS );
-	}
-
 	Vector2 ConstrainTranslation( Transform t, Vector2 wantedTranslation )
 	{
 		float translationDistance = wantedTranslation.magnitude;

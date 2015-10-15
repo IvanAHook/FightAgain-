@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class EquipmentComponent : MonoBehaviour { // Does not need monobehavior
 
@@ -8,6 +9,7 @@ public class EquipmentComponent : MonoBehaviour { // Does not need monobehavior
 	// Ability ability
 
 	public WeaponData weapon;
+	public List<EquipmentData> equipment;
 	public EquipmentData head;
 	public EquipmentData body;
 	public EquipmentData feet;
@@ -36,19 +38,24 @@ public class EquipmentComponent : MonoBehaviour { // Does not need monobehavior
 		}
 	}
 
-	void EquipWeapon( string weapon ) // struct? array? of weapons
+	public void EquipWeapon( WeaponData.Type type, string name )
 	{
+		weapon = GameManager.equipmentList.GetWeapon( type, name );
 	}
 
-	public void Equip( WeaponData weapon, EquipmentData head, EquipmentData body, EquipmentData feet )
+	public void Equip( EquipmentData.Type type, string name )
 	{
-		this.weapon = weapon;
-		this.head = head;
-		this.body = body;
-		this.feet = feet;
+		for (int i = 0; i < equipment.Count; i++) {
+			if( equipment[i].type == type )
+			{
+				equipment[i] = GameManager.equipmentList.GetEquipment( type, name );
+				return;
+			}
+		}
+		equipment.Add( GameManager.equipmentList.GetEquipment( type, name ) );
 	}
 
-	public int GetWeaponDamage()
+	public float GetWeaponDamage()
 	{
 		return weapon.damage;
 	}

@@ -7,7 +7,7 @@ public class WeaponComponent : MonoBehaviour {
 
 	bool moveRight = true;
 	public bool thrown = false;
-	int damage;
+	float damage;
 
 	void Start()
 	{

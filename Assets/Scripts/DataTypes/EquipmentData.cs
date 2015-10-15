@@ -6,10 +6,10 @@ public struct EquipmentData {
 	public Type type;
 	public string name;
 	public int armor;
-	public int speed;
+	public float speed;
 	// sprite reference?
 
-	public EquipmentData( Type type, string name, int armor, int speed )
+	public EquipmentData( Type type, string name, int armor, float speed )
 	{
 		this.type = type;
 		this.name = name;
