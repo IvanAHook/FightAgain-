@@ -17,6 +17,13 @@ public class Menu : MonoBehaviour {
 	public Canvas deathScreenCanvas;
 	bool paused = false;
 
+	public GameObject CreditsScreenHolder; 
+	public GameObject BackButton; 
+	public GameObject FightButton;
+	public GameObject ShopButton;
+	public GameObject OptionsButton;
+	public GameObject MuteButton;
+	public GameObject CreditsButton;
 
 	void Awake()
 	{
@@ -69,7 +76,27 @@ public class Menu : MonoBehaviour {
 
 	public void CreditsPress()
 	{
-		Debug.Log("Go to Credits");
+		Debug.Log("Go to Credits"); 
+		CreditsScreenHolder.SetActive(true); 
+		BackButton.SetActive (true); 
+		FightButton.SetActive (false);
+		ShopButton.SetActive (false);
+		OptionsButton.SetActive (false);
+		MuteButton.SetActive (false);
+		CreditsButton.SetActive (false);
+
+	}
+
+	public void BackButtonPress()
+	{
+		Debug.Log ("pressedBackButton");
+		CreditsScreenHolder.SetActive(false);  
+		BackButton.SetActive (false); 
+		FightButton.SetActive (true);
+		ShopButton.SetActive (true);
+		OptionsButton.SetActive (true);
+		MuteButton.SetActive (true);
+		CreditsButton.SetActive (true);
 	}
 
 	public void PausePress()
