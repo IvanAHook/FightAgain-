@@ -18,7 +18,6 @@ public class Enemy : Unit {
 
 	float attackRange = 1.2f;
 	float rAttackRange = 5f;
-	float moveSpeed = 3f;
 	float range;
 	bool isRanged;
 	
@@ -27,6 +26,14 @@ public class Enemy : Unit {
 	float xVel;
 	float yVel;
 	Vector2 randomVector;
+
+	public Sprite sprite;
+	
+	[SpineSlot]
+	public string slot;
+
+	[SpineSkin]
+	public string skin;
 
 
 	// ANIMATIONZ
@@ -44,10 +51,20 @@ public class Enemy : Unit {
 		_healthcomponent = GetComponent<HealthComponent>();
 		_movement = GetComponent<MovementComponent>();
 		_skelAnim = GetComponent<SkeletonAnimation>();
+
+		
 	}
+
 
 	public override void Start() 
 	{
+		// Attach test
+		var skeletonRenderer = GetComponent<SkeletonRenderer>();
+		var attachment = skeletonRenderer.skeleton.Data.AddUnitySprite(slot, sprite, skin);
+
+		//skeletonRenderer.skeleton.SetAttachment(slot, sprite.name);
+
+
 		state = State.Targeting;
 
 		// Temporary
