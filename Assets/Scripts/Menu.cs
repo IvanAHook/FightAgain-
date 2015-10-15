@@ -49,6 +49,7 @@ public class Menu : MonoBehaviour {
 	public void ShopPress()
 	{
 		Debug.Log("Go to shop");
+		Application.LoadLevel("StoreMenu");
 	}
 
 	public void OptionsPress()

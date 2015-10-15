@@ -67,7 +67,7 @@ public class MovementComponent : MonoBehaviour {
 		Collider2D[] neighborColliders = Physics2D.OverlapCircleAll( position + 0.5f * wantedTranslation, queryRadius );
 		foreach( Collider2D c2d in neighborColliders )
 		{
-			if( c2d.transform != this.transform )
+			if( c2d.transform != this.transform && c2d.name.Contains( "Box" ) )
 			{
 				neighbors.Add(c2d.transform);
 			}
@@ -79,10 +79,11 @@ public class MovementComponent : MonoBehaviour {
 		{
 			neighbors.Remove( collision.t );
 			Vector2 translation = collision.tangentialTranslation;
+			//Debug.Log( collision.tangentialTranslation );
 
 			if( NearestCollision( neighbors, position, translation, collision ) )
 				return translation * collision.distance;
-
+			Debug.Log( translation );
 			return translation;
 		}
 
@@ -99,7 +100,7 @@ public class MovementComponent : MonoBehaviour {
 			return false;
 
 		Vector2 wantedPosition = position + translation;
-		Vector2 normalizedTranslation = translation / translationLength;
+		Vector2 normalizedTranslation = translation.normalized;
 
 		collision.distance = translationLength;
 		foreach( Transform neighbor in neighbors )
@@ -107,7 +108,8 @@ public class MovementComponent : MonoBehaviour {
 			Vector2 posB = neighbor.position;
 			Vector2 toB = posB - position;
 
-			float d = Vector2.Dot( normalizedTranslation, toB );
+
+			float d = Vector2.Dot( normalizedTranslation, toB.normalized );
 			if( d <= 0 )
 				continue;
 

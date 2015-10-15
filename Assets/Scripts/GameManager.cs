@@ -19,7 +19,7 @@ public class GameManager : MonoBehaviour {
 	public EquipmentData head;
 	public EquipmentData body;
 	public EquipmentData feet;
-	EquipmentList equipmentList;
+	public static EquipmentList equipmentList;
 
 	public bool collisionHandling;
 	
