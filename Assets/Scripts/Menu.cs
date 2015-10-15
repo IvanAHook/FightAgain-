@@ -17,6 +17,7 @@ public class Menu : MonoBehaviour {
 	public Canvas deathScreenCanvas;
 	bool paused = false;
 
+	public GameObject OptionsScreenHolder;
 	public GameObject CreditsScreenHolder; 
 	public GameObject BackButton; 
 	public GameObject FightButton;
@@ -62,6 +63,13 @@ public class Menu : MonoBehaviour {
 	public void OptionsPress()
 	{
 		Debug.Log("Go to options");
+		OptionsScreenHolder.SetActive (true);  
+		BackButton.SetActive (true); 
+		FightButton.SetActive (false);
+		ShopButton.SetActive (false);
+		OptionsButton.SetActive (false);
+		MuteButton.SetActive (false);
+		CreditsButton.SetActive (false);
 	}
 
 	public void MutePress()
@@ -90,6 +98,7 @@ public class Menu : MonoBehaviour {
 	public void BackButtonPress()
 	{
 		Debug.Log ("pressedBackButton");
+		OptionsScreenHolder.SetActive (false);  
 		CreditsScreenHolder.SetActive(false);  
 		BackButton.SetActive (false); 
 		FightButton.SetActive (true);
