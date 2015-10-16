@@ -7,13 +7,14 @@ public struct WeaponData {
 
 	public Type type;
 	public string name;
-	public int damage;
+	public float damage;
 	// sprite reference?
 
-	public WeaponData( Type type, string name, int damage )
+	public WeaponData( Type type, string name, float damage )
 	{
 		this.type = type;
 		this.name = name;
 		this.damage = damage;
 	}
+
 }

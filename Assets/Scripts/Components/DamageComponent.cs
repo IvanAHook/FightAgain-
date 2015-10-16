@@ -5,7 +5,7 @@ public class DamageComponent : MonoBehaviour {
 
 	Transform myOwner;
 
-	int GetWeaponDamage()
+	float GetWeaponDamage()
 	{
 		if ( gameObject.tag == "Player" )
 			return GetComponentInParent<EquipmentComponent>().GetWeaponDamage();

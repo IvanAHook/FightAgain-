@@ -32,6 +32,11 @@ public class PlayerMovement : MonoBehaviour {
 
 	}
 
+	void Start()
+	{
+		_equipment.EquipWeapon( WeaponData.Type.Melee, "Katana" );
+	}
+
 	void Update() 
 	{
 

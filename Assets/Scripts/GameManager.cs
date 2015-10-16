@@ -11,8 +11,7 @@ public class GameManager : MonoBehaviour {
 
 	Transform playerTransform;
 	int money;
-	
-	public Transform player;
+
 	public GameObject menu;
 
 	public WeaponData weapon;
@@ -36,7 +35,7 @@ public class GameManager : MonoBehaviour {
 	{
 		equipmentList = new EquipmentList();
 		money = 0;
-		//SpawnPlayer();
+		SpawnPlayer();
 
 	}
 
@@ -56,12 +55,6 @@ public class GameManager : MonoBehaviour {
 			menu.GetComponent<Menu>().DeathScreen();
 		}
 
-		// Singelton Player instance?
-		if(playerTransform == null)
-		{
-			playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
-		}
-		
 	}
 
 	void LoadArena()
@@ -75,11 +68,10 @@ public class GameManager : MonoBehaviour {
 
 	}
 
-	Transform SpawnPlayer()
+	void SpawnPlayer()
 	{
-		player = Instantiate( playerPrefab, Vector3.zero, Quaternion.identity ) as Transform;
-		player.GetComponent<EquipmentComponent>().Equip( weapon, head, body, feet );
-		return player;
+		playerTransform = Instantiate( playerPrefab, Vector3.zero, Quaternion.identity ) as Transform;
+		//player.GetComponent<EquipmentComponent>().Equip( weapon, head, body, feet );
 	}
 
 	public Vector2 GetPlayerPosition()
