@@ -3,6 +3,9 @@ using System.Collections;
 
 public class GameManager : MonoBehaviour {
 
+	enum GameState { Menu, Fight };
+	GameState state;
+
 	public static GameManager instance = null;
 
 	public GameObject playerPrefab;
@@ -35,13 +38,12 @@ public class GameManager : MonoBehaviour {
 	{
 		equipmentList = new EquipmentList();
 		money = 0;
-		SpawnPlayer();
-
 	}
 
 	void InitGame()
 	{
-
+		state = GameState.Menu;
+		// load menu
 	}
 
 	void Update()
@@ -57,10 +59,23 @@ public class GameManager : MonoBehaviour {
 
 	}
 
-	void LoadArena()
+	public void LoadArena()
 	{
+		state = GameState.Fight;
+		Application.LoadLevel("FirstTest");
+
+		// set GameState == Fight
 		// load level
 		// spawn player
+
+	}
+
+	void OnLevelWasLoaded( int level )
+	{
+		if( level == 1 )
+		{
+			SpawnPlayer();
+		}
 	}
 
 	void LoadShop()
@@ -99,7 +114,7 @@ public class GameManager : MonoBehaviour {
 		return money += ammount;
 	}
 
-	int DecreaseMoney( int ammount )
+	public int DecreaseMoney( int ammount )
 	{
 		return money -= ammount;
 	}
