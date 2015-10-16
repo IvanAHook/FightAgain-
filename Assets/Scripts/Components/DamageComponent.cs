@@ -17,7 +17,6 @@ public class DamageComponent : MonoBehaviour {
 	{
 		//Debug.Log(gameObject.tag + " collided with " + other.tag);
 
-	
 		if (other.transform == myOwner) return;
 
 		// If I'm an enemy and I hit another enemy and we don't have the same target.
@@ -31,7 +30,7 @@ public class DamageComponent : MonoBehaviour {
 		else if (GetComponent<PlayerMovement>() != null || GetComponentInParent<PlayerMovement>() != null )
 		{
 			//Debug.Log("222");
-			other.gameObject.SendMessage( "TakeDamageFromPlayer", GetWeaponDamage(), SendMessageOptions.DontRequireReceiver ); //what is this?
+			other.gameObject.GetComponentInParent<HealthComponent>().SendMessage( "TakeDamageFromPlayer", GetWeaponDamage(), SendMessageOptions.DontRequireReceiver );
 		}
 		// If we are an enemy and we hit the player, send message
 		else if ( gameObject.GetComponentInParent<Enemy>() != null && other.tag == "Player" )
