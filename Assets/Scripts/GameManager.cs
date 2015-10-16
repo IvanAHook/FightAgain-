@@ -63,11 +63,6 @@ public class GameManager : MonoBehaviour {
 	{
 		state = GameState.Fight;
 		Application.LoadLevel("FirstTest");
-
-		// set GameState == Fight
-		// load level
-		// spawn player
-
 	}
 
 	void OnLevelWasLoaded( int level )
