@@ -58,7 +58,7 @@ public class SpriteAttacher : MonoBehaviour {
 
 		if (loader == null)
 			//create loader instance, tell it what sprite and shader to use
-			loader = new SpriteAttachmentLoader(sprite, Shader.Find("Spine/Skeleton"));
+			loader = new SpriteAttachmentLoader(sprite, Shader.Find("Sprites/Default"));
 
 		if (attachment == null)
 			attachment = loader.NewRegionAttachment(null, sprite.name, "");

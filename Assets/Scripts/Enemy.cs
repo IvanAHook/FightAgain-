@@ -16,7 +16,7 @@ public class Enemy : Unit {
     public Transform target = null;
 	public GameObject enemyProjectile;
 
-	float attackRange = 1.2f;
+	float attackRange = 1f;
 	float rAttackRange = 5f;
 	float range;
 	bool isRanged;
@@ -27,15 +27,6 @@ public class Enemy : Unit {
 	float yVel;
 	Vector2 randomVector;
 
-	public Sprite sprite;
-	
-	[SpineSlot]
-	public string slot;
-
-	[SpineSkin]
-	public string skin;
-
-
 	// ANIMATIONZ
 	SkeletonAnimation _skelAnim;
 	[SpineAnimation]
@@ -44,6 +35,8 @@ public class Enemy : Unit {
 	public string moveAnimation;
 	[SpineAnimation]
 	public string attackAnimation;
+	[SpineAnimation]
+	public string rAttackAnimation;
 	bool isIdle;
 
 	void Awake() 
@@ -51,19 +44,11 @@ public class Enemy : Unit {
 		_healthcomponent = GetComponent<HealthComponent>();
 		_movement = GetComponent<MovementComponent>();
 		_skelAnim = GetComponent<SkeletonAnimation>();
-
-		
 	}
 
 
 	public override void Start() 
 	{
-		// Attach test
-		var skeletonRenderer = GetComponent<SkeletonRenderer>();
-		var attachment = skeletonRenderer.skeleton.Data.AddUnitySprite(slot, sprite, skin);
-
-		//skeletonRenderer.skeleton.SetAttachment(slot, sprite.name);
-
 
 		state = State.Targeting;
 
@@ -249,7 +234,7 @@ public class Enemy : Unit {
 
 		// Shoot
 		//base.AttackAnim(); // not needed with spine
-		_skelAnim.state.SetAnimation( 0, attackAnimation, false );
+		_skelAnim.state.SetAnimation( 0, rAttackAnimation, false );
 
 		Vector2 pos = new Vector3( transform.position.x, transform.position.y + 0.5f, 0f);
 		GameObject spawnedProjectile = (GameObject)Instantiate(enemyProjectile, pos, Quaternion.identity);

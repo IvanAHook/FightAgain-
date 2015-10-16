@@ -8,6 +8,8 @@ public class HealthComponent : MonoBehaviour {
 	SpriteRenderer mySprite;
 	Color defaultColor;
 	float timer;
+	bool invurnable = false;
+	float invTime = 0.15f;
 	
 	void Awake() 
 	{
@@ -20,8 +22,9 @@ public class HealthComponent : MonoBehaviour {
 	void Update() // for test only plz
 	{
 		timer += Time.deltaTime;
-		if (timer > 0.5f)
+		if (timer > invTime)
 			//mySprite.color = defaultColor;
+			invurnable = false;
 			
 			//For testing
 			if (gameObject.tag == "Player" && Input.GetKeyDown(KeyCode.O))
@@ -33,18 +36,26 @@ public class HealthComponent : MonoBehaviour {
 	
 	public void TakeDamage( int damage )
 	{
-		health -= damage;
-		if ( health <= 0 )
+		if (!invurnable)
 		{
-			gameObject.SetActive(false);
+			health -= damage;
+			print(gameObject.tag + " took damage");
 			
-			if (gameObject.tag == "Player")
+			if (health <= 0)
 			{
-				GameManager.instance.PlayerDied();
+				gameObject.SetActive(false);
+
+				if (gameObject.tag == "Player")
+				{
+					GameManager.instance.PlayerDied();
+				}
 			}
+			//mySprite.color = Color.blue;
+			invurnable = true;
+			timer = 0f;
 		}
-		//mySprite.color = Color.blue;
-		timer = 0f;
+
+		
 	}
 	
 	public void TakeDamageFromPlayer( int damage )
