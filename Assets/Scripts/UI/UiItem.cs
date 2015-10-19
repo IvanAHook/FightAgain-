@@ -6,7 +6,7 @@ public class UiItem : MonoBehaviour {
 
 	public enum Type { Equipment, Weapon };
 
-	Type type;
+	public Type type;
 	public int itemId;
 	public int cost;
 	bool aquired;
