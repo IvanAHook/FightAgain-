@@ -8,7 +8,7 @@ public class HealthComponent : MonoBehaviour {
 	SpriteRenderer mySprite;
 	Color defaultColor;
 	float timer;
-	bool invurnable = false;
+	bool invulnerable = false;
 	float invTime = 0.15f;
 	
 	void Awake() 
@@ -24,7 +24,7 @@ public class HealthComponent : MonoBehaviour {
 		timer += Time.deltaTime;
 		if (timer > invTime)
 			//mySprite.color = defaultColor;
-			invurnable = false;
+			invulnerable = false;
 			
 			//For testing
 			if (gameObject.tag == "Player" && Input.GetKeyDown(KeyCode.O))
@@ -36,11 +36,15 @@ public class HealthComponent : MonoBehaviour {
 	
 	public void TakeDamage( int damage )
 	{
-		if (!invurnable)
+		if (!invulnerable)
 		{
 			health -= damage;
-			print(gameObject.tag + " took damage");
 			
+			if (gameObject.tag == "Enemy")
+			{
+				GetComponent<AnimationComponent>().PlayGotHitAnim(); // UUGHLY
+			}
+
 			if (health <= 0)
 			{
 				gameObject.SetActive(false);
@@ -51,7 +55,7 @@ public class HealthComponent : MonoBehaviour {
 				}
 			}
 			//mySprite.color = Color.blue;
-			invurnable = true;
+			invulnerable = true;
 			timer = 0f;
 		}
 
