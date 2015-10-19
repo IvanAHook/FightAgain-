@@ -7,12 +7,7 @@ public class WeaponComponent : MonoBehaviour {
 
 	bool moveRight = true;
 	public bool thrown = false;
-	float damage;
-
-	void Start()
-	{
-		damage = weaponData.damage;
-	}
+	float damage = 0.5f;
 
 	void Update() 
 	{
@@ -32,7 +27,11 @@ public class WeaponComponent : MonoBehaviour {
 		else
 			moveRight = false;
 	}
-	
+
+	public void SetWeapon( WeaponData weaponData )
+	{
+		this.weaponData = weaponData;
+	}
 	
 	void OnTriggerEnter2D (Collider2D other)
 	{

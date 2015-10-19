@@ -38,6 +38,7 @@ public class GameManager : MonoBehaviour {
 	{
 		equipmentList = new EquipmentList();
 		money = 0;
+		Debug.Log( head.type + "  " + body.type );
 	}
 
 	void InitGame()
@@ -56,8 +57,6 @@ public class GameManager : MonoBehaviour {
 			playerDied = false;
 			menu.GetComponent<Menu>().DeathScreen();
 		}
-
-		//Debug.Log(GetPlayerTransform());
 
 	}
 
@@ -82,10 +81,18 @@ public class GameManager : MonoBehaviour {
 
 	void SpawnPlayer()
 	{
-		//playerTransform = Instantiate( playerPrefab, Vector3.zero, Quaternion.identity ) as Transform;
-		GameObject player = Instantiate(playerPrefab, Vector3.zero, Quaternion.identity) as GameObject;
+		GameObject player = Instantiate( playerPrefab, Vector3.zero, Quaternion.identity ) as GameObject;
 		playerTransform = player.transform;
-		Debug.Log(playerTransform);
+		EquipmentComponent playerEquipment = playerTransform.GetComponent<EquipmentComponent>();
+
+/*		if( weapon != null )
+			playerEquipment.EquipWeapon( weapon.type, weapon.name );
+		if( head != null )
+			playerEquipment.Equip( head.type, head.name );
+		if( body != null )
+			playerEquipment.Equip( body.type, body.name );
+		if( feet != null )
+			playerEquipment.Equip( feet.type, feet.name );*/
 		//player.GetComponent<EquipmentComponent>().Equip( weapon, head, body, feet );
 	}
 

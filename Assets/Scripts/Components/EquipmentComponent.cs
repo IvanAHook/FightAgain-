@@ -24,6 +24,7 @@ public class EquipmentComponent : MonoBehaviour { // Does not need monobehavior
 			weapon.name = "Fist";
 			weapon.damage = 2;
 		}
+		GetComponent<WeaponComponent>().SetWeapon( weapon );
 	}
 
 	public void DropWeapon()
@@ -41,6 +42,7 @@ public class EquipmentComponent : MonoBehaviour { // Does not need monobehavior
 	public void EquipWeapon( WeaponData.Type type, string name )
 	{
 		weapon = GameManager.equipmentList.GetWeapon( type, name );
+		// Set weapon prefab
 	}
 
 	public void Equip( EquipmentData.Type type, string name )

@@ -96,6 +96,22 @@ public class EquipmentList {
 		return new EquipmentData( type, "Naked", 0, 0 );
 	}
 
+	public WeaponData GetWeapon( int id )
+	{
+		if( weapons.Count > id )
+			return weapons[ id ];
+		else
+			return weapons[0];
+	}
+	
+	public EquipmentData GetEquipment( int id )
+	{
+		if( equipment.Count > id )
+			return equipment[ id ];
+		else
+			return equipment[0];
+	}
+
 	void InsertEquipment( EquipmentData.Type type, string typeString, JSONNode jsonNode ) // parse weapons and equipment from JSON file
 	{
 		//Debug.Log( "Equipment list parsing..." + typeString );
