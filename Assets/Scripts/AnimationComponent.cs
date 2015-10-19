@@ -5,13 +5,16 @@ public class AnimationComponent : MonoBehaviour {
 
 	SkeletonAnimation skelAnim;
 	SkeletonRenderer skelRenderer;
+	bool likesHats = false;
 
-	/* // ATTACHMENTS
-	public Sprite mySprite;
+	 // ATTACHMENTS
+	public Sprite[] hats;
+
+	//public Sprite mySprite;
 	[SpineSlot]
 	public string slot;
 	[SpineSkin]
-	public string skin;*/
+	public string skin;
 
 	// ANIMATIONZ
 	SkeletonAnimation _skelAnim;
@@ -30,10 +33,21 @@ public class AnimationComponent : MonoBehaviour {
 
 	void Start () 
 	{
-		/*// ATTACHMENTS
+		int rng = Random.Range(0, 10);
+		if (rng > 6)
+		{
+			likesHats = true;
+		}
+
+		
 		skelRenderer = GetComponent<SkeletonRenderer>();
-		skelRenderer.skeleton.Data.AddUnitySprite(slot, mySprite, skin);
-		skelRenderer.skeleton.SetAttachment(slot, mySprite.name);*/
+		if (hats.Length > 0 && likesHats)
+		{
+			int randomInt = Random.Range(0, hats.Length);
+			skelRenderer.skeleton.Data.AddUnitySprite(slot, hats[randomInt], skin, "Sprites/Default");
+			skelRenderer.skeleton.SetAttachment(slot, hats[randomInt].name);
+		}
+		
 
 		// ANIMATIONZ
 		_skelAnim = GetComponent<SkeletonAnimation>();

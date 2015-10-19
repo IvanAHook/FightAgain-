@@ -4,13 +4,7 @@ using System.Collections;
 public class EnemyProjectile : MonoBehaviour {
 	
 	bool moveRight = true;
-	int damage;
 	float lifeTime;
-
-	void Awake() 
-	{
-		damage = 10;
-	}
 
 	void Update () 
 	{

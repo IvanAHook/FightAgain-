@@ -38,7 +38,9 @@ public class GameManager : MonoBehaviour {
 	{
 		equipmentList = new EquipmentList();
 		money = 0;
-		Debug.Log( head.type + "  " + body.type );
+		//Debug.Log( head.type + "  " + body.type );
+
+		SpawnPlayer(); // SUPER DUPER MEGA TEMP - ARRE BARRE
 	}
 
 	void InitGame()
