@@ -30,6 +30,32 @@ public class ShopMenu : MonoBehaviour {
 		Debug.Log ("pressedBuy");
 	}
 
+	public void EquipPress()
+	{
+		int id = selectedItem.GetItemId();
+		if( selectedItem.GetType() == UiItem.Type.Equipment )
+		{
+			EquipmentData item = GameManager.equipmentList.GetEquipment( id );
+			if( item.type == EquipmentData.Type.Head )
+			{
+				GameManager.instance.head = item;
+			}
+			else if( item.type == EquipmentData.Type.Body )
+			{
+				GameManager.instance.body = item;
+			}
+			else if( item.type == EquipmentData.Type.Feet )
+			{
+				GameManager.instance.feet = item;
+			}
+		}
+		else if( selectedItem.GetType() == UiItem.Type.Weapon )
+		{
+			GameManager.instance.weapon = GameManager.equipmentList.GetWeapon( id );
+		}
+		Debug.Log ("pressedEquip");
+	}
+
 	public void FightPress ()
 	{
 		//GameManager.instance.LoadArena();

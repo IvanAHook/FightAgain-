@@ -4,6 +4,9 @@ using System.Collections;
 
 public class UiItem : MonoBehaviour {
 
+	public enum Type { Equipment, Weapon };
+
+	Type type;
 	public int itemId;
 	public int cost;
 	bool aquired;
@@ -16,6 +19,11 @@ public class UiItem : MonoBehaviour {
 	public int GetItemCost()
 	{
 		return cost;
+	}
+
+	public UiItem.Type GetType()
+	{
+		return type;
 	}
 
 	public bool IsAquired()
