@@ -55,6 +55,8 @@ public class GameManager : MonoBehaviour {
 			menu.GetComponent<Menu>().DeathScreen();
 		}
 
+		//Debug.Log(GetPlayerTransform());
+
 	}
 
 	void LoadArena()
@@ -70,7 +72,10 @@ public class GameManager : MonoBehaviour {
 
 	void SpawnPlayer()
 	{
-		playerTransform = Instantiate( playerPrefab, Vector3.zero, Quaternion.identity ) as Transform;
+		//playerTransform = Instantiate( playerPrefab, Vector3.zero, Quaternion.identity ) as Transform;
+		GameObject player = Instantiate(playerPrefab, Vector3.zero, Quaternion.identity) as GameObject;
+		playerTransform = player.transform;
+		Debug.Log(playerTransform);
 		//player.GetComponent<EquipmentComponent>().Equip( weapon, head, body, feet );
 	}
 

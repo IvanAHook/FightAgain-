@@ -4,6 +4,7 @@ using System.Collections.Generic;
 
 [RequireComponent(typeof(HealthComponent))]
 [RequireComponent(typeof(MovementComponent))]
+[RequireComponent(typeof(AnimationComponent))]
 public class Enemy : Unit {
 
 	public enum State { Targeting, Engaging, Attacking, Death };
@@ -12,6 +13,7 @@ public class Enemy : Unit {
 	// Required componentent
 	HealthComponent _healthcomponent;
 	MovementComponent _movement;
+	AnimationComponent _animComponent;
 
     public Transform target = null;
 	public GameObject enemyProjectile;
@@ -27,29 +29,18 @@ public class Enemy : Unit {
 	float yVel;
 	Vector2 randomVector;
 
-	// ANIMATIONZ
-	SkeletonAnimation _skelAnim;
-	[SpineAnimation]
-	public string idleAnimation;
-	[SpineAnimation]
-	public string moveAnimation;
-	[SpineAnimation]
-	public string attackAnimation;
-	[SpineAnimation]
-	public string rAttackAnimation;
 	bool isIdle;
 
 	void Awake() 
 	{
 		_healthcomponent = GetComponent<HealthComponent>();
 		_movement = GetComponent<MovementComponent>();
-		_skelAnim = GetComponent<SkeletonAnimation>();
+		_animComponent = GetComponent<AnimationComponent>();
 	}
 
 
 	public override void Start() 
 	{
-
 		state = State.Targeting;
 
 		// Temporary
@@ -57,9 +48,9 @@ public class Enemy : Unit {
 		int meleeOrRanged = Random.Range(0, 2);
 		
 		if (meleeOrRanged == 0)
-			isRanged = true;
+			isRanged = false;
 		else
-			isRanged = true;
+			isRanged = false;
 
 		// Change range depening on if enemy is ranged or not.
 		if (isRanged)
@@ -123,21 +114,32 @@ public class Enemy : Unit {
 
 	void SelectTarget( Transform player, List<Enemy> enemies ) 
 	{
-
+		int engagedToPlayer = 0;
 		foreach (Enemy e in enemies)
 		{
-			if ( e.target == null && e != this )
+			if (e.target == player)
+				engagedToPlayer += 1;
+		}
+		
+		foreach (Enemy e in enemies)
+		{	
+			if ( engagedToPlayer <= 3 )
 			{
+				target = player;
+				state = State.Engaging;
+				engagedToPlayer += 1;
+			}
+			else if ( e.target == null && e != this )
+			{
+				// Find one enemy, let's fight!
 				target = e.transform;
 				e.target = transform;
 				e.state = State.Engaging;
 				state = State.Engaging;
-				return;
 			}
 		}
-
-		target = player;
-		state = State.Engaging;
+		
+	
 	}
 
     void Engage() 
@@ -184,7 +186,7 @@ public class Enemy : Unit {
 			if (!isIdle)
 			{
 				isIdle = true;
-				_skelAnim.state.SetAnimation(0, idleAnimation, true);
+				_animComponent.PlayIdleAnim();
 			}
 			
 
@@ -203,7 +205,7 @@ public class Enemy : Unit {
 			if (isIdle)
 			{
 				isIdle = false;
-				_skelAnim.state.SetAnimation(0, moveAnimation, true);
+				_animComponent.PlayRunAnim();
 			}
 			
 		}
@@ -233,8 +235,8 @@ public class Enemy : Unit {
 		yield return new WaitForSeconds(0.2f);
 
 		// Shoot
-		//base.AttackAnim(); // not needed with spine
-		_skelAnim.state.SetAnimation( 0, rAttackAnimation, false );
+
+		_animComponent.PlayAttackAnim();
 
 		Vector2 pos = new Vector3( transform.position.x, transform.position.y + 0.5f, 0f);
 		GameObject spawnedProjectile = (GameObject)Instantiate(enemyProjectile, pos, Quaternion.identity);
@@ -258,8 +260,7 @@ public class Enemy : Unit {
 
 	IEnumerator MeleeAttack()
 	{
-		//base.AttackAnim(); // not needed with spine
-		_skelAnim.state.SetAnimation(0, attackAnimation, false);
+		_animComponent.PlayAttackAnim();
 
 		yield return new WaitForSeconds(0.5f);
 		state = State.Engaging;

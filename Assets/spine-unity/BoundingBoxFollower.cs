@@ -56,6 +56,7 @@ public class BoundingBoxFollower : MonoBehaviour {
 	public Dictionary<BoundingBoxAttachment, PolygonCollider2D> colliderTable = new Dictionary<BoundingBoxAttachment, PolygonCollider2D>();
 	public Dictionary<BoundingBoxAttachment, string> attachmentNameTable = new Dictionary<BoundingBoxAttachment, string>();
 
+
 	public string CurrentAttachmentName {
 		get {
 			return currentAttachmentName;

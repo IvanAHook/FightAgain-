@@ -82,11 +82,6 @@ public class Unit : MonoBehaviour {
 		}
 	}
 
-	public void AttackAnim() // not really needed.
-	{
-		animator.SetTrigger("Attack");
-	}
-
     public int GetNumberEngagedWith() 
 	{
         return engagedWithEnemies.Count;
