@@ -38,7 +38,6 @@ public class GameManager : MonoBehaviour {
 	{
 		equipmentList = new EquipmentList();
 		money = 0;
-		Debug.Log( head.type + "  " + body.type );
 	}
 
 	void InitGame()
@@ -84,6 +83,10 @@ public class GameManager : MonoBehaviour {
 		GameObject player = Instantiate( playerPrefab, Vector3.zero, Quaternion.identity ) as GameObject;
 		playerTransform = player.transform;
 		EquipmentComponent playerEquipment = playerTransform.GetComponent<EquipmentComponent>();
+		playerEquipment.weapon = weapon;
+		playerEquipment.head = head;
+		playerEquipment.body = body;
+		playerEquipment.feet = feet;
 
 /*		if( weapon != null )
 			playerEquipment.EquipWeapon( weapon.type, weapon.name );

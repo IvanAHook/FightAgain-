@@ -10,24 +10,42 @@ public class ShopMenu : MonoBehaviour {
 	public GameObject HelmetsItems;
 	public GameObject BootsItems;
 
+	public Transform weapon1Slot;
+	public Transform weapon2Slot;
+	public Transform headSlot;
+	public Transform bodySlot;
+	public Transform feetSlot;
+
+	UiItem weapon1E;
+	UiItem weapon2E;
+	UiItem headE;
+	UiItem bodyE;
+	UiItem feetE;
+
 	UiItem selectedItem;
 
 	public void SelectPress( GameObject item )
 	{
 		selectedItem = item.GetComponent<UiItem>();
-		Debug.Log( selectedItem.name );
+		//Debug.Log( selectedItem.name );
 	}
 
-	public void BuyPress ()
+	public void BuyPress()
 	{
+		if( selectedItem == null ) return;
+
 		int itemCost = selectedItem.GetItemCost();
 		if( GameManager.instance.GetMoney() >= itemCost && !selectedItem.IsAquired() )
 		{
-			Debug.Log( "bought: " + selectedItem.name );
+			//Debug.Log( "bought: " + selectedItem.name );
 			GameManager.instance.DecreaseMoney( itemCost );
 			selectedItem.Aquire( true );
 		}
-		Debug.Log ("pressedBuy");
+		else if( selectedItem.IsAquired() )
+		{
+			EquipPress();
+		}
+		//Debug.Log ("pressedBuy");
 	}
 
 	public void EquipPress()
@@ -38,22 +56,34 @@ public class ShopMenu : MonoBehaviour {
 			EquipmentData item = GameManager.equipmentList.GetEquipment( id );
 			if( item.type == EquipmentData.Type.Head )
 			{
-				GameManager.instance.head = item;
+				//GameManager.instance.head = item;
+				GameManager.instance.head = GameManager.equipmentList.GetEquipment( 2 );
+				headE = Instantiate( selectedItem, headSlot.position, Quaternion.identity ) as UiItem;
+				headE.transform.parent = headSlot;
 			}
 			else if( item.type == EquipmentData.Type.Body )
 			{
-				GameManager.instance.body = item;
+				//GameManager.instance.body = item;
+				GameManager.instance.body = GameManager.equipmentList.GetEquipment( 11 );
+				bodyE = Instantiate( selectedItem, bodySlot.position, Quaternion.identity ) as UiItem;
+				bodyE.transform.parent = bodySlot;
 			}
 			else if( item.type == EquipmentData.Type.Feet )
 			{
-				GameManager.instance.feet = item;
+				//GameManager.instance.feet = item;
+				GameManager.instance.feet = GameManager.equipmentList.GetEquipment( 19 );
+				feetE = Instantiate( selectedItem, feetSlot.position, Quaternion.identity ) as UiItem;
+				feetE.transform.parent = feetSlot;
+
 			}
 		}
 		else if( selectedItem.GetType() == UiItem.Type.Weapon )
 		{
-			GameManager.instance.weapon = GameManager.equipmentList.GetWeapon( id );
+			GameManager.instance.weapon = GameManager.equipmentList.GetWeapon( 4 );
+			weapon1E = Instantiate( selectedItem, weapon1Slot.position, Quaternion.identity ) as UiItem;
+			weapon1E.transform.parent = weapon1Slot;
 		}
-		Debug.Log ("pressedEquip");
+		//Debug.Log ("pressedEquip");
 	}
 
 	public void FightPress ()
