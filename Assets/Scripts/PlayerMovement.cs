@@ -8,13 +8,10 @@ using CnControls;
 [RequireComponent(typeof(SkeletonAnimation))]
 public class PlayerMovement : MonoBehaviour {
 
-	private Animator anim;
-	private bool facingRight = true;
-
 	EquipmentComponent _equipment;
 	MovementComponent _movement;
 	
-	// ANIMATIONZ
+	// ANIMATIONS
 	SkeletonAnimation _skelAnim;
 	[SpineAnimation( "Idle" )]
 	public string idleAnimation;
@@ -22,7 +19,9 @@ public class PlayerMovement : MonoBehaviour {
 	public string moveAnimation;
 	[SpineAnimation]
 	public string attackAnimation;
+
 	bool isIdle;
+	private bool facingRight = true;
 
 	void Awake() 
 	{
@@ -30,11 +29,6 @@ public class PlayerMovement : MonoBehaviour {
 		_movement = GetComponent<MovementComponent>();
 		_skelAnim = GetComponent<SkeletonAnimation>();
 
-	}
-
-	void Start()
-	{
-		_equipment.EquipWeapon( WeaponData.Type.Melee, "Katana" );
 	}
 
 	void Update() 
@@ -49,14 +43,6 @@ public class PlayerMovement : MonoBehaviour {
 			isIdle = true;
 			_skelAnim.state.SetAnimation(0, idleAnimation, true);
 		}
-			
-
-		// Old prototype animations.
-		/*if( CrossPlatformInputManager.GetAxis( "Vertical" ) != 0 || CrossPlatformInputManager.GetAxis( "Horizontal" ) != 0 ) 
-			anim.SetFloat( "Speed", 1f );
-		else 
-            anim.SetFloat( "Speed", 0f );*/
-
 
         if( CrossPlatformInputManager.GetButtonDown( "Jump" ) || Input.GetKeyDown(KeyCode.U) )
 			_skelAnim.state.SetAnimation( 0, attackAnimation, false );
@@ -71,10 +57,8 @@ public class PlayerMovement : MonoBehaviour {
 					   CnInputManager.GetAxis("Vertical"));
 
 		if (CnInputManager.GetAxis("Horizontal") < 0 && facingRight)
-			// _skelAnim.skeleton.FlipX = true;
 			Flip();
 		else if (CnInputManager.GetAxis("Horizontal") > 0 && !facingRight)
-			// _skelAnim.skeleton.FlipX = false;
 			Flip();
 
 		if (isIdle)
@@ -109,18 +93,6 @@ public class PlayerMovement : MonoBehaviour {
         Vector3 scale = transform.localScale;
         scale.x *= -1;
         transform.localScale = scale;
-    }
-
-    void Attack( string attack ) 
-	{
-    }
-
-    private void OnTriggerEnter2D(Collider2D other) 
-	{
-		if ( other.tag == "Weapon" )
-		{
-
-		}
     }
 
 }

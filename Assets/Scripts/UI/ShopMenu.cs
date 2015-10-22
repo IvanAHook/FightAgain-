@@ -57,21 +57,21 @@ public class ShopMenu : MonoBehaviour {
 			if( item.type == EquipmentData.Type.Head )
 			{
 				//GameManager.instance.head = item;
-				GameManager.instance.head = GameManager.equipmentList.GetEquipment( 2 );
+				GameManager.instance.head = GameManager.equipmentList.GetEquipment( id );
 				headE = Instantiate( selectedItem, headSlot.position, Quaternion.identity ) as UiItem;
 				headE.transform.parent = headSlot;
 			}
 			else if( item.type == EquipmentData.Type.Body )
 			{
 				//GameManager.instance.body = item;
-				GameManager.instance.body = GameManager.equipmentList.GetEquipment( 11 );
+				GameManager.instance.body = GameManager.equipmentList.GetEquipment( id );
 				bodyE = Instantiate( selectedItem, bodySlot.position, Quaternion.identity ) as UiItem;
 				bodyE.transform.parent = bodySlot;
 			}
 			else if( item.type == EquipmentData.Type.Feet )
 			{
 				//GameManager.instance.feet = item;
-				GameManager.instance.feet = GameManager.equipmentList.GetEquipment( 19 );
+				GameManager.instance.feet = GameManager.equipmentList.GetEquipment( id );
 				feetE = Instantiate( selectedItem, feetSlot.position, Quaternion.identity ) as UiItem;
 				feetE.transform.parent = feetSlot;
 
@@ -79,7 +79,7 @@ public class ShopMenu : MonoBehaviour {
 		}
 		else if( selectedItem.GetType() == UiItem.Type.Weapon )
 		{
-			GameManager.instance.weapon = GameManager.equipmentList.GetWeapon( 4 );
+			GameManager.instance.weapon = GameManager.equipmentList.GetWeapon( id );
 			weapon1E = Instantiate( selectedItem, weapon1Slot.position, Quaternion.identity ) as UiItem;
 			weapon1E.transform.parent = weapon1Slot;
 		}
@@ -88,8 +88,8 @@ public class ShopMenu : MonoBehaviour {
 
 	public void FightPress ()
 	{
-		//GameManager.instance.LoadArena();
-		Application.LoadLevel("FirstTest"); //Remember to change the string here later.
+		GameManager.instance.LoadArena();
+		//Application.LoadLevel("FirstTest"); //Remember to change the string here later.
 	}
 
 	public void BackButtonPress ()

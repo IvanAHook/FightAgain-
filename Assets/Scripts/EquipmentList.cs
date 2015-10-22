@@ -6,11 +6,10 @@ using System.Collections.Generic;
 public class EquipmentList {
 
 	FileReader _fReader;
-	// put in arrays instead
-	List<EquipmentData> equipment;
+	List<EquipmentData> equipment;  // Move to arrays when JSON is implemented
 	List<WeaponData> weapons;
 
-	public EquipmentList()
+	public EquipmentList() // Loading equipment from JSON coming soon
 	{
 		equipment = new List<EquipmentData>();
 		weapons = new List<WeaponData>();
@@ -62,15 +61,6 @@ public class EquipmentList {
 		weapons.Add( new WeaponData( WeaponData.Type.Ranged, "Bazooka", 8 ) );										// 13
 		weapons.Add( new WeaponData( WeaponData.Type.Ranged, "Virus Gun", 8 ) );									// 14
 
-		TextAsset equipmentFile = Resources.Load( "equipment" ) as TextAsset;
-		var E = JSON.Parse( equipmentFile.text );
-
-		/*InsertEquipment( EquipmentData.Type.Head, "head", E);
-		InsertEquipment( EquipmentData.Type.Body, "body", E);
-		InsertEquipment( EquipmentData.Type.Feet, "feet", E);
-
-		InsertWeapons( WeaponData.Type.Melee, "melee", E);
-		InsertWeapons( WeaponData.Type.Ranged, "ranged", E);*/
 	}
 	
 	public WeaponData GetWeapon( WeaponData.Type type, string name )
@@ -115,7 +105,6 @@ public class EquipmentList {
 
 	void InsertEquipment( EquipmentData.Type type, string typeString, JSONNode jsonNode ) // parse weapons and equipment from JSON file
 	{
-		//Debug.Log( "Equipment list parsing..." + typeString );
 		
 		for( int i = 0; i < jsonNode["equipment"][typeString].Count; i++ ) // add helmets
 		{
@@ -127,7 +116,6 @@ public class EquipmentList {
 
 	void InsertWeapons( WeaponData.Type type, string typeString, JSONNode jsonNode )
 	{
-		//Debug.Log( "Weapons list parsing..." + typeString );
 		
 		for( int i = 0; i < jsonNode["weapons"][typeString].Count; i++ ) // add melee weapons
 		{

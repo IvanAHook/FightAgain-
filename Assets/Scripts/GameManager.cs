@@ -4,14 +4,13 @@ using System.Collections;
 public class GameManager : MonoBehaviour {
 
 	enum GameState { Menu, Fight };
-	GameState state;
+	static GameState state;
 
 	public static GameManager instance = null;
 
 	public GameObject playerPrefab;
 
 	bool playerDied = false;
-
 	Transform playerTransform;
 	int money;
 
@@ -22,8 +21,6 @@ public class GameManager : MonoBehaviour {
 	public EquipmentData body;
 	public EquipmentData feet;
 	public static EquipmentList equipmentList;
-
-	public bool collisionHandling;
 	
 	void Awake()
 	{
@@ -39,6 +36,10 @@ public class GameManager : MonoBehaviour {
 		SpawnPlayer(); // Temp / Arre Barre
 
 		equipmentList = new EquipmentList();
+		weapon = equipmentList.GetWeapon( 0 );
+		head = new EquipmentData( EquipmentData.Type.Head, "Naked", 0, 0f );
+		body = new EquipmentData( EquipmentData.Type.Body, "Naked", 0, 0f );
+		feet = new EquipmentData( EquipmentData.Type.Feet, "Naked", 0, 0f );
 		money = 0;
 	}
 
@@ -58,26 +59,26 @@ public class GameManager : MonoBehaviour {
 			playerDied = false;
 			menu.GetComponent<Menu>().DeathScreen();
 		}
+	}
 
+	void LoadMenu()
+	{
+		state = GameState.Menu;
+		Application.LoadLevel("MainMenu");
 	}
 
 	public void LoadArena()
 	{
 		state = GameState.Fight;
-		Application.LoadLevel("FirstTest");
+		Application.LoadLevel("ArenaLevel");
 	}
 
 	void OnLevelWasLoaded( int level )
 	{
-		if( level == 1 )
+		if( level == 2 )
 		{
 			SpawnPlayer();
 		}
-	}
-
-	void LoadShop()
-	{
-
 	}
 
 	void SpawnPlayer()
@@ -89,16 +90,6 @@ public class GameManager : MonoBehaviour {
 		playerEquipment.head = head;
 		playerEquipment.body = body;
 		playerEquipment.feet = feet;
-
-/*		if( weapon != null )
-			playerEquipment.EquipWeapon( weapon.type, weapon.name );
-		if( head != null )
-			playerEquipment.Equip( head.type, head.name );
-		if( body != null )
-			playerEquipment.Equip( body.type, body.name );
-		if( feet != null )
-			playerEquipment.Equip( feet.type, feet.name );*/
-		//player.GetComponent<EquipmentComponent>().Equip( weapon, head, body, feet );
 	}
 
 	public Vector2 GetPlayerPosition()
