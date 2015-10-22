@@ -36,6 +36,8 @@ public class GameManager : MonoBehaviour {
 
 	void Start()
 	{
+		SpawnPlayer(); // Temp / Arre Barre
+
 		equipmentList = new EquipmentList();
 		money = 0;
 	}
@@ -48,7 +50,7 @@ public class GameManager : MonoBehaviour {
 
 	void Update()
 	{
-		if( playerTransform && playerTransform.gameObject.activeSelf == false ) { //TODO wtf?
+		if( playerTransform && playerTransform.gameObject.activeSelf == false ) {
 			playerTransform = GameObject.FindGameObjectWithTag( "Player" ).transform;
 		}
 

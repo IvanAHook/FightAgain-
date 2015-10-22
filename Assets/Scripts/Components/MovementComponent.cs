@@ -12,7 +12,7 @@ public class MovementComponent : MonoBehaviour {
 		public Vector2 tangentialTranslation;
 	}
 
-	public float speed = 3.8f;
+	public float speed;
 	float RADIUS;
 	float DIAMETER_SQR;
 
@@ -22,7 +22,8 @@ public class MovementComponent : MonoBehaviour {
 		DIAMETER_SQR = 4;
 	}
 
-	public void Move( float horizontal, float vertical ) {
+	public void Move( float horizontal, float vertical )
+	{
 
 		if( gameObject.tag == "Enemy" && GameManager.instance.collisionHandling )
 		{
@@ -43,6 +44,12 @@ public class MovementComponent : MonoBehaviour {
 
 	}
 
+	public void UpdateVel(float horizontalVel, float verticalVel)
+	{
+
+	}
+
+	// Prolly dont need this if we're going full pulic var for speed /Arre
 	public void ChangeSpeed( int speed )
 	{
 		if( gameObject.tag == "Player" )

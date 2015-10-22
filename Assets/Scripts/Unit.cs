@@ -30,6 +30,8 @@ public class Unit : MonoBehaviour {
 
     }
 
+	
+	/*//moved to Enemy
 	public void FlipCheck(float vel)
 	{
 		//Debug.Log(vel);
@@ -54,7 +56,8 @@ public class Unit : MonoBehaviour {
 		Vector3 scale = transform.localScale;
 		scale.x *= -1;
 		transform.localScale = scale;
-	}
+	}*/
+	
 
 	// Not working right now. Using SetSpeed() instead.
 	public void SpeedCheck (float xVel, float yVel)

@@ -21,36 +21,39 @@ public class Enemy : Unit {
 	float attackRange = 1f;
 	float rAttackRange = 5f;
 	float range;
-	bool isRanged;
+	bool isRanged = false;
 	
 	bool attacked = false;
+	bool strafing = false;
 
 	float xVel;
 	float yVel;
 	Vector2 randomVector;
 
-	bool isIdle;
+	public bool isIdle = true;
 
 	void Awake() 
 	{
 		_healthcomponent = GetComponent<HealthComponent>();
 		_movement = GetComponent<MovementComponent>();
 		_animComponent = GetComponent<AnimationComponent>();
-	}
 
+		float random = Random.Range ( -0.4f, 0.4f );
+		_movement.speed += random;
+	}
 
 	public override void Start() 
 	{
 		state = State.Targeting;
 
-		// Temporary
+		// Temporary /Ariel
 		// Make enemy melee or ranged at random
 		int meleeOrRanged = Random.Range(0, 2);
 		
-		if (meleeOrRanged == 0)
+		
+		if (meleeOrRanged > 0)
 			isRanged = true;
-		else
-			isRanged = true;
+		
 
 		// Change range depening on if enemy is ranged or not.
 		if (isRanged)
@@ -64,17 +67,21 @@ public class Enemy : Unit {
         base.Start();
 	}
 
-	void Update() // Only for Colins feel test
+	void Update() // Only for Colins feel test 
 	{
 		if ( GameObject.Find( "EnemyManager" ) == null )
 		{
-			if ( Vector3.Normalize( GameObject.Find( "Player" ).transform.position
-			          - transform.position ).x < 0 && facingRight )
+			if ( Vector3.Normalize( GameObject.Find( "Player" ).transform.position - transform.position ).x < 0 && facingRight )	
+			{
 				Flip();
-			else if ( Vector3.Normalize( GameObject.Find( "Player" ).transform.position
-			                            - transform.position ).x >= 0 && !facingRight )
+			}
+				
+			else if ( Vector3.Normalize( GameObject.Find( "Player" ).transform.position - transform.position ).x >= 0 && !facingRight )
+			{
 				Flip();
+			}
 		}
+
 	}
 
 	public State UppdateAttention( Transform player, List<Enemy> enemies )
@@ -95,7 +102,7 @@ public class Enemy : Unit {
 			Die();
 
 		if (xVel != 1 && state != State.Attacking) 
-			base.FlipCheck(xVel);
+			FlipCheck(xVel);
 
 		return state;
 	}
@@ -106,6 +113,7 @@ public class Enemy : Unit {
 
 	void Search( Transform player, List<Enemy> enemies ) 
 	{
+		strafing = false;
 		if ( this.target == null ) 
 			SelectTarget( player, enemies );
 
@@ -163,13 +171,14 @@ public class Enemy : Unit {
 		else if (target.position.x > transform.position.x)
 			myTarget = targetPos - new Vector2(range - 0.15f, 0f);
 
+		// Clamperino
+		myTarget = new Vector2 (Mathf.Clamp( myTarget.x, -8f, 8f ), Mathf.Clamp( myTarget.y, -4f, 4f ) );
+
 		Mathf.Clamp( myTarget.x, -8f, 8f );
 		Mathf.Clamp( myTarget.y, -4f, 4f );
 
 		// Add a bit of randomness to the target.
 		myTarget += randomVector;
-
-		// Clamperino
 
 
 		// Get target direction.
@@ -185,27 +194,23 @@ public class Enemy : Unit {
 		{
 			state = State.Attacking;
 
-			// Set speed for animation. Not needed for spine
-			// base.SetSpeed(0);
+			// not sure why this is here /Arre
 			if (!isIdle)
 			{
 				isIdle = true;
-				_animComponent.PlayIdleAnim();
+		
 			}
 			
-
 			//Flip if not facing player.
 			if (target.position.x < transform.position.x && base.facingRight)
-				base.Flip();
+				Flip();
 			else if (target.position.x > transform.position.x && !base.facingRight)
-				base.Flip();
+				Flip();
 		}
 		else if (distance > 0.3f) // Move if not too close
 		{
-			//transform.Translate(dir * moveSpeed * Time.deltaTime);
 			_movement.Move( dir.x, dir.y );
-			//base.SetSpeed(1); // not needed for spine
-
+		
 			if (isIdle)
 			{
 				isIdle = false;
@@ -218,7 +223,7 @@ public class Enemy : Unit {
 
 	void Attack() 
 	{
-
+		strafing = true;
 		if (!attacked && isRanged)
 		{
 			attacked = true;
@@ -265,12 +270,45 @@ public class Enemy : Unit {
 	{
 		_animComponent.PlayAttackAnim();
 
-		yield return new WaitForSeconds(0.5f);
+		yield return new WaitForSeconds(0.5f); // Recover
 		state = State.Engaging;
-		
-		yield return new WaitForSeconds(1f); // Recover
+
+	
+		yield return new WaitForSeconds(1f); // Attack CD
 		attacked = false;
 		
+	}
+
+	void FlipCheck(float vel)
+	{
+		
+		if (strafing && state == State.Engaging ) //Flip if not facing target
+		{
+			if (target.position.x < transform.position.x && base.facingRight)
+				Flip();
+			else if (target.position.x > transform.position.x && !base.facingRight)
+				Flip();
+		}
+		else // flip according to velocity
+		{
+			// If moving left
+			if (vel < 0 && facingRight)
+				Flip();
+			// if moving right
+			else if (vel > 0 && !facingRight)
+				Flip();
+		}
+		
+
+	}
+
+	void Flip()
+	{
+		//Debug.Log("Flip!");
+		facingRight = !facingRight;
+		Vector3 scale = transform.localScale;
+		scale.x *= -1;
+		transform.localScale = scale;
 	}
 
     void Die() 
