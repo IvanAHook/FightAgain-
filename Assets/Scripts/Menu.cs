@@ -51,7 +51,8 @@ public class Menu : MonoBehaviour {
 
 	public void FightPress () 
 	{
-		Application.LoadLevel("FirstTest"); //Remember to change the string here later.
+		GameManager.instance.LoadArena();
+		//Application.LoadLevel("FirstTest"); //Remember to change the string here later.
 	}
 
 	public void ShopPress()
