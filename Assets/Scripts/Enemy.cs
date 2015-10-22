@@ -48,9 +48,9 @@ public class Enemy : Unit {
 		int meleeOrRanged = Random.Range(0, 2);
 		
 		if (meleeOrRanged == 0)
-			isRanged = false;
+			isRanged = true;
 		else
-			isRanged = false;
+			isRanged = true;
 
 		// Change range depening on if enemy is ranged or not.
 		if (isRanged)
@@ -123,7 +123,7 @@ public class Enemy : Unit {
 		
 		foreach (Enemy e in enemies)
 		{	
-			if ( engagedToPlayer <= 3 )
+			if ( engagedToPlayer < 3 )
 			{
 				target = player;
 				state = State.Engaging;
@@ -138,8 +138,6 @@ public class Enemy : Unit {
 				state = State.Engaging;
 			}
 		}
-		
-	
 	}
 
     void Engage() 
@@ -165,8 +163,14 @@ public class Enemy : Unit {
 		else if (target.position.x > transform.position.x)
 			myTarget = targetPos - new Vector2(range - 0.15f, 0f);
 
+		Mathf.Clamp( myTarget.x, -8f, 8f );
+		Mathf.Clamp( myTarget.y, -4f, 4f );
+
 		// Add a bit of randomness to the target.
 		myTarget += randomVector;
+
+		// Clamperino
+
 
 		// Get target direction.
 		Vector2 targetDirection = myTarget - myPos;
@@ -235,7 +239,6 @@ public class Enemy : Unit {
 		yield return new WaitForSeconds(0.2f);
 
 		// Shoot
-
 		_animComponent.PlayAttackAnim();
 
 		Vector2 pos = new Vector3( transform.position.x, transform.position.y + 0.5f, 0f);
@@ -243,12 +246,12 @@ public class Enemy : Unit {
 		if (base.facingRight)
 		{
 			spawnedProjectile.gameObject.GetComponent<EnemyProjectile>().MoveRight(true);
-			spawnedProjectile.gameObject.GetComponent<DamageComponent>().Owner(gameObject.GetComponentInChildren<Collider2D>().gameObject.transform);
+			spawnedProjectile.gameObject.GetComponent<DamageComponent>().Owner(gameObject.transform);
 		}	
 		else
 		{
 			spawnedProjectile.gameObject.GetComponent<EnemyProjectile>().MoveRight(false);
-			spawnedProjectile.gameObject.GetComponent<DamageComponent>().Owner(gameObject.GetComponentInChildren<Collider2D>().gameObject.transform);
+			spawnedProjectile.gameObject.GetComponent<DamageComponent>().Owner(gameObject.transform);
 		}
 			
 
