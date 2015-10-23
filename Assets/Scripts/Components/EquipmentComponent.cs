@@ -57,6 +57,16 @@ public class EquipmentComponent : MonoBehaviour { // Does not need monobehavior
 		equipment.Add( GameManager.equipmentList.GetEquipment( type, name ) );
 	}
 
+	public float GetArmor()
+	{
+		return head.armor + body.armor + feet.armor;
+	}
+
+	public float GetSpeed()
+	{
+		return head.speed + body.speed + feet.speed;
+	}
+
 	public float GetWeaponDamage()
 	{
 		return weapon.damage;

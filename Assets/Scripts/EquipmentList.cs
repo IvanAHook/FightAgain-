@@ -35,12 +35,12 @@ public class EquipmentList {
 		equipment.Add( new EquipmentData( EquipmentData.Type.Body, "Samurai", 5, 1.2f ) );							// 15
 
 		// Footwear
-		equipment.Add( new EquipmentData( EquipmentData.Type.Feet, "Snickers", 0, 1.2f ) );							// 16
-		equipment.Add( new EquipmentData( EquipmentData.Type.Feet, "Medieval Boots", 0, 1.1f ) );					// 17
-		equipment.Add( new EquipmentData( EquipmentData.Type.Feet, "Kungfu slippers", 0, 1.3f ) );					// 18
-		equipment.Add( new EquipmentData( EquipmentData.Type.Feet, "Biker Boots", 0, 1.2f ) );						// 19
-		equipment.Add( new EquipmentData( EquipmentData.Type.Feet, "American footbal trainers", 0, 1.3f ) );		// 20
-		equipment.Add( new EquipmentData( EquipmentData.Type.Feet, "Rollerblades", 0, 1.4f ) );						// 21
+		equipment.Add( new EquipmentData( EquipmentData.Type.Feet, "Snickers", 1, 1.2f ) );							// 16
+		equipment.Add( new EquipmentData( EquipmentData.Type.Feet, "Medieval Boots", 1, 1.1f ) );					// 17
+		equipment.Add( new EquipmentData( EquipmentData.Type.Feet, "Kungfu slippers", 1, 1.3f ) );					// 18
+		equipment.Add( new EquipmentData( EquipmentData.Type.Feet, "Biker Boots", 1, 1.2f ) );						// 19
+		equipment.Add( new EquipmentData( EquipmentData.Type.Feet, "American footbal trainers", 1, 1.3f ) );		// 20
+		equipment.Add( new EquipmentData( EquipmentData.Type.Feet, "Rollerblades", 1, 1.4f ) );						// 21
 
 		// Melee weapons
 		weapons.Add( new WeaponData( WeaponData.Type.Melee, "Fists", 0.5f ) );										// 0

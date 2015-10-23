@@ -5,20 +5,23 @@ using System.Linq;
 
 public class MovementComponent : MonoBehaviour {
 
-	public float speed = 3.8f;
+	public float BASESPEED = 3.8f;
+	float horizontalClamp = 8f;
+	float verticalClamp = 4f;
 
-
-	public void Move( float horizontal, float vertical ) {
-		Vector2 movement = new Vector3( Mathf.Clamp( transform.position.x + horizontal * speed * Time.deltaTime, -8f, 8f ),
-		                               Mathf.Clamp( transform.position.y + vertical * speed * Time.deltaTime, -4f, 4f ),
-		                               0.0f );
+	public void Move( float horizontal, float vertical, float speedModifier ) {
+		float speed = BASESPEED * speedModifier;
+		Vector2 movement = new Vector3(
+			Mathf.Clamp( transform.position.x + horizontal * speed * Time.deltaTime, -horizontalClamp*64, horizontalClamp*64 ),
+			Mathf.Clamp( transform.position.y + vertical * speed * Time.deltaTime, -verticalClamp*64, verticalClamp*64 ),
+		    0.0f );
 		transform.position = movement;
 	}
 
 	public void ChangeSpeed( int speed )
 	{
 		if( gameObject.tag == "Player" )
-			this.speed = speed;
+			this.BASESPEED = speed;
 	}
 
 }

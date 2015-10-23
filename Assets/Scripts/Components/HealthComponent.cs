@@ -4,6 +4,7 @@ using System.Collections;
 public class HealthComponent : MonoBehaviour {
 	
 	public int health;
+	[HideInInspector]public float armorValue = 0;
 	
 	SpriteRenderer mySprite;
 	Color defaultColor;
@@ -11,19 +12,10 @@ public class HealthComponent : MonoBehaviour {
 	bool invulnerable = false;
 	float invTime = 0.15f;
 	
-	void Awake() 
-	{
-		//mySprite = GetComponent<SpriteRenderer>();
-		//defaultColor = mySprite.color;
-		//if (mySprite == null)
-		//Debug.LogError("Unable to find Sprite component");
-	}
-	
 	void Update() // for test only plz
 	{
 		timer += Time.deltaTime;
 		if (timer > invTime)
-			//mySprite.color = defaultColor;
 			invulnerable = false;
 			
 			//For testing
@@ -38,6 +30,7 @@ public class HealthComponent : MonoBehaviour {
 	{
 		if (!invulnerable)
 		{
+
 			health -= damage;
 			
 			if (gameObject.tag == "Enemy")
@@ -54,11 +47,9 @@ public class HealthComponent : MonoBehaviour {
 					GameManager.instance.PlayerDied();
 				}
 			}
-			//mySprite.color = Color.blue;
 			invulnerable = true;
 			timer = 0f;
 		}
-
 		
 	}
 	
@@ -71,7 +62,6 @@ public class HealthComponent : MonoBehaviour {
 			
 			gameObject.SetActive(false);
 		}
-		//mySprite.color = Color.blue;
 		timer = 0f;
 	}
 	

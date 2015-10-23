@@ -5,11 +5,13 @@ using CnControls;
 
 [RequireComponent(typeof(EquipmentComponent))]
 [RequireComponent(typeof(MovementComponent))]
+[RequireComponent(typeof(HealthComponent))]
 [RequireComponent(typeof(SkeletonAnimation))]
 public class PlayerMovement : MonoBehaviour {
 
 	EquipmentComponent _equipment;
 	MovementComponent _movement;
+	HealthComponent _health;
 	
 	// ANIMATIONS
 	SkeletonAnimation _skelAnim;
@@ -27,8 +29,10 @@ public class PlayerMovement : MonoBehaviour {
 	{
 		_equipment = GetComponent<EquipmentComponent>();
 		_movement = GetComponent<MovementComponent>();
+		_health = GetComponent<HealthComponent>();
 		_skelAnim = GetComponent<SkeletonAnimation>();
 
+		_health.armorValue = _equipment.GetArmor();
 	}
 
 	void Update() 
@@ -54,7 +58,7 @@ public class PlayerMovement : MonoBehaviour {
 	void UpdateInput ()
 	{
 		_movement.Move(CnInputManager.GetAxis("Horizontal"),
-					   CnInputManager.GetAxis("Vertical"));
+					   CnInputManager.GetAxis("Vertical"), _equipment.GetSpeed());
 
 		if (CnInputManager.GetAxis("Horizontal") < 0 && facingRight)
 			Flip();
