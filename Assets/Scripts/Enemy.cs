@@ -39,7 +39,7 @@ public class Enemy : Unit {
 		_animComponent = GetComponent<AnimationComponent>();
 
 		float random = Random.Range ( -0.4f, 0.4f );
-		_movement.speed += random;
+		_movement.BASESPEED += random;
 	}
 
 	public override void Start() 
@@ -209,7 +209,7 @@ public class Enemy : Unit {
 		}
 		else if (distance > 0.3f) // Move if not too close
 		{
-			_movement.Move( dir.x, dir.y );
+			_movement.Move( dir.x, dir.y, 1 );
 		
 			if (isIdle)
 			{
