@@ -13,9 +13,9 @@ public class EnemyProjectile : MonoBehaviour {
 			Destroy(gameObject);
 
 		if (moveRight)
-			transform.position += transform.right * 12f * Time.deltaTime;
+			transform.position += transform.right * 768f * Time.deltaTime;
 		else
-			transform.position -= transform.right * 12f * Time.deltaTime;
+			transform.position -= transform.right * 768f * Time.deltaTime;
 	}
 
 	public void MoveRight (bool right)

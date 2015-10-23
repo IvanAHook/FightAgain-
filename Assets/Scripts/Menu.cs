@@ -52,7 +52,6 @@ public class Menu : MonoBehaviour {
 	public void FightPress () 
 	{
 		GameManager.instance.LoadArena();
-		Debug.Log("japp");
 		//Application.LoadLevel("FirstTest"); //Remember to change the string here later.
 	}
 

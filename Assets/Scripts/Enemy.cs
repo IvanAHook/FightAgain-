@@ -18,8 +18,8 @@ public class Enemy : Unit {
     public Transform target = null;
 	public GameObject enemyProjectile;
 
-	float attackRange = 1f;
-	float rAttackRange = 5f;
+	float attackRange = 64f;
+	float rAttackRange = 320f;
 	float range;
 	bool isRanged = false;
 	
@@ -38,7 +38,7 @@ public class Enemy : Unit {
 		_movement = GetComponent<MovementComponent>();
 		_animComponent = GetComponent<AnimationComponent>();
 
-		float random = Random.Range ( -0.4f, 0.4f );
+		float random = Random.Range ( -25f, 25f );
 		_movement.BASESPEED += random;
 	}
 
@@ -49,10 +49,11 @@ public class Enemy : Unit {
 		// Temporary /Ariel
 		// Make enemy melee or ranged at random
 		int meleeOrRanged = Random.Range(0, 2);
-		
-		
-		if (meleeOrRanged > 0)
-			isRanged = true;
+
+		isRanged = false;
+
+		//if (meleeOrRanged > 0)
+		//	isRanged = true;
 		
 
 		// Change range depening on if enemy is ranged or not.
@@ -166,16 +167,16 @@ public class Enemy : Unit {
 		// Change target vector depending on if the player is to the right of left of me.
 		// Left
 		if (target.position.x < transform.position.x)
-			myTarget = targetPos + new Vector2(range - 0.15f, 0f);
+			myTarget = targetPos + new Vector2(range - 9.6f, 0f);
 		// Right
 		else if (target.position.x > transform.position.x)
-			myTarget = targetPos - new Vector2(range - 0.15f, 0f);
+			myTarget = targetPos - new Vector2(range - 9.6f, 0f);
 
 		// Clamperino
-		myTarget = new Vector2 (Mathf.Clamp( myTarget.x, -8f, 8f ), Mathf.Clamp( myTarget.y, -4f, 4f ) );
+		myTarget = new Vector2 (Mathf.Clamp( myTarget.x, -512f, 512f ), Mathf.Clamp( myTarget.y, -256f, 256f ) );
 
-		Mathf.Clamp( myTarget.x, -8f, 8f );
-		Mathf.Clamp( myTarget.y, -4f, 4f );
+		/*Mathf.Clamp( myTarget.x, -8f, 8f );
+		Mathf.Clamp( myTarget.y, -4f, 4f );*/
 
 		// Add a bit of randomness to the target.
 		myTarget += randomVector;
@@ -190,7 +191,7 @@ public class Enemy : Unit {
 		
 		// Enemy movement.
 		// If close enough, Attack
-		if (distance < 0.3f && state != State.Attacking && !attacked)
+		if (distance < 19.2f && state != State.Attacking && !attacked)
 		{
 			state = State.Attacking;
 
@@ -207,7 +208,7 @@ public class Enemy : Unit {
 			else if (target.position.x > transform.position.x && !base.facingRight)
 				Flip();
 		}
-		else if (distance > 0.3f) // Move if not too close
+		else if (distance > 19.2f) // Move if not too close
 		{
 			_movement.Move( dir.x, dir.y, 1 );
 		
@@ -246,7 +247,7 @@ public class Enemy : Unit {
 		// Shoot
 		_animComponent.PlayAttackAnim();
 
-		Vector2 pos = new Vector3( transform.position.x, transform.position.y + 0.5f, 0f);
+		Vector2 pos = new Vector3( transform.position.x, transform.position.y + 32f, 0f);
 		GameObject spawnedProjectile = (GameObject)Instantiate(enemyProjectile, pos, Quaternion.identity);
 		if (base.facingRight)
 		{
