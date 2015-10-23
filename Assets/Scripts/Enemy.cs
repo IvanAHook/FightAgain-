@@ -203,7 +203,7 @@ public class Enemy : Unit {
 		else if (distance > 0.3f) // Move if not too close
 		{
 			//transform.Translate(dir * moveSpeed * Time.deltaTime);
-			_movement.Move( dir.x, dir.y );
+			_movement.Move( dir.x, dir.y, 1 );
 			//base.SetSpeed(1); // not needed for spine
 
 			if (isIdle)

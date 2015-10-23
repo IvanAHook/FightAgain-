@@ -35,9 +35,9 @@ public class GameManager : MonoBehaviour {
 	{
 		equipmentList = new EquipmentList();
 		weapon = equipmentList.GetWeapon( 0 );
-		head = new EquipmentData( EquipmentData.Type.Head, "Naked", 0, 0f );
-		body = new EquipmentData( EquipmentData.Type.Body, "Naked", 0, 0f );
-		feet = new EquipmentData( EquipmentData.Type.Feet, "Naked", 0, 0f );
+		head = new EquipmentData( EquipmentData.Type.Head, "Naked", 1, 1f );
+		body = new EquipmentData( EquipmentData.Type.Body, "Naked", 1, 1f );
+		feet = new EquipmentData( EquipmentData.Type.Feet, "Naked", 1, 1f );
 		money = 0;
 	}
 
