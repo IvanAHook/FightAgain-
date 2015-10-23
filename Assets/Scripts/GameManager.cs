@@ -51,7 +51,7 @@ public class GameManager : MonoBehaviour {
 
 	void Update()
 	{
-		if( playerTransform && playerTransform.gameObject.activeSelf == false ) {
+		if( playerTransform && playerTransform.gameObject.activeSelf == true ) {
 			playerTransform = GameObject.FindGameObjectWithTag( "Player" ).transform;
 		}
 

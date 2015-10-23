@@ -9,12 +9,15 @@ public class AnimationComponent : MonoBehaviour {
 
 	 // ATTACHMENTS
 	public Sprite[] hats;
+	
+
 
 	//public Sprite mySprite;
+	[SpineSkin]
+	public string[] skins;
 	[SpineSlot]
 	public string slot;
-	[SpineSkin]
-	public string skin;
+
 
 	// ANIMATIONZ
 	SkeletonAnimation _skelAnim;
@@ -39,13 +42,20 @@ public class AnimationComponent : MonoBehaviour {
 			likesHats = true;
 		}
 
+		int randomSkin = Random.Range(0, skins.Length);
+		int randomHat = Random.Range(0, hats.Length);
 		
 		skelRenderer = GetComponent<SkeletonRenderer>();
+		
+		if (skins.Length > 0)
+		{
+			skelRenderer.skeleton.SetSkin(skins [randomSkin] );
+		}
+			
 		if (hats.Length > 0 && likesHats)
 		{
-			int randomInt = Random.Range(0, hats.Length);
-			skelRenderer.skeleton.Data.AddUnitySprite(slot, hats[randomInt], skin, "Sprites/Default");
-			skelRenderer.skeleton.SetAttachment(slot, hats[randomInt].name);
+			skelRenderer.skeleton.Data.AddUnitySprite(slot, hats[randomHat], skins [randomSkin ], "Sprites/Default");
+			skelRenderer.skeleton.SetAttachment(slot, hats[randomHat].name);
 		}
 		
 
@@ -98,13 +108,11 @@ public class AnimationComponent : MonoBehaviour {
 
 	public void PlayGotHitAnim ()
 	{
-		Debug.Log("Request gothit anim");
 		if (!animCheck)
 		{
 			//_skelAnim.state.AddAnimation(0, gotHitAnimation, false, 0f);
 			_skelAnim.state.SetAnimation(0, gotHitAnimation, false);
 			animCheck = true;
-			Debug.Log("Play got hit anim");
 		}
 		
 	}
