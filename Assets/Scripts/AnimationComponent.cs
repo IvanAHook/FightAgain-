@@ -9,12 +9,15 @@ public class AnimationComponent : MonoBehaviour {
 
 	 // ATTACHMENTS
 	public Sprite[] hats;
+	
+
 
 	//public Sprite mySprite;
+	[SpineSkin]
+	public string[] skins;
 	[SpineSlot]
 	public string slot;
-	[SpineSkin]
-	public string skin;
+
 
 	// ANIMATIONZ
 	SkeletonAnimation _skelAnim;
@@ -39,13 +42,20 @@ public class AnimationComponent : MonoBehaviour {
 			likesHats = true;
 		}
 
+		int randomSkin = Random.Range(0, skins.Length);
+		int randomHat = Random.Range(0, hats.Length);
 		
 		skelRenderer = GetComponent<SkeletonRenderer>();
+		
+		if (skins.Length > 0)
+		{
+			skelRenderer.skeleton.SetSkin(skins [randomSkin] );
+		}
+			
 		if (hats.Length > 0 && likesHats)
 		{
-			int randomInt = Random.Range(0, hats.Length);
-			skelRenderer.skeleton.Data.AddUnitySprite(slot, hats[randomInt], skin, "Sprites/Default");
-			skelRenderer.skeleton.SetAttachment(slot, hats[randomInt].name);
+			skelRenderer.skeleton.Data.AddUnitySprite(slot, hats[randomHat], skins [randomSkin ], "Sprites/Default");
+			skelRenderer.skeleton.SetAttachment(slot, hats[randomHat].name);
 		}
 		
 
@@ -60,34 +70,64 @@ public class AnimationComponent : MonoBehaviour {
 		if (animCheck && _skelAnim.state.GetCurrent(0) == null )
 		{
 			animCheck = false;
-			PlayIdleAnim();
+			AnimCheck();
 		}
-
-			
-			
 	}
+
+	
+	// not sure I want this.
+	/*public void PlayAnim( int track, string animation, bool loop )
+	{
+		_skelAnim.state.SetAnimation( track, animation, loop );
+	}*/
 	
 	public void PlayIdleAnim()
 	{
+		if (!animCheck)
+		//_skelAnim.state.AddAnimation(0, idleAnimation, true, 0f);
 		_skelAnim.state.SetAnimation(0, idleAnimation, true);
-		animCheck = false;
 	}
 
 	public void PlayAttackAnim()
 	{
-		_skelAnim.state.SetAnimation(0, attackAnimation, false);
-		animCheck = true;
+		if (!animCheck)
+		{
+			//_skelAnim.state.AddAnimation(0, attackAnimation, false, 0f);
+			_skelAnim.state.SetAnimation(0, attackAnimation, false);
+			animCheck = true;
+		}
+	
 	}
 	
 	public void PlayRunAnim ()
 	{
-		_skelAnim.state.SetAnimation(0, moveAnimation, true);
-		animCheck = false;
+		if (!animCheck)
+			//_skelAnim.state.AddAnimation(0, moveAnimation, true, 0f);
+			_skelAnim.state.SetAnimation(0, moveAnimation, true);
 	}
 
 	public void PlayGotHitAnim ()
 	{
-		_skelAnim.state.SetAnimation(0, gotHitAnimation, false);
-		animCheck = true;
+		if (!animCheck)
+		{
+			//_skelAnim.state.AddAnimation(0, gotHitAnimation, false, 0f);
+			_skelAnim.state.SetAnimation(0, gotHitAnimation, false);
+			animCheck = true;
+		}
+		
+	}
+
+	void AnimCheck()
+	{
+		if (GetComponent<Enemy>() != null)
+		{
+			if (GetComponent<Enemy>().GetState().ToString() == "Engaging")
+			{
+				PlayRunAnim();
+			}
+			else
+				PlayIdleAnim();
+			
+		}
 	}
 }

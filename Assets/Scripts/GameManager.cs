@@ -33,6 +33,8 @@ public class GameManager : MonoBehaviour {
 
 	void Start()
 	{
+		SpawnPlayer(); // Temp / Arre Barre
+
 		equipmentList = new EquipmentList();
 		weapon = equipmentList.GetWeapon( 0 );
 		head = new EquipmentData( EquipmentData.Type.Head, "Naked", 1, 1f );
@@ -49,7 +51,7 @@ public class GameManager : MonoBehaviour {
 
 	void Update()
 	{
-		if( playerTransform && playerTransform.gameObject.activeSelf == false ) { //TODO wtf?
+		if( playerTransform && playerTransform.gameObject.activeSelf == true ) {
 			playerTransform = GameObject.FindGameObjectWithTag( "Player" ).transform;
 		}
 
