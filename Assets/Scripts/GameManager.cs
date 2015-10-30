@@ -14,7 +14,8 @@ public class GameManager : MonoBehaviour {
 	Transform playerTransform;
 	int money;
 
-	public GameObject menu;
+	public GameObject menuPrefab;
+	public static GameObject menuInstance = null;
 
 	public WeaponData weapon;
 	public EquipmentData head;
@@ -55,9 +56,16 @@ public class GameManager : MonoBehaviour {
 			playerTransform = GameObject.FindGameObjectWithTag( "Player" ).transform;
 		}
 
-		if (playerDied) {
-			playerDied = false;
-			menu.GetComponent<Menu>().DeathScreen();
+		// Player dies.
+		if (playerDied) 
+		{
+			playerDied = false; //"Do Once"
+
+			// Spawn menu if it doesn't exist.
+			if (menuInstance == null)
+				menuInstance = Instantiate(menuPrefab, Vector3.zero, Quaternion.identity) as GameObject;
+				
+			menuInstance.GetComponent<Menu>().DeathScreen();
 		}
 	}
 

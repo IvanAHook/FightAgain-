@@ -134,7 +134,7 @@ public class Menu : MonoBehaviour {
 	public void RetryPress()
 	{
 		Time.timeScale = 1;
-		Application.LoadLevel("FirstTest"); // Temp
+		Application.LoadLevel("ArenaLevel"); // Temp
 	}
 
 	public void DeathScreen ()

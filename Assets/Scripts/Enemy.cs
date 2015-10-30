@@ -22,6 +22,9 @@ public class Enemy : Unit {
 	float rAttackRange = 320f;
 	float range;
 	bool isRanged = false;
+
+	float lockOnTime;
+	float chargeUpTime;
 	
 	bool attacked = false;
 	bool strafing = false;
@@ -50,11 +53,13 @@ public class Enemy : Unit {
 		// Make enemy melee or ranged at random
 		int meleeOrRanged = Random.Range(0, 2);
 
-		isRanged = false;
+		//isRanged = false; // for testing a specific type of enemy
 
-		//if (meleeOrRanged > 0)
-		//	isRanged = true;
-		
+		if (meleeOrRanged > 0)
+			isRanged = true;
+
+		chargeUpTime = Random.Range(0.05f, 0.15f);
+		lockOnTime = Random.Range(0.1f, 0.3f);
 
 		// Change range depening on if enemy is ranged or not.
 		if (isRanged)
@@ -242,7 +247,7 @@ public class Enemy : Unit {
 	IEnumerator RangedAttack()
 	{
 		// Wait while Locking On
-		yield return new WaitForSeconds(0.2f);
+		yield return new WaitForSeconds(lockOnTime);
 
 		// Shoot
 		_animComponent.PlayAttackAnim();
@@ -269,6 +274,7 @@ public class Enemy : Unit {
 
 	IEnumerator MeleeAttack()
 	{
+		yield return new WaitForSeconds(chargeUpTime);
 		_animComponent.PlayAttackAnim();
 
 		yield return new WaitForSeconds(0.5f); // Recover

@@ -31,10 +31,12 @@ public class DamageComponent : MonoBehaviour {
 			SendDamage(other.gameObject.GetComponentInParent<HealthComponent>());
 		}
 		// If we are the player, send message
-		else if (GetComponent<PlayerMovement>() != null || GetComponentInParent<PlayerMovement>() != null )
+		else if ( (GetComponent<PlayerMovement>() != null || GetComponentInParent<PlayerMovement>() != null ) 
+				&& other.tag != "EnemyProjectile" )
 		{
 			//Debug.Log("222");
-			other.gameObject.GetComponentInParent<HealthComponent>().SendMessage( "TakeDamageFromPlayer", GetWeaponDamage(), SendMessageOptions.DontRequireReceiver );
+			other.gameObject.GetComponentInParent<HealthComponent>()
+			.SendMessage( "TakeDamageFromPlayer", GetWeaponDamage(), SendMessageOptions.DontRequireReceiver );
 		}
 		// If we are an enemy and we hit the player, send message
 		else if ( gameObject.GetComponentInParent<Enemy>() != null && other.tag == "Player" )
